@@ -151,6 +151,8 @@ namespace ClusterWave.Scenes
 
         public override void Draw()
         {
+            client.chat.PreDraw(GraphicsDevice, batch);
+            GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Gray);
             GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
@@ -168,7 +170,7 @@ namespace ClusterWave.Scenes
             shields.DrawShields(GraphicsDevice);
 
             bg.RayLightFx.Parameters["lightPos"].SetValue(mousePos);
-            //scenario.DrawLightWalls(GraphicsDevice);
+            scenario.DrawLightWalls(GraphicsDevice);
 
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);

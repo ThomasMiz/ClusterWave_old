@@ -30,8 +30,8 @@ namespace ClusterWave
 
         Matrix transform;
         int linesToShow;
-        bool isTyping = false;
-        public bool IsTyping { get { return isTyping; } }
+        bool isOpen = false;
+        public bool IsOpen { get { return isOpen; } }
 
         StringBuilder typingText;
         Vector2 typingTextSize;
@@ -112,31 +112,41 @@ namespace ClusterWave
 
         public void PreDraw(GraphicsDevice device, SpriteBatch batch)
         {
-            showTyping.PreDraw(device, batch, isTyping && (Game1.Time - lastCharTime) % 1 < 0.5f);
+            showTyping.PreDraw(device, batch, isOpen && (Game1.Time - lastCharTime) % 1 < 0.5f);
         }
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null);
-            batch.Draw(Game1.whiteSquare, bounds, new Color(0, 0, 0, 200));
-            batch.End();
-
-            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, transform);
-
-            showTyping.DrawAt(batch, typingPosY);
-            if (isTyping && (Game1.Time - lastCharTime) % 1 < 0.5f)
+            if (isOpen)
             {
-                //batch.DrawString(Normal, "_", new Vector2(typingTextSize.X, typingPosY), Color.Gray);
-            }
-            int index = lineDrawIndex;
-            float y = typingPosY - measure.Y - TYPING_DRAW_SEPARATION;
-            for (int i = 0; i < lineDrawCount; i++)
-            {
-                lines[--index].DrawAt(batch, y);
-                y -= measure.Y;
-            }
+                #region DrawOpen
+                batch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null);
+                batch.Draw(Game1.whiteSquare, bounds, new Color(0, 0, 0, 200));
+                batch.End();
 
-            batch.End();
+                batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null, null, transform);
+
+                showTyping.DrawAt(batch, typingPosY);
+                if (isOpen && (Game1.Time - lastCharTime) % 1 < 0.5f)
+                {
+                    //batch.DrawString(Normal, "_", new Vector2(typingTextSize.X, typingPosY), Color.Gray);
+                }
+                int index = lineDrawIndex;
+                float y = typingPosY - measure.Y - TYPING_DRAW_SEPARATION;
+                for (int i = 0; i < lineDrawCount; i++)
+                {
+                    lines[--index].DrawAt(batch, y);
+                    y -= measure.Y;
+                }
+
+                batch.End();
+                #endregion
+            }
+            else
+            {
+                #region DrawClosed
+                #endregion
+            }
         }
 
         public void Add(String text)
@@ -191,15 +201,15 @@ namespace ClusterWave
 
         public void StartTyping()
         {
-            if (!isTyping)
+            if (!isOpen)
             {
-                isTyping = true;
+                isOpen = true;
             }
         }
 
         void OnCharEnter(object sender, CharacterEventArgs e)
         {
-            if (isTyping)
+            if (isOpen)
             {
                 lastCharTime = Game1.Time;
                 char c = e.Character;
@@ -285,9 +295,9 @@ namespace ClusterWave
 
         public void PauseTyping()
         {
-            if (isTyping)
+            if (isOpen)
             {
-                isTyping = false;
+                isOpen = false;
             }
         }
 

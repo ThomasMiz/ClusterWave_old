@@ -35,7 +35,7 @@ namespace ClusterWave.Scenes
         public override void Draw()
         {
             client.chat.PreDraw(GraphicsDevice, batch);
-            GraphicsDevice.SetRenderTarget(Game1.DefaultRenderTarget);
+            GraphicsDevice.SetRenderTarget(null);
 
             Color back = Stuff.ColorFromHSV(Game1.Time * 0.2f, 1f, 0.2f);
             GraphicsDevice.Clear(back);

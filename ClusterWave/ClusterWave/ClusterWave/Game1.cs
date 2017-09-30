@@ -14,7 +14,6 @@ namespace ClusterWave
 {
     class Game1 : Microsoft.Xna.Framework.Game
     {
-        public static RenderTarget2D DefaultRenderTarget;
         public static Game1 game;
         public static int ScreenWidth, ScreenHeight, HalfScreenWidth, HalfScreenHeight;
         public static float Time = 0, DeltaTime = 0;
@@ -108,7 +107,6 @@ namespace ClusterWave
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.SetRenderTarget(DefaultRenderTarget);
             scene.Draw();
 
             batch.Begin();
@@ -117,9 +115,6 @@ namespace ClusterWave
 
             //chat.Draw(batch);
             GraphicsDevice.SetRenderTarget(null);
-            batch.Begin();
-            batch.Draw(DefaultRenderTarget, Vector2.Zero, Color.White);
-            batch.End();
             base.Draw(gameTime);
         }
 
@@ -154,8 +149,6 @@ namespace ClusterWave
 
                 scene.OnResize();
 
-                if (DefaultRenderTarget != null) DefaultRenderTarget.Dispose();
-                DefaultRenderTarget = new RenderTarget2D(GraphicsDevice, ScreenWidth, ScreenHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
             }
         }
 
