@@ -110,7 +110,6 @@
     <Compile Include="Scenario\Scenario.cs" />
     <Compile Include="Scenario\Shape.cs" />
     <Compile Include="Scenes\InGameScene.cs" />
-    <Compile Include="Scenes\LoadingMenu.cs" />
     <Compile Include="Scenes\ScenarioLoadingScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Scenes\Windows95.cs" />

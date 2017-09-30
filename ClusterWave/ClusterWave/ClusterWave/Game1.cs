@@ -48,28 +48,40 @@ namespace ClusterWave
 
         protected override void Initialize()
         {
-            base.Initialize();
+            game = this;
+            Window.ClientSizeChanged += Window_ClientSizeChanged;
+            EventInput.Initialize(Window);
+            base.Initialize(); //note: LoadContent() is called during Initialize()
         }
 
         protected override void LoadContent()
         {
-
-            game = this;
             batch = new SpriteBatch(GraphicsDevice);
-            Window.ClientSizeChanged += Window_ClientSizeChanged;
-
-            if (!EventInput.IsInitialized)
-                EventInput.Initialize(Window);
 
             Chat.LoadFonts(Content);
-            client = new Client();
 
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
             InactiveSleepTime = TargetElapsedTime;
             IsFixedTimeStep = true;
 
-            scene = new Scenes.LoadingMenu();
+            font = Content.Load<SpriteFont>("Font");
+            if (whiteSquare != null) whiteSquare.Dispose();
+            whiteSquare = new Texture2D(GraphicsDevice, 1, 1);
+            whiteSquare.SetData(new Color[] { Color.White });
+
+            Scenes.Windows95.Load(Content);
+
+            Scenes.InGameScene.Load(Content);
+
+            ClusterWave.Scenario.Dynamic.Bullet.Load(Content);
+            ClusterWave.Scenario.Backgrounds.Background.Load(Content);
+            ClusterWave.Scenario.Dynamic.Shield.Load(Content);
+
+            if (client == null)
+                client = new Client();
+            if (scene == null)
+                scene = new Scenes.InGameScene(client);//new Scenes.ScenarioLoadingScene(client);
 
             Window_ClientSizeChanged(null, null);
         }
@@ -152,26 +164,6 @@ namespace ClusterWave
             scene.OnExit();
             scene = s;
             s.OnResize();
-        }
-
-        public void LoadAllData(object m)
-        {
-            Scenes.LoadingMenu menu = (Scenes.LoadingMenu)m;
-
-            font = Content.Load<SpriteFont>("Font");
-            whiteSquare = new Texture2D(GraphicsDevice, 1, 1);
-            whiteSquare.SetData(new Color[] { Color.White });
-
-            menu.SetText("Loading Windows 95...");
-            Scenes.Windows95.Load(Content);
-
-            menu.SetText("Loading Data...");
-            Scenes.InGameScene.Load(Content);
-
-
-            ClusterWave.Scenario.Dynamic.Bullet.Load(Content);
-            ClusterWave.Scenario.Backgrounds.Background.Load(Content);
-            ClusterWave.Scenario.Dynamic.Shield.Load(Content);
         }
     }
 }

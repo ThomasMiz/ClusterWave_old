@@ -48,6 +48,7 @@ namespace ClusterWave.Scenes
         [Obsolete("NO USEN ESTE CONSTRUCTOR DE MIERDA, DEPRECATED AF (es para cargar sin server)", false)]
         public InGameScene(Client client)
         {
+            this.client = client;
             if (!System.IO.File.Exists("data.map"))
             {
                 Game1.game.Exit();
