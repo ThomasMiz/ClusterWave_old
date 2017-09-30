@@ -53,11 +53,13 @@ namespace ClusterWave
 
         protected override void LoadContent()
         {
+
             game = this;
             batch = new SpriteBatch(GraphicsDevice);
             Window.ClientSizeChanged += Window_ClientSizeChanged;
 
-            EventInput.Initialize(Window);
+            if (!EventInput.IsInitialized)
+                EventInput.Initialize(Window);
 
             Chat.LoadFonts(Content);
             client = new Client();

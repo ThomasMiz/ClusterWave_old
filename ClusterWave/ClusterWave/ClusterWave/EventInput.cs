@@ -118,6 +118,7 @@ namespace ClusterWave
         delegate IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         static bool initialized;
+        public static bool IsInitialized { get { return initialized; } }
         static IntPtr prevWndProc;
         static WndProc hookProcDelegate;
         static IntPtr hIMC;
