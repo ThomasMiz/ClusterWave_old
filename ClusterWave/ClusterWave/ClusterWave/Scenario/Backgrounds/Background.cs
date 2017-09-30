@@ -18,7 +18,8 @@ namespace ClusterWave.Scenario.Backgrounds
         public abstract Effect RayLightFx { get; }
 
         public abstract void Update();
-        public abstract void Draw(SpriteBatch batch, GraphicsDevice device);
+        public abstract void Draw(GraphicsDevice device, SpriteBatch batch);
+        public abstract void PreDraw(GraphicsDevice device, SpriteBatch batch);
         public abstract void Resize();
         public virtual void Dispose() { }
     }

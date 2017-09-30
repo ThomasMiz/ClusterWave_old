@@ -130,11 +130,11 @@ namespace ClusterWave
         {
             if (ScreenWidth != Window.ClientBounds.Width || ScreenHeight != Window.ClientBounds.Height)
             {
-                ScreenWidth = Window.ClientBounds.Width;
+                ScreenWidth = Math.Max(Window.ClientBounds.Width, 1);
                 ScreenHeight = Math.Max(Window.ClientBounds.Height, 1);
                 
                 int chatHeight = Math.Min(ScreenHeight * 3 / 4, 900);
-                client.chat.SetBounds(new Rectangle(10, ScreenHeight-chatHeight-20, 800, chatHeight));
+                client.chat.SetBounds(new Rectangle(10, ScreenHeight - chatHeight - 20, Math.Min(800, ScreenWidth), chatHeight));
 
                 if (ScreenWidth == 0) ScreenWidth = 1;
                 else if (ScreenWidth > 2048) ScreenWidth = 2048;

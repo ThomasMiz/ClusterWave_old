@@ -137,7 +137,7 @@ namespace ClusterWave.Scenes
 
             if (Game1.ms.LeftButton == ButtonState.Pressed)
             {
-                bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f), 1000));
+                bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f)*0.5f, 1000));
             }
 
 
@@ -152,6 +152,8 @@ namespace ClusterWave.Scenes
         public override void Draw()
         {
             client.chat.PreDraw(GraphicsDevice, batch);
+            bg.PreDraw(GraphicsDevice, batch);
+
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Gray);
             GraphicsDevice.RasterizerState = RasterizerState.CullNone;
@@ -159,7 +161,7 @@ namespace ClusterWave.Scenes
             GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
 
-            bg.Draw(batch, GraphicsDevice);
+            bg.Draw(GraphicsDevice, batch);
 
             float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
             debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
@@ -170,7 +172,7 @@ namespace ClusterWave.Scenes
             shields.DrawShields(GraphicsDevice);
 
             bg.RayLightFx.Parameters["lightPos"].SetValue(mousePos);
-            scenario.DrawLightWalls(GraphicsDevice);
+            //scenario.DrawLightWalls(GraphicsDevice);
 
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);

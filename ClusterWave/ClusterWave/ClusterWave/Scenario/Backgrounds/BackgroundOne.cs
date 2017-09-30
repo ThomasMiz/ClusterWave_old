@@ -32,7 +32,12 @@ namespace ClusterWave.Scenario.Backgrounds
             
         }
 
-        public override void Draw(SpriteBatch batch, GraphicsDevice device)
+        public override void PreDraw(GraphicsDevice device, SpriteBatch batch)
+        {
+            
+        }
+
+        public override void Draw(GraphicsDevice device, SpriteBatch batch)
         {
 
         }

@@ -6,9 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ClusterWave
 {
+    /// <summary>
+    /// Encapsulates a single chat text line, gives it formatting for fonts/colors.
+    /// </summary>
     class ChatLine
     {
-        public const char markStart = '&', markEnd = ';', markBold = 'b', markItalics = 'i', markReset = 'r';
+        public const char markStart = '&', markEnd = ';';
 
         #region StaticShit
 
@@ -222,6 +225,16 @@ namespace ClusterWave
             }
         }
 
+        public void DrawAt(SpriteBatch batch, float y, float alpha)
+        {
+            for (int i = 0; i < text.Length; i++)
+            {
+                Color bc = backColors[i], c = colors[i];
+                batch.DrawString(fonts[i], text[i], new Vector2(positions[i] + 15, y + 15), new Color(bc.R, bc.G, bc.B, (byte)(bc.A * alpha)));
+                batch.DrawString(fonts[i], text[i], new Vector2(positions[i], y), new Color(c.R, c.G, c.B, (byte)(c.A * alpha)));
+            }
+        }
+
         public float MeasureX()
         {
             int ind = text.Length - 1;
@@ -356,7 +369,8 @@ namespace ClusterWave
     class AutisticChatLine
     {
         /// <summary>This name has nothing to do with the fact that this class is named with the word "Autistic".
-        /// I realised it might sound offensive after writting it and realised "special" could be mis-interpreted so</summary>
+        /// I realised it might sound offensive after writting it and realised "special" could be mis-interpreted so...
+        /// xddddd</summary>
         static Color SpecialColor = new Color(196, 196, 196, 128);
 
         List<String> textList;
@@ -603,7 +617,7 @@ namespace ClusterWave
         {
             this.scale = scale;
             if (target != null) target.Dispose();
-            target = new RenderTarget2D(Game1.game.GraphicsDevice, width, (int)(Chat.Webdings.MeasureString("YEAH BUOY 420 M8").Y * scale+0.5f));
+            target = new RenderTarget2D(Game1.game.GraphicsDevice, width, Math.Max(1, (int)(Chat.Webdings.MeasureString("YEAH BUOY 420 M8").Y * scale + 0.5f)));
             mat = Matrix.CreateScale(scale);
         }
     }
