@@ -149,7 +149,7 @@ namespace ClusterWave.Scenes
         public override void Draw()
         {
             GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GraphicsDevice.BlendState = BlendState.NonPremultiplied;
             GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
 
@@ -162,8 +162,6 @@ namespace ClusterWave.Scenes
             bg.Draw(GraphicsDevice, batch);
 
             float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
-            //debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
-
 
             particles.DrawParticles(batch, GraphicsDevice);
             bullets.DrawBullets(batch, GraphicsDevice);
@@ -176,6 +174,9 @@ namespace ClusterWave.Scenes
             scenario.DrawShapeLines(GraphicsDevice);
 
             client.chat.Draw(batch);
+
+            debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
+            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
         }
 
         public override void OnResize()

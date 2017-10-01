@@ -109,12 +109,10 @@ namespace ClusterWave
         {
             scene.Draw();
 
-            batch.Begin();
+            //batch.Begin();
             //batch.DrawString(font, (((int)(100.0 / gameTime.ElapsedGameTime.TotalSeconds)) / 100.0).ToString(), Vector2.Zero, Color.Black);
-            batch.End();
+            //batch.End();
 
-            //chat.Draw(batch);
-            GraphicsDevice.SetRenderTarget(null);
             base.Draw(gameTime);
         }
 
