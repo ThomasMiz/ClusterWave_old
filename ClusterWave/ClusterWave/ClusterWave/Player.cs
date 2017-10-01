@@ -13,9 +13,12 @@ namespace ClusterWave
         public Texture2D Texture { get { return texture; } }
         public String Name { get { return name; } set { name = value; } }
 
-        public Player()
-        {
+        public int id { get { return id; } set { id = value; } }
 
+        public Player(string name, int id)
+        {
+            this.id = id;
+            this.name = name;
         }
     }
 }
