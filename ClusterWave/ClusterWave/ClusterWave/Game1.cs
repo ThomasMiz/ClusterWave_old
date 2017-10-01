@@ -41,7 +41,6 @@ namespace ClusterWave
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false };
-            
             Content.RootDirectory = "Content";
         }
 
