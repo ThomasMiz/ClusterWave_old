@@ -148,15 +148,16 @@ namespace ClusterWave.Scenes
 
         public override void Draw()
         {
+            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            GraphicsDevice.DepthStencilState = DepthStencilState.None;
+
             client.chat.PreDraw(GraphicsDevice, batch);
             bg.PreDraw(GraphicsDevice, batch);
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Gray);
-            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-            GraphicsDevice.DepthStencilState = DepthStencilState.None;
 
             bg.Draw(GraphicsDevice, batch);
 
@@ -169,7 +170,7 @@ namespace ClusterWave.Scenes
             shields.DrawShields(GraphicsDevice);
 
             bg.RayLightFx.Parameters["lightPos"].SetValue(mousePos);
-            //scenario.DrawLightWalls(GraphicsDevice);
+            scenario.DrawLightWalls(GraphicsDevice);
 
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);

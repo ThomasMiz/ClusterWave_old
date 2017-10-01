@@ -39,7 +39,6 @@ float4 PixelShaderFunction(PixelShaderInput input) : COLOR0
 
 	for (int i = 0; i < 5; i++){
 		float dis = 1.5 * distance(fp, points[i]);
-		//if (dis < 50) return float4(0, 0, 0, 1);
 		float wav = sin(dis * 0.1 + time) * 0.5 + 0.5;
 		coords.xy += wav * 100.0 * sin(dis * 0.1 + time * 2.5);
 	}

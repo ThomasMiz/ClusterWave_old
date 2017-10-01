@@ -31,20 +31,22 @@ namespace ClusterWave.Scenario.Backgrounds
 
             worldParameter.SetValue(Matrix.Identity);
             viewParameter.SetValue(Matrix.Identity);
-            projParameter.SetValue(Matrix.Identity);
+            projParameter.SetValue(Matrix.CreateOrthographicOffCenter(-1, 1, 1, -1, 0f, 10f));
             BackgroundFx.Parameters["colors"].SetValue(BackgroundTexture);
         }
 
         VertexBuffer buffer;
+        RenderTarget2D target;
+        float resolutionMultiply = 1;
 
         public BackgroundOne()
         {
             buffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionColorTexture), 4, BufferUsage.WriteOnly);
             buffer.SetData(new VertexPositionColorTexture[]{
-                new VertexPositionColorTexture(new Vector3(-1, -1, 0), new Color(255, 0, 0), new Vector2(0, 1)),
-                new VertexPositionColorTexture(new Vector3(1, -1, 0), new Color(0, 255, 0), new Vector2(1, 1)),
-                new VertexPositionColorTexture(new Vector3(-1, 1, 0), new Color(0, 0, 255), new Vector2(0, 0)),
-                new VertexPositionColorTexture(new Vector3(1, 1, 0), new Color(255, 255, 255), new Vector2(1, 0)),
+                new VertexPositionColorTexture(new Vector3(-1, -1, -1), new Color(255, 0, 0), new Vector2(0, 1)),
+                new VertexPositionColorTexture(new Vector3(1, -1, -1), new Color(0, 255, 0), new Vector2(1, 1)),
+                new VertexPositionColorTexture(new Vector3(-1, 1, -1), new Color(0, 0, 255), new Vector2(0, 0)),
+                new VertexPositionColorTexture(new Vector3(1, 1, -1), new Color(255, 255, 255), new Vector2(1, 0)),
             });
         }
 
@@ -55,16 +57,13 @@ namespace ClusterWave.Scenario.Backgrounds
 
         public override void Update()
         {
-            
+            resolutionMultiply = ((float)Math.Sin(Game1.Time) * 0.5f + 0.5f) * 0.6f + 0.2f;
         }
 
         public override void PreDraw(GraphicsDevice device, SpriteBatch batch)
         {
-            
-        }
-
-        public override void Draw(GraphicsDevice device, SpriteBatch batch)
-        {
+            device.SetRenderTarget(target);
+            device.Clear(Color.White);
             float time = Game1.Time;
             timeParameter.SetValue(time);
             time *= 0.2f;
@@ -77,22 +76,32 @@ namespace ClusterWave.Scenario.Backgrounds
                 new Vector2((float)Math.Sin(time*1.174+4.0)*hw+hw, (float)Math.Sin(time*0.817+8.0)*hh+hh),
             };
             pointsParameter.SetValue(values);
+            worldParameter.SetValue(Matrix.CreateTranslation(1, 1, 0) * Matrix.CreateScale(resolutionMultiply) * Matrix.CreateTranslation(-1, -1, 0));
 
             BackgroundFx.CurrentTechnique.Passes[0].Apply();
             device.SetVertexBuffer(buffer);
-            device.RasterizerState = RasterizerState.CullNone;
             device.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
+        }
 
+        public override void Draw(GraphicsDevice device, SpriteBatch batch)
+        {
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
+            batch.Draw(target, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f/resolutionMultiply, SpriteEffects.None, 0f);
+            batch.End();
         }
 
         public override void Resize()
         {
             sizeParameter.SetValue(new Vector2(Game1.ScreenWidth, Game1.ScreenHeight));
+            if (target != null)
+                target.Dispose();
+            target = new RenderTarget2D(Game1.game.GraphicsDevice, Game1.ScreenWidth, Game1.ScreenHeight, false, SurfaceFormat.Color, DepthFormat.None);
         }
 
         public override void Dispose()
         {
             buffer.Dispose();
+            target.Dispose();
         }
     }
 }
