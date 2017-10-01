@@ -13,14 +13,14 @@ namespace ClusterWave.Scenario
         protected Body body;
         protected float rotation;
 
-        Player player;
-        Texture2D texture;
-        Vector2 origin;
-        float scale;
-
+        protected Player player;
+        private Texture2D texture;
+        private Vector2 origin;
+        private float scale;
 
         public PlayerController(Vector2 position, World world, Player player)
         {
+            texture = player.Texture;
             rotation = 0;
             this.player = player;
             body = new Body(world, position, 0f, null);
