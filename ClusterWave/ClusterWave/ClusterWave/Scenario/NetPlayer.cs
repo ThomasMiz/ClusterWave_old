@@ -7,8 +7,8 @@ namespace ClusterWave.Scenario
 {
     class NetPlayer : PlayerController
     {
-        public NetPlayer(Vector2 position, World world, Texture2D texture)
-            : base(position, world, texture)
+        public NetPlayer(Vector2 position, World world, Player player)
+            : base(position, world, player)
         {
 
         }

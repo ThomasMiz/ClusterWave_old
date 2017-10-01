@@ -7,8 +7,8 @@ namespace ClusterWave.Scenario
 {
     class LocalPlayer : PlayerController
     {
-        public LocalPlayer(Vector2 position, World world, Texture2D texture)
-            : base(position, world, texture)
+        public LocalPlayer(Vector2 position, World world, Player player)
+            : base(position, world, player)
         {
 
         }

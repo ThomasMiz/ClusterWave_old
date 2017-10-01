@@ -257,7 +257,7 @@ namespace ClusterWave
                 {
                     case 13: //enter character
                         #region Enter
-                        if (typingText.Length != 0)
+                        if (showTyping.ChatLineLength() != 0)
                         {
                             String s = typingText.ToString();
                             if (OnLineEntered != null)

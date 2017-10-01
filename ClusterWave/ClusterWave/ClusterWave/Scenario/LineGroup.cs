@@ -42,8 +42,8 @@ namespace ClusterWave.Scenario
             }
             f.CollisionCategories = Constants.WallsCategory;
             f.CollidesWith = Constants.WallsCollideWith;
-            f.Friction = Friction;
-            f.Restitution = Restitution;
+            f.Friction = Constants.WallsFriction;
+            f.Restitution = Constants.WallsRestitution;
         }
     }
 }

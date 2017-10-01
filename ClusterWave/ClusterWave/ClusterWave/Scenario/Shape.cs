@@ -8,7 +8,6 @@ namespace ClusterWave.Scenario
     abstract class Shape : IDisposable
     {
         protected const float LightWallZ = 1;
-        public const float Restitution = 0, Friction = 1;
 
         protected VertexBuffer lineBuffer, lightBuffer;
         protected int linePrimitiveCount, lightPrimitiveCount;

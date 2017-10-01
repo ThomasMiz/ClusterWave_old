@@ -123,8 +123,8 @@ namespace ClusterWave.Scenario
             staticBody.BodyType = BodyType.Static;
             staticBody.CollisionCategories = Constants.WallsCategory;
             staticBody.CollidesWith = Category.All;
-            staticBody.Friction = Shape.Friction;
-            staticBody.Restitution = Shape.Restitution;
+            staticBody.Friction = Constants.WallsFriction;
+            staticBody.Restitution = Constants.WallsRestitution;
             AddRectangle(Vector2.Zero, new Vector2(_width, _height));
         }
 

@@ -120,7 +120,7 @@ namespace ClusterWave.Scenes
             mousePos.Y = (Game1.ms.Y - Game1.HalfScreenHeight) * scenario.ScreenToSizeRatio + scenario.HalfHeight;
 
             #region Weeeee Colorful Physics Particles
-            if (Game1.ms.LeftButton == ButtonState.Pressed && Game1.oldms.LeftButton == ButtonState.Released && Game1.ms.X > 0 && Game1.ms.X < Game1.ScreenWidth && Game1.ms.Y > 0 && Game1.ms.Y < Game1.ScreenHeight)
+            /*if (Game1.ms.LeftButton == ButtonState.Pressed && Game1.oldms.LeftButton == ButtonState.Released && Game1.ms.X > 0 && Game1.ms.X < Game1.ScreenWidth && Game1.ms.Y > 0 && Game1.ms.Y < Game1.ScreenHeight)
             {
                 System.Collections.Generic.List<Vector2> ekidelol = new System.Collections.Generic.List<Vector2>(60);
                 for (int i = 0; i < 30; i++)
@@ -132,10 +132,10 @@ namespace ClusterWave.Scenes
 
                 particles.Add(new TrianglePhysicsParticle(ekidelol.ToArray(), scenario.PhysicsWorld, mousePos));
                 
-            }
+            }*/
             #endregion
 
-            //if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f)*0.5f, 1000));
+            if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f)*0.5f, 1000));
 
 
             bullets.UpdateBullets();

@@ -105,7 +105,6 @@
     <Compile Include="Scenario\NetPlayer.cs" />
     <Compile Include="Scenario\PlayerController.cs" />
     <Compile Include="Scenario\Polygon.cs" />
-    <Compile Include="Scenario\PolyTexture.cs" />
     <Compile Include="Scenario\Rectangle.cs" />
     <Compile Include="Scenario\Scenario.cs" />
     <Compile Include="Scenario\Shape.cs" />
@@ -113,7 +112,7 @@
     <Compile Include="Scenes\ScenarioLoadingScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Scenes\Windows95.cs" />
-    <Compile Include="Stuff.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\Drawables\DrawMethod.cs" />
     <Compile Include="UI\Drawables\DrawSingleColor.cs" />

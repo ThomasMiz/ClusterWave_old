@@ -61,42 +61,28 @@ namespace ClusterWave.Scenario
             #region FillBuffer
             for (int c = 0; c < vert.Count; c++)
             {
+                Vertices currentVertices = vert[c];
                 #region Physics
-                Fixture f = physicsBody.CreateFixture(new PolygonShape(vert[c], 1f));
+                Fixture f = physicsBody.CreateFixture(new PolygonShape(currentVertices, 1f));
                 f.CollisionCategories = Constants.WallsCategory;
                 f.CollidesWith = Constants.WallsCollideWith;
-                f.Friction = Friction;
-                f.Restitution = Restitution;
+                f.Friction = Constants.WallsFriction;
+                f.Restitution = Constants.WallsRestitution;
                 #endregion
 
-                //Calculates the centroid of the convex polygon (polygons are split into convex)
-                //and makes a polygon fan to cover it's area
+                VertexPositionColorTexture z = new VertexPositionColorTexture(new Vector3(currentVertices[0], 0), Color.White, Vector2.Zero);
 
-                Vector2 centroid = Vector2.Zero;
-                for (int a = 0; a < vert[c].Count; a++)
-                    centroid += vert[c][a];
-                centroid /= vert[c].Count;
-
-                List<Vector3> l = new List<Vector3>(vert[c].Count);
-                for (int a = 0; a < vert[c].Count; a++)
+                for (int a = 0; a < currentVertices.Count - 1;)
                 {
-                    Vector2 p = vert[c][a];
-                    l.Add(new Vector3(p, (float)Math.Atan2(p.X - centroid.X, p.Y - centroid.Y)));
-                }
-                l.Sort((x, y) => x.Z.CompareTo(y.Z));
-
-                VertexPositionColorTexture centVert = new VertexPositionColorTexture(new Vector3(centroid, 0), Color.White, Vector2.Zero);
-                for (int a = 0; a < l.Count - 1;)
-                {
-                    fillList.Add(centVert);
-                    fillList.Add(new VertexPositionColorTexture(new Vector3(l[a].X, l[a].Y, 0), Color.White, Vector2.Zero));
+                    fillList.Add(z);
+                    fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[a].X, currentVertices[a].Y, 0), Color.White, Vector2.Zero));
                     a++;
-                    fillList.Add(new VertexPositionColorTexture(new Vector3(l[a].X, l[a].Y, 0), Color.White, Vector2.Zero));
+                    fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[a].X, currentVertices[a].Y, 0), Color.White, Vector2.Zero));
                 }
-                int lesscount = l.Count-1;
-                fillList.Add(centVert);
-                fillList.Add(new VertexPositionColorTexture(new Vector3(l[lesscount].X, l[lesscount].Y, 0), Color.White, Vector2.Zero));
-                fillList.Add(new VertexPositionColorTexture(new Vector3(l[0].X, l[0].Y, 0), Color.White, Vector2.Zero));
+                int lesscount = currentVertices.Count-1;
+                fillList.Add(z);
+                fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[lesscount].X, currentVertices[lesscount].Y, 0), Color.White, Vector2.Zero));
+                fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[0].X, currentVertices[0].Y, 0), Color.White, Vector2.Zero));
             }
 
             fillBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionColorTexture), fillList.Count, BufferUsage.WriteOnly);

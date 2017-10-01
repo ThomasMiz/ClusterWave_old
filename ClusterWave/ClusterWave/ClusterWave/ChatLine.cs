@@ -376,6 +376,7 @@ namespace ClusterWave
         List<String> textList;
         List<Color> colorList, backColors;
         List<SpriteFont> fontList;
+        List<bool> isSpecial;
 
         RenderTarget2D target;
         float scale, width;
@@ -389,6 +390,7 @@ namespace ClusterWave
             colorList = new List<Color>(16);
             backColors = new List<Color>(16);
             fontList = new List<SpriteFont>(16);
+            isSpecial = new List<bool>(16);
         }
         ~AutisticChatLine()
         {
@@ -420,12 +422,14 @@ namespace ClusterWave
                             currentText.Clear();
                             colorList.Add(lastColor);
                             fontList.Add(lastFont);
+                            isSpecial.Add(false);
 
                             lastColor = ChatLine.AllColors[res];
 
                             colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                             fontList.Add(Chat.Italic);
                             textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                            isSpecial.Add(true);
                         }
                         else if (thing.Equals("n") || thing.Equals("normal"))
                         {
@@ -433,12 +437,14 @@ namespace ClusterWave
                             currentText.Clear();
                             colorList.Add(lastColor);
                             fontList.Add(lastFont);
+                            isSpecial.Add(false);
 
                             lastFont = Chat.Normal;
 
                             colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                             fontList.Add(Chat.Italic);
                             textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                            isSpecial.Add(true);
                         }
                         else if (thing.Equals("b") || thing.Equals("bold"))
                         {
@@ -446,12 +452,14 @@ namespace ClusterWave
                             currentText.Clear();
                             colorList.Add(lastColor);
                             fontList.Add(lastFont);
+                            isSpecial.Add(false);
 
                             lastFont = Chat.Bold;
 
                             colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                             fontList.Add(Chat.Italic);
                             textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                            isSpecial.Add(true);
                         }
                         else if (thing.Equals("i") || thing.Equals("italics"))
                         {
@@ -459,12 +467,14 @@ namespace ClusterWave
                             currentText.Clear();
                             colorList.Add(lastColor);
                             fontList.Add(lastFont);
+                            isSpecial.Add(false);
 
                             lastFont = Chat.Italic;
 
                             colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                             fontList.Add(Chat.Italic);
                             textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                            isSpecial.Add(true);
                         }
                         else if (thing.Equals("w") || thing.Equals("webdings"))
                         {
@@ -472,12 +482,14 @@ namespace ClusterWave
                             currentText.Clear();
                             colorList.Add(lastColor);
                             fontList.Add(lastFont);
+                            isSpecial.Add(false);
 
                             lastFont = Chat.Webdings;
 
                             colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                             fontList.Add(Chat.Italic);
                             textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                            isSpecial.Add(true);
                         }
                         else if (thing.Equals("r") || thing.Equals("reset"))
                         {
@@ -485,6 +497,7 @@ namespace ClusterWave
                             currentText.Clear();
                             colorList.Add(lastColor);
                             fontList.Add(lastFont);
+                            isSpecial.Add(false);
 
                             lastColor = ChatLine.DefaultColor;
                             lastFont = Chat.Normal;
@@ -492,6 +505,7 @@ namespace ClusterWave
                             colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                             fontList.Add(Chat.Italic);
                             textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                            isSpecial.Add(true);
                         }
                         else
                         {
@@ -502,12 +516,14 @@ namespace ClusterWave
                                 currentText.Clear();
                                 colorList.Add(lastColor);
                                 fontList.Add(lastFont);
+                                isSpecial.Add(false);
 
                                 lastColor = c;
 
                                 colorList.Add(Color.Lerp(SpecialColor, lastColor, 0.5f));
                                 fontList.Add(Chat.Italic);
                                 textList.Add(String.Concat(ChatLine.markStart, beforeLower, ChatLine.markEnd));
+                                isSpecial.Add(true);
                             }
                             else
                             {
@@ -534,6 +550,7 @@ namespace ClusterWave
             textList.Add(currentText.ToString());
             colorList.Add(lastColor);
             fontList.Add(lastFont);
+            isSpecial.Add(false);
 
             backColors.Clear();
             for (int i = 0; i < colorList.Count; i++)
@@ -554,6 +571,7 @@ namespace ClusterWave
             textList.Clear();
             colorList.Clear();
             fontList.Clear();
+            isSpecial.Clear();
             width = 0;
         }
 
@@ -611,6 +629,15 @@ namespace ClusterWave
             for (int i = 0; i < textList.Count; i++)
                 val += fontList[i].MeasureString(textList[i]).X;
             return val;
+        }
+
+        public int ChatLineLength()
+        {
+            int ret = 0;
+            for (int i = 0; i < textList.Count; i++)
+                if (!isSpecial[i])
+                    ret += textList[i].Length;
+            return ret;
         }
 
         public void OnResize(int width, float scale)

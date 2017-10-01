@@ -8,25 +8,26 @@ namespace ClusterWave.Scenario
 {
     abstract class PlayerController
     {
-        const float PlayerSize = 0.2f;
+        const float PlayerSize = 0.2f, PlayerColliderSize = PlayerSize * 0.75f;
 
         protected Body body;
         protected float rotation;
 
+        Player player;
         Texture2D texture;
         Vector2 origin;
         float scale;
 
 
-        public PlayerController(Vector2 position, World world, Texture2D texture)
+        public PlayerController(Vector2 position, World world, Player player)
         {
             rotation = 0;
-            this.texture = texture;
+            this.player = player;
             body = new Body(world, position, 0f, null);
-            body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(0.2f, 1f), null);
+            body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(PlayerColliderSize, 1f), null);
             body.BodyType = BodyType.Dynamic;
             body.FixedRotation = true;
-            body.Friction = 0;
+            body.Friction = 0.5f;
             body.Restitution = 0;
             body.CollidesWith = Constants.PlayersCollideWith;
             body.CollisionCategories = Constants.PlayerCategory;
