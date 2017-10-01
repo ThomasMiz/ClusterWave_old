@@ -109,10 +109,10 @@ namespace ClusterWaveServer.Network
                     case NetIncomingMessageType.StatusChanged:
                         #region StatusChange
                         index = incomingMsg.ReadByte();
-                        switch (index)
+                        switch (incomingMsg.SenderConnection.Status)
                         {
-                            case 4:
-                                Console.WriteLine("COSA");
+                            case NetConnectionStatus.Connected:
+                                Console.WriteLine("Connection started");
                                 break;
                         }
                         #endregion
@@ -155,11 +155,16 @@ namespace ClusterWaveServer.Network
                         ConnectionToId.Add(msg.SenderConnection, i);
                         players[i] = new PlayerInfo(name,i);
                         Console.WriteLine("Player : " + name + " connected with ID : " + i);
+                        NetOutgoingMessage outMsg = server.CreateMessage();
+                        outMsg.Write(MsgIndex.assignId);
+                        outMsg.Write((byte)i);
+                        server.SendMessage(outMsg, msg.SenderConnection, NetDeliveryMethod.ReliableUnordered);
+                        connectedPlayers += 1;
                         break;
                     }
                 }
             }
-
+            Console.WriteLine("This brings the total connected player to : " + connectedPlayers + "/" + maximumCapacity);
         }
 
         void SendChatMessage(String message)
