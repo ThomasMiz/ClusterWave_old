@@ -32,12 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FarseerPhysics XNA">
-      <HintPath>..\..\..\..\Projects\ClusterWave_lib\FarseerPhysics XNA.dll</HintPath>
+    <Reference Include="FarseerPhysics XNA, Version=3.5.0.27755, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ClusterWave_lib\FarseerPhysics XNA.dll</HintPath>
     </Reference>
     <Reference Include="Lidgren.Network, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Projects\ClusterWave_lib\Lidgren.Network.dll</HintPath>
+      <HintPath>..\..\ClusterWave_lib\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
