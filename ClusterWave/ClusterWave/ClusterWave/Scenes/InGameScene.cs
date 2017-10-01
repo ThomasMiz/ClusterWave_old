@@ -38,6 +38,8 @@ namespace ClusterWave.Scenes
         BulletList bullets;
 
         Client client;
+        LocalPlayer localPlayer;
+        NetPlayer[] netPlayers;
 
         /// <summary>Debug Renderer for Farseer Physics</summary>
         DebugViewXNA debug;
@@ -114,8 +116,6 @@ namespace ClusterWave.Scenes
 
         public override void Update()
         {
-            //client.Update();
-            //game.SetScene(new Windows95());
             mousePos.X = (Game1.ms.X - Game1.HalfScreenWidth) * scenario.ScreenToSizeRatio + scenario.HalfWidth;
             mousePos.Y = (Game1.ms.Y - Game1.HalfScreenHeight) * scenario.ScreenToSizeRatio + scenario.HalfHeight;
 
