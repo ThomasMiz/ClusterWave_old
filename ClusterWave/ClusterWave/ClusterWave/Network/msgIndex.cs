@@ -15,6 +15,7 @@ namespace ClusterWave.Network
         public const byte playerMove = 4;
         public const byte playerAct = 5;
         public const byte scenarioRecieve = 6;
+        public const byte assignId = 7;
 
         public class subIndex
         {

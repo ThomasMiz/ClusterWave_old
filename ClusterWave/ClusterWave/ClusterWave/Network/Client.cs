@@ -79,6 +79,11 @@ namespace ClusterWave.Network
                         incomingMsg.ReadByte();
                         chat.Add(incomingMsg.ReadString());
                     }
+                    else if (index == MsgIndex.assignId)
+                    {
+                        incomingMsg.ReadByte();
+                        clientPlayer.Id = incomingMsg.ReadByte();
+                    }
                     else if (OnPacket != null)
                         OnPacket(incomingMsg);
                     #endregion
