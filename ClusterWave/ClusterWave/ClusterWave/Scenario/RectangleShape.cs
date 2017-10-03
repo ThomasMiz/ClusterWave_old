@@ -7,11 +7,11 @@ using FarseerPhysics.Common;
 
 namespace ClusterWave.Scenario
 {
-    class Rectangle : Shape
+    class RectangleShape : Shape
     {
         public const byte Type = 2;
 
-        public Rectangle(Vector2 topLeft, Vector2 size, Body physicsBody)
+        public RectangleShape(Vector2 topLeft, Vector2 size, Body physicsBody)
         {
             linePrimitiveCount = 4;
             lightPrimitiveCount = 8;

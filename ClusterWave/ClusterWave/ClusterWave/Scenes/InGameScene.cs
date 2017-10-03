@@ -23,8 +23,8 @@ namespace ClusterWave.Scenes
         /// <summary>Loads shaders, textures, etc. Call once when the program is opened</summary>
         public static void Load(ContentManager Content)
         {
-            colorFx = Content.Load<Effect>("ColorFx");
-            colors = Content.Load<Texture2D>("colors");
+            colorFx = Content.Load<Effect>("Scenario/ColorFx");
+            colors = Content.Load<Texture2D>("Scenario/colors");
 
             colorFx.Parameters["colors"].SetValue(colors);
         }
@@ -80,6 +80,7 @@ namespace ClusterWave.Scenes
             Shield.shieldFx.Parameters["View"].SetValue(view);
             bg.ShapeLineFx.Parameters["size"].SetValue(new Vector2(scenario.Width, scenario.Height));
             colorFx.Parameters[1].SetValue(view);
+            bg.ScenarioSizeParameter.SetValue(new Vector2(scenario.Width, scenario.Height));
 
             debug = new DebugViewXNA(scenario.PhysicsWorld);
             debug.LoadContent(GraphicsDevice, game.Content);
@@ -92,7 +93,6 @@ namespace ClusterWave.Scenes
         public InGameScene(Client client, Scenario.Scenario scenario)
         {
             this.client = client;
-
             this.scenario = scenario;
 
             bg = scenario.BackgroundObject;
@@ -109,6 +109,7 @@ namespace ClusterWave.Scenes
             Shield.shieldFx.Parameters["View"].SetValue(view);
             bg.ShapeLineFx.Parameters["size"].SetValue(new Vector2(scenario.Width, scenario.Height));
             colorFx.Parameters[1].SetValue(view);
+            bg.ScenarioSizeParameter.SetValue(new Vector2(scenario.Width, scenario.Height));
 
             debug = new DebugViewXNA(scenario.PhysicsWorld);
             debug.LoadContent(GraphicsDevice, game.Content);
@@ -167,7 +168,9 @@ namespace ClusterWave.Scenes
             bullets.DrawBullets(batch, GraphicsDevice);
             shields.DrawShields(GraphicsDevice);
 
-            bg.RayLightFx.Parameters["lightPos"].SetValue(mousePos);
+            bg.LightPosParameter.SetValue(mousePos);
+            bg.RayTimeParameter.SetValue(Game1.Time);
+
             scenario.DrawLightWalls(GraphicsDevice);
 
             scenario.DrawShapeFill(GraphicsDevice);

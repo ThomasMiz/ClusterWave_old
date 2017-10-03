@@ -36,7 +36,7 @@ float4 PixelShaderFunction(PixelShaderInput input) : COLOR0
 {
 	float2 coords = input.Coords * size;
 	float2 fp = coords;
-
+	
 	for (int i = 0; i < 5; i++){
 		float dis = 1.5 * distance(fp, points[i]);
 		float wav = sin(dis * 0.1 + time) * 0.5 + 0.5;

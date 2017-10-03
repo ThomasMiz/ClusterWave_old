@@ -13,12 +13,16 @@ namespace ClusterWave.Scenario.Backgrounds
         public static Texture2D BackgroundTexture;
         public static Effect BackgroundFx;
         private static EffectParameter worldParameter, viewParameter, projParameter, timeParameter, sizeParameter, pointsParameter;
+        public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam;
         public static void Load1(ContentManager Content)
         {
             shapeTexture = Content.Load<Texture2D>("Scenario/Backgrounds/1/shape");
             RayFx = Content.Load<Effect>("Scenario/Backgrounds/1/ray");
             LinesFx = Content.Load<Effect>("Scenario/Backgrounds/1/lines");
             TextureFx = Content.Load<Effect>("Scenario/Backgrounds/1/texturizer");
+
+            lightPosParam = RayFx.Parameters["lightPos"];
+            scenarioSizeParam = RayFx.Parameters["size"];
 
             BackgroundTexture = Content.Load<Texture2D>("Scenario/Backgrounds/1/texture");
             BackgroundFx = Content.Load<Effect>("Scenario/Backgrounds/1/bgFx");
@@ -28,6 +32,7 @@ namespace ClusterWave.Scenario.Backgrounds
             timeParameter = BackgroundFx.Parameters["time"];
             sizeParameter = BackgroundFx.Parameters["size"];
             pointsParameter = BackgroundFx.Parameters["points"];
+            rayTimeParam = RayFx.Parameters["time"];
 
             worldParameter.SetValue(Matrix.Identity);
             viewParameter.SetValue(Matrix.Identity);
@@ -54,6 +59,9 @@ namespace ClusterWave.Scenario.Backgrounds
         public override Effect ShapeFillFx { get { return TextureFx; } }
         public override Effect ShapeLineFx { get { return LinesFx; } }
         public override Effect RayLightFx { get { return RayFx; } }
+        public override EffectParameter LightPosParameter { get { return lightPosParam; } }
+        public override EffectParameter ScenarioSizeParameter { get { return scenarioSizeParam; } }
+        public override EffectParameter RayTimeParameter { get { return rayTimeParam; } }
 
         public override void Update()
         {

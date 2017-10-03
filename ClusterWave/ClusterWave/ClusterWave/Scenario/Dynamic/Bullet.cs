@@ -15,7 +15,7 @@ namespace ClusterWave.Scenario.Dynamic
         public static Texture2D texture;
         public static void Load(ContentManager Content)
         {
-            texture = Content.Load<Texture2D>("bullet");
+            texture = Content.Load<Texture2D>("Scenario/Bullet/texture");
         }
 
         private LinkedList<Bullet> list;

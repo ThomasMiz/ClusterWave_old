@@ -97,6 +97,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Scenario\Backgrounds\Background.cs" />
     <Compile Include="Scenario\Backgrounds\BackgroundOne.cs" />
+    <Compile Include="Scenario\Backgrounds\BackgroundTwo.cs" />
     <Compile Include="Scenario\Dynamic\Bullet.cs" />
     <Compile Include="Scenario\Dynamic\BulletList.cs" />
     <Compile Include="Scenario\Dynamic\Shield.cs" />
@@ -106,7 +107,7 @@
     <Compile Include="Scenario\NetPlayer.cs" />
     <Compile Include="Scenario\PlayerController.cs" />
     <Compile Include="Scenario\Polygon.cs" />
-    <Compile Include="Scenario\Rectangle.cs" />
+    <Compile Include="Scenario\RectangleShape.cs" />
     <Compile Include="Scenario\Scenario.cs" />
     <Compile Include="Scenario\Shape.cs" />
     <Compile Include="Scenes\InGameScene.cs" />

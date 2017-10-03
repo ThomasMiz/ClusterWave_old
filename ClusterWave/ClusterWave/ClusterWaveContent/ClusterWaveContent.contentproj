@@ -57,35 +57,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bullet.png">
-      <Name>bullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="ColorFx.fx">
+    <Compile Include="Scenario\ColorFx.fx">
       <Name>ColorFx</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
-    <Compile Include="colors.png">
+    <Compile Include="Scenario\colors.png">
       <Name>colors</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="RayLight.fx">
-      <Name>RayLight</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-    <Compile Include="ScenarioFx.fx">
-      <Name>ScenarioFx</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-    <Compile Include="ScenarioTexture.fx">
-      <Name>ScenarioTexture</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
     </Compile>
     <Compile Include="Scenario\Backgrounds\1\lines.fx">
       <Name>lines</Name>
@@ -117,11 +97,6 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
-    <Compile Include="walltest.png">
-      <Name>walltest</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scenario\Backgrounds\1\bgFx.fx">
@@ -140,6 +115,13 @@
   <ItemGroup>
     <Compile Include="Player\player.png">
       <Name>player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Scenario\Bullet\texture.png">
+      <Name>texture</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -24,6 +24,7 @@ namespace ClusterWave.Scenario
         Vector2[] players;
         String name;
         bool done;
+        Rectangle screenBounds;
 
         Background background;
 
@@ -41,7 +42,7 @@ namespace ClusterWave.Scenario
         public byte BackgroundType { get { return backgroundType; } }
         /// <summary>Gets the maximum amount of players the scenario supports</summary>
         public int PlayerCount { get { return players.Length; } }
-        /// <summary>Gets the player's positions</summary>
+        /// <summary>Gets the player's positions on locally loaded scenarios.</summary>
         /// <remarks>This will only work on local-loaded scenarios, NO NETWORK!!!</remarks>
         public Vector2[] PlayersPos { get { return players; } }
         /// <summary>Gets the scale ratio the projection should use, also used for calculating the mouse's position.</summary>
@@ -50,6 +51,8 @@ namespace ClusterWave.Scenario
         public String Name { get { return name; } }
         /// <summary>Returns the Scenario.Backgrounds.Background object</summary>
         public Background BackgroundObject { get { return background; } }
+
+        public Rectangle ScreenBounds { get { return screenBounds; } }
 
         public bool DoneLoading { get { return done; } }
 
@@ -87,7 +90,7 @@ namespace ClusterWave.Scenario
                     case Polygon.Type:
                         AddPolygon(stream.ReadVector2Array());
                         break;
-                    case Rectangle.Type:
+                    case RectangleShape.Type:
                         AddRectangle(stream.ReadVector2(), stream.ReadVector2());
                         break;
                 }
@@ -194,7 +197,7 @@ namespace ClusterWave.Scenario
             shapes.Add(new Polygon(vertices, staticBody, background.ShapeTexture));
         }
         private void AddLinegroup(Vector2[] vertices) { shapes.Add(new LineGroup(vertices, staticBody)); }
-        private void AddRectangle(Vector2 pos, Vector2 size) { shapes.Add(new Rectangle(pos, size, staticBody)); }
+        private void AddRectangle(Vector2 pos, Vector2 size) { shapes.Add(new RectangleShape(pos, size, staticBody)); }
 
         /// <summary>Calles world.Step and advances the physics by Game1.DeltaTime</summary>
         public void PhysicsStep()
@@ -249,6 +252,12 @@ namespace ClusterWave.Scenario
 
             size *= 1.05f;
             screenScale *= 1.05f;
+
+
+            screenBounds.X = (int)(-_halfw / screenScale + Game1.HalfScreenWidth);
+            screenBounds.Y = (int)(-_halfh / screenScale + Game1.HalfScreenHeight);
+            screenBounds.Width = (int)(_width / screenScale);
+            screenBounds.Height = (int)(_height / screenScale);
 
             return Matrix.CreateOrthographic(size.X, -size.Y, 0f, 100f);
         }

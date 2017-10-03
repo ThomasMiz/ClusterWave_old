@@ -10,12 +10,16 @@ namespace ClusterWave.Scenario.Backgrounds
         public static void Load(ContentManager Content)
         {
             BackgroundOne.Load1(Content);
+            BackgroundTwo.Load1(Content);
         }
 
         public abstract Texture2D ShapeTexture { get; }
         public abstract Effect ShapeFillFx { get; }
         public abstract Effect ShapeLineFx { get; }
         public abstract Effect RayLightFx { get; }
+        public abstract EffectParameter LightPosParameter { get; }
+        public abstract EffectParameter ScenarioSizeParameter { get; }
+        public abstract EffectParameter RayTimeParameter { get; }
 
         public abstract void Update();
         public abstract void Draw(GraphicsDevice device, SpriteBatch batch);
