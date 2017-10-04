@@ -11,11 +11,14 @@ namespace ClusterWave.Scenario.Dynamic
 {
     class Bullet
     {
-        public const float Radius = 0.0666f, Friction = 0f, Restitution = 1f;
         public static Texture2D texture;
+        public static Vector2 origin;
+        public static float drawScale;
         public static void Load(ContentManager Content)
         {
             texture = Content.Load<Texture2D>("Scenario/Bullet/texture");
+            origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+            drawScale = Constants.BulletRadius / origin.X;
         }
 
         private LinkedList<Bullet> list;
@@ -42,11 +45,11 @@ namespace ClusterWave.Scenario.Dynamic
             body = new Body(physicsWorld, pos, rot, null);
             body.BodyType = BodyType.Dynamic;
             body.LinearVelocity = movement;
-            Fixture f = body.CreateFixture(new CircleShape(Radius, 0.5f));
-            f.Friction = Friction;
-            f.Restitution = Restitution;
-            body.Friction = Friction;
-            body.Restitution = Restitution;
+            Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity));
+            f.Friction = Constants.BulletFriction;
+            f.Restitution = Constants.BulletRestitution;
+            body.Friction = Constants.BulletFriction;
+            body.Restitution = Constants.BulletRestitution;
             body.AngularDamping = 0f;
             body.LinearDamping = 0f;
             body.CollidesWith = Constants.BulletsCollideWith;
@@ -80,9 +83,9 @@ namespace ClusterWave.Scenario.Dynamic
             }
         }
 
-        public void Draw(SpriteBatch batch, GraphicsDevice device)
+        public void Draw(SpriteBatch batch)
         {
-
+            batch.Draw(texture, body.Position, null, Stuff.ColorFromHue(Game1.Time+body.Position.X), body.Rotation, origin, drawScale, SpriteEffects.None, 0f);
         }
 
         public void PacketArrive(Lidgren.Network.NetIncomingMessage msg)

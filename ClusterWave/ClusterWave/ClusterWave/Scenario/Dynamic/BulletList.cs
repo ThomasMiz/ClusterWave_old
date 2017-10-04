@@ -26,12 +26,12 @@ namespace ClusterWave.Scenario.Dynamic
             }
         }
 
-        public void DrawBullets(SpriteBatch batch, GraphicsDevice device)
+        public void DrawBullets(SpriteBatch batch)
         {
             LinkedListNode<Bullet> b = list.First;
             while (b != null)
             {
-                b.Value.Draw(batch, device);
+                b.Value.Draw(batch);
                 b = b.Next;
             }
         }
