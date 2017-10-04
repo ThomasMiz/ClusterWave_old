@@ -8,16 +8,16 @@ namespace ClusterWave
     class Player
     {
         String name;
-        Texture2D texture;
         private int id;
+        private int colorIndex;
 
-        public Texture2D Texture { get { return texture; } }
         public String Name { get { return name; } set { name = value; } }
 
-        public int Id { get { return id; } set { id = value; } }
+        public int Id { get { return id; } set { id = value; } } //set? not very object oriented...
+        public int ColorIndex { get { return colorIndex; } }
 
         public Player()
-        {
+        { //este constructor es un cancer y espero que sea temporal
 
         }
 

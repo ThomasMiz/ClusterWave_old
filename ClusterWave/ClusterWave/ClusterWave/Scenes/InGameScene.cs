@@ -32,6 +32,7 @@ namespace ClusterWave.Scenes
         Scenario.Scenario scenario;
         Vector2 mousePos;
         Background bg;
+        Matrix PlayerDrawMatrix;
 
         ParticleList particles;
         ShieldList shields;
@@ -40,6 +41,9 @@ namespace ClusterWave.Scenes
         Client client;
         LocalPlayer localPlayer;
         NetPlayer[] netPlayers;
+
+        public Scenario.Scenario Scenario { get { return scenario; } }
+        public Client Client { get { return client; } }
 
         /// <summary>Debug Renderer for Farseer Physics</summary>
         DebugViewXNA debug;
@@ -82,6 +86,9 @@ namespace ClusterWave.Scenes
             colorFx.Parameters[1].SetValue(view);
             bg.ScenarioSizeParameter.SetValue(new Vector2(scenario.Width, scenario.Height));
 
+            netPlayers = new NetPlayer[0];
+            localPlayer = new LocalPlayer(scenario.PlayersPos[0], this, null);
+
             debug = new DebugViewXNA(scenario.PhysicsWorld);
             debug.LoadContent(GraphicsDevice, game.Content);
         }
@@ -113,6 +120,9 @@ namespace ClusterWave.Scenes
 
             debug = new DebugViewXNA(scenario.PhysicsWorld);
             debug.LoadContent(GraphicsDevice, game.Content);
+
+            netPlayers = new NetPlayer[0];
+            localPlayer = new LocalPlayer(new Vector2(Game1.Random(scenario.Width), Game1.Random(scenario.Height)), this, null);
         }
 
         public override void Update()
@@ -141,7 +151,16 @@ namespace ClusterWave.Scenes
 
             bullets.UpdateBullets();
 
+            for (int i = 0; i < netPlayers.Length; i++)
+                netPlayers[i].UpdatePrePhysics();
+            localPlayer.UpdatePrePhysics(mousePos);
+
             scenario.PhysicsStep();
+
+            for (int i = 0; i < netPlayers.Length; i++)
+                netPlayers[i].UpdatePostPhysics();
+            localPlayer.UpdatePostPhysics();
+
             bg.Update();
 
             particles.UpdateParticles();
@@ -164,11 +183,17 @@ namespace ClusterWave.Scenes
 
             float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
 
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, PlayerDrawMatrix);
+            localPlayer.Draw(batch);
+            for (int i = 0; i < netPlayers.Length; i++)
+                netPlayers[i].Draw(batch);
+            batch.End();
+
             particles.DrawParticles(batch, GraphicsDevice);
             bullets.DrawBullets(batch, GraphicsDevice);
             shields.DrawShields(GraphicsDevice);
 
-            bg.LightPosParameter.SetValue(mousePos);
+            bg.LightPosParameter.SetValue(localPlayer.Position);
             bg.RayTimeParameter.SetValue(Game1.Time);
 
             scenario.DrawLightWalls(GraphicsDevice);
@@ -185,14 +210,16 @@ namespace ClusterWave.Scenes
         {
             if (scenario != null)
             {
-                Matrix proj = scenario.CreateProjectionMatrix();
-                bg.RayLightFx.Parameters["Projection"].SetValue(proj);
-                bg.ShapeFillFx.Parameters["Projection"].SetValue(proj);
-                bg.ShapeLineFx.Parameters["Projection"].SetValue(proj);
-                colorFx.Parameters["Projection"].SetValue(proj);
-                Shield.shieldFx.Parameters["Projection"].SetValue(proj);
+                Matrix Projection = scenario.CreateProjectionMatrix();
+                bg.RayLightFx.Parameters["Projection"].SetValue(Projection);
+                bg.ShapeFillFx.Parameters["Projection"].SetValue(Projection);
+                bg.ShapeLineFx.Parameters["Projection"].SetValue(Projection);
+                colorFx.Parameters["Projection"].SetValue(Projection);
+                Shield.shieldFx.Parameters["Projection"].SetValue(Projection);
 
                 bg.Resize();
+
+                PlayerDrawMatrix = Matrix.CreateTranslation(-scenario.HalfWidth, -scenario.HalfHeight, 0) * Matrix.CreateScale(1f/scenario.ScreenToSizeRatio) * Matrix.CreateTranslation(Game1.HalfScreenWidth, Game1.HalfScreenHeight, 0);
             }
         }
 

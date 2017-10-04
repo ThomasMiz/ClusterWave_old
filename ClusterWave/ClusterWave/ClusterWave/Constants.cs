@@ -20,9 +20,9 @@ namespace ClusterWave
         public const Category ShieldCollideWith = PlayerCategory | BulletsCategory;
 
         public const float PlayerRestitution = 0f;
-        public const float PlayerFriction = 0.5f;
+        public const float PlayerFriction = 0f;
         public const float WallsRestitution = 0f;
-        public const float WallsFriction = 1f;
+        public const float WallsFriction = 0f;
         public const float BulletRestitution = 1f;
         public const float BulletFriction = 1f;
         public const float ShieldRestitution = WallsRestitution;

@@ -113,8 +113,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player\player.png">
-      <Name>player</Name>
+    <Compile Include="Player\dusto.png">
+      <Name>dusto</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -122,6 +122,18 @@
   <ItemGroup>
     <Compile Include="Scenario\Bullet\texture.png">
       <Name>texture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Player\1.png">
+      <Name>1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Player\2.png">
+      <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

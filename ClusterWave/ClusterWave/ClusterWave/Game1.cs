@@ -75,6 +75,7 @@ namespace ClusterWave
             ClusterWave.Scenario.Dynamic.Bullet.Load(Content);
             ClusterWave.Scenario.Backgrounds.Background.Load(Content);
             ClusterWave.Scenario.Dynamic.Shield.Load(Content);
+            ClusterWave.Scenario.PlayerController.Load(Content);
 
             if (client == null)
                 client = new Client();
