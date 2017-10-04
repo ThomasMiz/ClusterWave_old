@@ -183,14 +183,18 @@ namespace ClusterWave.Scenes
 
             float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
 
+            #region Batch: Bullets & Players
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, PlayerDrawMatrix);
+
+            bullets.DrawBullets(batch);
             localPlayer.Draw(batch);
             for (int i = 0; i < netPlayers.Length; i++)
                 netPlayers[i].Draw(batch);
+
             batch.End();
+            #endregion
 
             particles.DrawParticles(batch, GraphicsDevice);
-            bullets.DrawBullets(batch, GraphicsDevice);
             shields.DrawShields(GraphicsDevice);
 
             bg.LightPosParameter.SetValue(localPlayer.Position);
