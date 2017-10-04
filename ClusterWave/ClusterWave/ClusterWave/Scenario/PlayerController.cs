@@ -10,15 +10,15 @@ namespace ClusterWave.Scenario
 {
     abstract class PlayerController
     {
-        protected const float PlayerSize = 0.5f, PlayerColliderSize = PlayerSize * 0.33f;
+        protected const float PlayerSize = Constants.PlayerColliderSize / 0.33f;
         protected const float MovementSpeed = 0.75f;
         const int FrameWidth = 24, FrameHeight = 21;
         public static Texture2D[] PlayerTextures;
         public static void Load(ContentManager Content)
         {
             PlayerTextures = new Texture2D[2];
-            for (int i = 0; i < 2;)
-                PlayerTextures[i] = Content.Load<Texture2D>("Player/" + ++i);
+            //for (int i = 0; i < 2;)
+            //    PlayerTextures[i] = Content.Load<Texture2D>("Player/" + ++i);
             PlayerTextures[0] = Content.Load<Texture2D>("Player/dusto");
         }
 
@@ -44,7 +44,7 @@ namespace ClusterWave.Scenario
             rotation = 0;
             this.player = player;
             body = new Body(scene.Scenario.PhysicsWorld, position, 0f, null);
-            body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(PlayerColliderSize, 1f), null);
+            body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(Constants.PlayerColliderSize, 1f), null);
             body.BodyType = BodyType.Dynamic;
             body.FixedRotation = true;
             body.Friction = 0.5f;
@@ -60,8 +60,6 @@ namespace ClusterWave.Scenario
 
         public void Draw(SpriteBatch batch)
         {
-
-
             batch.Draw(texture, body.Position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
         }
 
