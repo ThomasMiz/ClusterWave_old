@@ -21,12 +21,19 @@ namespace ClusterWave
 
         public const float PlayerRestitution = 0f;
         public const float PlayerFriction = 0f;
+        public const float PlayerColliderSize = 1f / 6f;
+
         public const float WallsRestitution = 0f;
         public const float WallsFriction = 0f;
-        public const float BulletRestitution = 1f;
-        public const float BulletFriction = 1f;
+
         public const float ShieldRestitution = WallsRestitution;
         public const float ShieldFriction = WallsFriction;
+
+        public const float BulletRadius = 2f / 40f;
+        public const float BulletDensity = 0.1f;
+        public const float BulletRestitution = 1f;
+        public const float BulletFriction = 0f;
+
     }
 
     static class Stuff
