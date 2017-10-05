@@ -111,7 +111,7 @@ namespace ClusterWave.Network
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.disconnect);
             msg.Write(MsgIndex.subIndex.playerConnect);
-            msg.Write(clientPlayer.Name);
+            msg.Write(name);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
