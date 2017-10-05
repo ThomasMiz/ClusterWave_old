@@ -95,6 +95,7 @@ namespace ClusterWaveServer.Network
                                 #endregion
                                 break;
                             case MsgIndex.disconnect:
+                                #region ConnectionHandling
                                 incomingMsg.ReadByte();
                                 int subIndex = incomingMsg.ReadByte();
                                 if (subIndex == MsgIndex.subIndex.playerConnect)
@@ -112,6 +113,7 @@ namespace ClusterWaveServer.Network
                                         }
                                     }
                                 }
+                                #endregion
                                 break;
                             default:
                                 scene.OnPacket(incomingMsg);
