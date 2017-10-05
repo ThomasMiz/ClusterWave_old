@@ -87,8 +87,11 @@ namespace ClusterWave.Scenes
                     for (int i = 1; i != msg.Data.Length; i++)
                         arr[i - 1] = msg.Data[i];
                     scenario.CreatePacketArrive(arr);
-                    if (scenario.DoneLoading)
+                    if (scenario.DoneLoading)// game.SetScene(new InGameScene(client, scenario));
+                    {
                         game.SetScene(new InGameScene(client, scenario));
+                        client.signalLoadingIsFinished();
+                    }
                     #endregion
                     break;
             }
