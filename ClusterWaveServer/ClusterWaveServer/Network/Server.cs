@@ -20,7 +20,7 @@ namespace ClusterWaveServer.Network
         int connectedPlayers;
         int maximumCapacity = 8;
 
-        Dictionary<NetConnection,int> ConnectionToId;
+        Dictionary<NetConnection, int> ConnectionToId;
         //26200 = Port
 
 
@@ -54,67 +54,68 @@ namespace ClusterWaveServer.Network
                 {
                     case NetIncomingMessageType.Data:
                         #region Data
-                        if (incomingMsg.PeekByte() == 1)
+                        switch (incomingMsg.PeekByte())
                         {
-                            #region ChatMessage
-                            incomingMsg.ReadByte();
-                            String str = incomingMsg.ReadString();
-                            if (str.StartsWith("/"))
-                            {
-                                String[] spl = str.Split(' ');
-                                switch (spl[0])
+                            case MsgIndex.chat:
+                                #region ChatMessage
+                                incomingMsg.ReadByte();
+                                String str = incomingMsg.ReadString();
+                                if (str.StartsWith("/"))
                                 {
-                                    case "/help":
-                                        SendChatMessage("There are no server commands other than help. Haha! &red;xddd", incomingMsg.SenderConnection);
-                                        break;
-                                    case "/colorhelp":
-                                        SendChatMessage("You can use different colors and fonts using '&' followed by an identifier and a ';', typing \"&identifier;\". Possible identifiers:", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &r;normal", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &red;red", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &blue;blue", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &green;green", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &macri;macri", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &magenta;magenta", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &i;italics", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &b;bold", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &w;webdings &r;(webdings)", incomingMsg.SenderConnection);
-                                        SendChatMessage("   - &r;reset (takes out all formatting)", incomingMsg.SenderConnection);
-                                        SendChatMessage("And lots of other colors!", incomingMsg.SenderConnection);
-                                        break;
-                                    default:
-                                        SendChatMessage("&red;Command not found.", incomingMsg.SenderConnection);
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine(str);
-                                SendChatMessage(str);
-                            }
-                            #endregion
-                        }
-                        else if (incomingMsg.PeekByte() == 3)
-                        {
-                            int subIndex = incomingMsg.ReadByte();
-                            if (subIndex == MsgIndex.subIndex.playerConnect)
-                            {
-                                Console.WriteLine("Player connected from : " + incomingMsg.SenderConnection.RemoteEndPoint.Address);
-                                ConnectionMessageRecieve(incomingMsg);
-                            }
-                            if (subIndex == MsgIndex.subIndex.doneLoading)
-                            {
-                                for (int i = 0; i <= maximumCapacity; i++)
-                                {
-                                    if (players[i] == null)
+                                    String[] spl = str.Split(' ');
+                                    switch (spl[0])
                                     {
-
+                                        case "/help":
+                                            SendChatMessage("There are no server commands other than help. Haha! &red;xddd", incomingMsg.SenderConnection);
+                                            break;
+                                        case "/colorhelp":
+                                            SendChatMessage("You can use different colors and fonts using '&' followed by an identifier and a ';', typing \"&identifier;\". Possible identifiers:", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &r;normal", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &red;red", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &blue;blue", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &green;green", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &macri;macri", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &magenta;magenta", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &i;italics", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &b;bold", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &w;webdings &r;(webdings)", incomingMsg.SenderConnection);
+                                            SendChatMessage("   - &r;reset (takes out all formatting)", incomingMsg.SenderConnection);
+                                            SendChatMessage("And lots of other colors!", incomingMsg.SenderConnection);
+                                            break;
+                                        default:
+                                            SendChatMessage("&red;Command not found.", incomingMsg.SenderConnection);
+                                            break;
                                     }
                                 }
-                            }
-                        }
-                        else
-                        {
-                            scene.OnPacket(incomingMsg);
+                                else
+                                {
+                                    Console.WriteLine(str);
+                                    SendChatMessage(str);
+                                }
+                                #endregion
+                                break;
+                            case MsgIndex.disconnect:
+                                incomingMsg.ReadByte();
+                                int subIndex = incomingMsg.ReadByte();
+                                if (subIndex == MsgIndex.subIndex.playerConnect)
+                                {
+                                    Console.WriteLine("Player connected from : " + incomingMsg.SenderConnection.RemoteEndPoint.Address);
+                                    ConnectionMessageRecieve(incomingMsg);
+                                }
+                                if (subIndex == MsgIndex.subIndex.doneLoading)
+                                {
+                                    for (int i = 0; i <= maximumCapacity; i++)
+                                    {
+                                        if (players[i] == null)
+                                        {
+
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                scene.OnPacket(incomingMsg);
+                                break;
                         }
                         #endregion
                         break;
@@ -142,7 +143,7 @@ namespace ClusterWaveServer.Network
             //para el juego terminado, agregar checkeo de que se haya cargado bien? (load.IsOk)
             Scenarios.ScenarioLoader load = new Scenarios.ScenarioLoader(file);
             load.OnCreationPacket += sendByteArray;
-            scene = new InGameScene(this,load.CreateScenario());
+            scene = new InGameScene(this, load.CreateScenario());
             load.OnCreationPacket -= sendByteArray;
         }
 
@@ -156,8 +157,6 @@ namespace ClusterWaveServer.Network
 
         void ConnectionMessageRecieve(NetIncomingMessage msg)
         {
-            msg.ReadByte();
-            byte index = msg.ReadByte();
             string name = msg.ReadString();
             if (connectedPlayers <= maximumCapacity)
             {
@@ -166,14 +165,14 @@ namespace ClusterWaveServer.Network
                     if (players[i] == null)
                     {
                         ConnectionToId.Add(msg.SenderConnection, i);
-                        players[i] = new PlayerInfo(name,i);
+                        players[i] = new PlayerInfo(name, i);
                         Console.WriteLine("Player : " + name + " connected with ID : " + i);
                         NetOutgoingMessage outMsg = server.CreateMessage();
                         outMsg.Write(MsgIndex.assignId);
                         outMsg.Write((byte)i);
                         server.SendMessage(outMsg, msg.SenderConnection, NetDeliveryMethod.ReliableUnordered);
                         connectedPlayers += 1;
-                        break;      
+                        break;
                     }
                 }
             }
