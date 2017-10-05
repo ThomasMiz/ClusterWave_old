@@ -14,6 +14,7 @@ namespace ClusterWaveServer.Network
         public const byte disconnect = 3;
         public const byte playerMove = 4;
         public const byte playerAct = 5;
+        public const byte scenarioRecieve = 6;
         public const byte assignId = 7;
 
         public class subIndex
@@ -26,6 +27,8 @@ namespace ClusterWaveServer.Network
             public const byte playerExit = 31;
             public const byte connectionTimeout = 32;
             public const byte playerKicked = 33;
+            public const byte playerConnect = 34;
+            public const byte doneLoading = 35;
 
             public const byte dash = 40;
             public const byte left = 41;

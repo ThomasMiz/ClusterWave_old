@@ -15,6 +15,7 @@ namespace ClusterWave.Network
         NetPeerConfiguration config;
         NetClient client;
         Player clientPlayer;
+        string name;
 
         public event OnPacketArrive OnPacket;
 
@@ -23,7 +24,6 @@ namespace ClusterWave.Network
             chat = new Chat();
             chat.OnLineEntered += OnChatLineEntered;
 
-            clientPlayer = new Player();
             config = new NetPeerConfiguration("Cluster Wave");
             client = new NetClient(config);
             client.Start();
@@ -57,7 +57,7 @@ namespace ClusterWave.Network
 
         public void connect(string ip, string name)
         {
-            clientPlayer.Name = name;
+            this.name = name;
             client.Connect(ip, 26200);
             chat.Add(String.Concat("&green;[Client] Attempting connection to ", ip, "..."));
         }
@@ -82,7 +82,7 @@ namespace ClusterWave.Network
                     else if (index == MsgIndex.assignId)
                     {
                         incomingMsg.ReadByte();
-                        clientPlayer.Id = incomingMsg.ReadByte();
+                        clientPlayer = new Player(name, incomingMsg.ReadByte());
                     }
                     else if (OnPacket != null)
                         OnPacket(incomingMsg);
@@ -120,6 +120,13 @@ namespace ClusterWave.Network
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.chat);
             msg.Write(text);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void signalLoadingIsFinished()
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.scenarioRecieve);
             client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
