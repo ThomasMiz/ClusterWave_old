@@ -111,7 +111,7 @@ namespace ClusterWave.Scenario
             {
                 default:
                 case 1:
-                    background = new BackgroundOne();
+                    background = new BackgroundTwo();
                     break;
                 case 2:
                     background = new BackgroundOne();
@@ -194,22 +194,21 @@ namespace ClusterWave.Scenario
 
         private void AddPolygon(Vector2[] vertices)
         {
-            shapes.Add(new Polygon(vertices, staticBody, background.ShapeTexture));
+            shapes.Add(new Polygon(vertices, staticBody));
         }
         private void AddLinegroup(Vector2[] vertices) { shapes.Add(new LineGroup(vertices, staticBody)); }
         private void AddRectangle(Vector2 pos, Vector2 size) { shapes.Add(new RectangleShape(pos, size, staticBody)); }
 
         /// <summary>Calles world.Step and advances the physics by Game1.DeltaTime</summary>
-        public void PhysicsStep()
+        public void PhysicsStep(float time)
         {
-            world.Step(Game1.DeltaTime);
+            world.Step(time);
         }
 
         /// <summary>Draws the shapes whatever no need to explain, m8</summary>
         public void DrawShapeLines(GraphicsDevice device)
         {
             Effect fx = background.ShapeLineFx;
-            fx.Parameters["time"].SetValue(Game1.Time);
             fx.CurrentTechnique.Passes[0].Apply();
             for (int i = 0; i < shapes.Count; i++)
                 shapes[i].DrawLines(device);
@@ -218,18 +217,16 @@ namespace ClusterWave.Scenario
         public void DrawShapeFill(GraphicsDevice device)
         {
             Effect fx = background.ShapeFillFx;
-            fx.Parameters["time"].SetValue(Game1.Time);
             fx.CurrentTechnique.Passes[0].Apply();
-            device.SamplerStates[0] = SamplerState.PointWrap;
+            device.SamplerStates[0] = SamplerState.LinearWrap;
             for (int i = 0; i < shapes.Count; i++)
-                shapes[i].DrawFill(device, fx);
+                shapes[i].DrawFill(device);
         }
 
         /// <summary>Draws all the light walls. Make sure to use the correct Effect, as this function doesn't control any of that stuff</summary>
         public void DrawLightWalls(GraphicsDevice device)
         {
             Effect fx = background.RayLightFx;
-            fx.Parameters["time"].SetValue(Game1.Time);
             fx.CurrentTechnique.Passes[0].Apply();
             for (int i = 0; i < shapes.Count; i++)
                 shapes[i].DrawLight(device);

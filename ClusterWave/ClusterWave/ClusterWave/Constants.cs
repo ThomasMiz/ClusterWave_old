@@ -72,5 +72,27 @@ namespace ClusterWave
             MultiplyColor(ref hue, v);
             return hue;
         }
+
+        /// <summary>
+        /// Cheap parabola-based wave that oscilates with amplitud of 1 and wavelength of 2.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static float CheapSineWave(float x)
+        {
+            x = x % 2;
+            return x < 1 ? (-4 * x * (x - 1)) : (4 * (x - 1) * (x - 2));
+        }
+
+        /// <summary>
+        /// Cheap parabola-based wave that oscilates in between [0, 1] and has a wavelength of 2.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static float CheapWave(float x)
+        {
+            x = x % 2;
+            return x < 1 ? (-2 * x * (x - 1) + 0.5f) : (2 * (x - 1) * (x - 2) + 0.5f);
+        }
     }
 }

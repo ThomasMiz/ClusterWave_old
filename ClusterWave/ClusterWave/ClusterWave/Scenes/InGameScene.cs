@@ -155,7 +155,7 @@ namespace ClusterWave.Scenes
                 netPlayers[i].UpdatePrePhysics();
             localPlayer.UpdatePrePhysics(mousePos);
 
-            scenario.PhysicsStep();
+            scenario.PhysicsStep(Game1.DeltaTime);
 
             for (int i = 0; i < netPlayers.Length; i++)
                 netPlayers[i].UpdatePostPhysics();
@@ -172,16 +172,17 @@ namespace ClusterWave.Scenes
             GraphicsDevice.BlendState = BlendState.NonPremultiplied;
             GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
+            bg.SetTimeParameters(Game1.Time);
 
             client.chat.PreDraw(GraphicsDevice, batch);
             bg.PreDraw(GraphicsDevice, batch);
 
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.Gray);
+            GraphicsDevice.Clear(bg.ClearColor);
 
             bg.Draw(GraphicsDevice, batch);
 
-            float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
+            /*float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
 
             #region Batch: Bullets & Players
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, PlayerDrawMatrix);
@@ -205,7 +206,7 @@ namespace ClusterWave.Scenes
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);
 
-            client.chat.Draw(batch);
+            client.chat.Draw(batch);*/
 
             //debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
         }

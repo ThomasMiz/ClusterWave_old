@@ -80,7 +80,7 @@ namespace ClusterWave
             if (client == null)
                 client = new Client();
             if (scene == null)
-                scene = /*new Scenes.InGameScene(client);*/ new Scenes.ScenarioLoadingScene(client);
+                scene = new Scenes.InGameScene(client);// new Scenes.ScenarioLoadingScene(client);
 
             Window_ClientSizeChanged(null, null);
         }
@@ -113,6 +113,7 @@ namespace ClusterWave
             //batch.DrawString(font, (((int)(100.0 / gameTime.ElapsedGameTime.TotalSeconds)) / 100.0).ToString(), Vector2.Zero, Color.Black);
             //batch.End();
 
+            GraphicsDevice.SetVertexBuffer(null);
             base.Draw(gameTime);
         }
 

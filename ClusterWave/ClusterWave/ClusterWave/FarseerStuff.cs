@@ -23,7 +23,7 @@ namespace FarseerPhysics.DebugView
     public class DebugViewXNA : DebugViewBase, IDisposable
     {
         //Drawing
-        private PrimitiveBatch _primitiveBatch;
+        private StupidPrimitiveBatch _primitiveBatch;
         private SpriteBatch _batch;
         private SpriteFont _font;
         private GraphicsDevice _device;
@@ -781,7 +781,7 @@ namespace FarseerPhysics.DebugView
             // Create a new SpriteBatch, which can be used to draw textures.
             _device = device;
             _batch = new SpriteBatch(_device);
-            _primitiveBatch = new PrimitiveBatch(_device, 1000);
+            _primitiveBatch = new StupidPrimitiveBatch(_device, 1000);
             _font = content.Load<SpriteFont>("Font");
             _stringData = new List<StringData>();
 
@@ -819,7 +819,7 @@ namespace FarseerPhysics.DebugView
         #endregion
     }
 
-    public class PrimitiveBatch : IDisposable
+    public class StupidPrimitiveBatch : IDisposable
     {
         private const int DefaultBufferSize = 500;
 
@@ -840,7 +840,7 @@ namespace FarseerPhysics.DebugView
         private VertexPositionColor[] _triangleVertices;
         private int _triangleVertsCount;
 
-        public PrimitiveBatch(GraphicsDevice graphicsDevice, int bufferSize = DefaultBufferSize)
+        public StupidPrimitiveBatch(GraphicsDevice graphicsDevice, int bufferSize = DefaultBufferSize)
         {
             if (graphicsDevice == null)
                 throw new ArgumentNullException("graphicsDevice");

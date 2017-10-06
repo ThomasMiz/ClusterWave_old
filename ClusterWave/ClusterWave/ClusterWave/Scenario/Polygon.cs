@@ -13,11 +13,10 @@ namespace ClusterWave.Scenario
     {
         public const byte Type = 1;
 
-        Texture2D fillTx;
         VertexBuffer fillBuffer;
         int fillPrimitiveCount;
 
-        public Polygon(Vector2[] vertices, Body physicsBody, Texture2D texture)
+        public Polygon(Vector2[] vertices, Body physicsBody)
         {
             //god forbid the unreadability of this constructor
 
@@ -89,12 +88,10 @@ namespace ClusterWave.Scenario
             fillBuffer.SetData(fillList.ToArray());
             fillPrimitiveCount = fillList.Count / 3;
             #endregion
-            this.fillTx = texture;
         }
 
-        public override void DrawFill(GraphicsDevice device, Effect effect)
+        public override void DrawFill(GraphicsDevice device)
         {
-            effect.Parameters[3].SetValue(fillTx);
             device.SetVertexBuffer(fillBuffer);
             device.DrawPrimitives(PrimitiveType.TriangleList, 0, fillPrimitiveCount);
         }

@@ -77,7 +77,9 @@ namespace ClusterWave.Scenario.Dynamic
         {
             if (check)
             {
-                body.Rotation = (float)Math.Atan2(body.LinearVelocity.Y, body.LinearVelocity.X);
+                Vector2 lv = body.LinearVelocity;
+                if (lv.X != 0 && lv.Y != 0)
+                    body.Rotation = (float)Math.Atan2(lv.Y, lv.X);
                 body.LinearVelocity = new Vector2((float)Math.Cos(body.Rotation) * spd, (float)Math.Sin(body.Rotation) * spd);
                 check = false;
             }

@@ -13,7 +13,7 @@ namespace ClusterWave.Scenario.Backgrounds
         public static Texture2D BackgroundTexture;
         public static Effect BackgroundFx;
         private static EffectParameter worldParameter, viewParameter, projParameter, timeParameter, sizeParameter, pointsParameter;
-        public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam;
+        public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
         public static void Load1(ContentManager Content)
         {
             shapeTexture = Content.Load<Texture2D>("Scenario/Backgrounds/1/shape");
@@ -33,6 +33,8 @@ namespace ClusterWave.Scenario.Backgrounds
             sizeParameter = BackgroundFx.Parameters["size"];
             pointsParameter = BackgroundFx.Parameters["points"];
             rayTimeParam = RayFx.Parameters["time"];
+            shapeTimeParam = TextureFx.Parameters["time"];
+            linesTimeParam = LinesFx.Parameters["time"];
 
             worldParameter.SetValue(Matrix.Identity);
             viewParameter.SetValue(Matrix.Identity);
@@ -44,6 +46,16 @@ namespace ClusterWave.Scenario.Backgrounds
         RenderTarget2D target;
         float resolutionMultiply = 1;
 
+        public override Texture2D ShapeTexture { get { return shapeTexture; } }
+        public override Effect ShapeFillFx { get { return TextureFx; } }
+        public override Effect ShapeLineFx { get { return LinesFx; } }
+        public override Effect RayLightFx { get { return RayFx; } }
+        public override EffectParameter LightPosParameter { get { return lightPosParam; } }
+        public override EffectParameter ScenarioSizeParameter { get { return scenarioSizeParam; } }
+        public override EffectParameter RayTimeParameter { get { return rayTimeParam; } }
+        public override EffectParameter ShapeFillTimeParameter { get { return shapeTimeParam; } }
+        public override EffectParameter ShapeLinesTimeParameter { get { return linesTimeParam; } }
+
         public BackgroundOne()
         {
             buffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionColorTexture), 4, BufferUsage.WriteOnly);
@@ -53,15 +65,8 @@ namespace ClusterWave.Scenario.Backgrounds
                 new VertexPositionColorTexture(new Vector3(-1, 1, -1), new Color(0, 0, 255), new Vector2(0, 0)),
                 new VertexPositionColorTexture(new Vector3(1, 1, -1), new Color(255, 255, 255), new Vector2(1, 0)),
             });
+            TextureFx.Parameters["tex"].SetValue(shapeTexture);
         }
-
-        public override Texture2D ShapeTexture { get { return shapeTexture; } }
-        public override Effect ShapeFillFx { get { return TextureFx; } }
-        public override Effect ShapeLineFx { get { return LinesFx; } }
-        public override Effect RayLightFx { get { return RayFx; } }
-        public override EffectParameter LightPosParameter { get { return lightPosParam; } }
-        public override EffectParameter ScenarioSizeParameter { get { return scenarioSizeParam; } }
-        public override EffectParameter RayTimeParameter { get { return rayTimeParam; } }
 
         public override void Update()
         {

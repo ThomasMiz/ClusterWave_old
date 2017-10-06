@@ -22,7 +22,7 @@ namespace ClusterWave.Scenario
             device.DrawPrimitives(PrimitiveType.TriangleStrip, 0, lightPrimitiveCount);
         }
 
-        public virtual void DrawFill(GraphicsDevice device, Effect fx) { }
+        public virtual void DrawFill(GraphicsDevice device) { }
 
         public virtual void Dispose()
         {

@@ -20,6 +20,16 @@ namespace ClusterWave.Scenario.Backgrounds
         public abstract EffectParameter LightPosParameter { get; }
         public abstract EffectParameter ScenarioSizeParameter { get; }
         public abstract EffectParameter RayTimeParameter { get; }
+        public abstract EffectParameter ShapeFillTimeParameter { get; }
+        public abstract EffectParameter ShapeLinesTimeParameter { get; }
+        public virtual Color ClearColor { get { return Color.Black; } }
+
+        public void SetTimeParameters(float time)
+        {
+            RayTimeParameter.SetValue(time);
+            ShapeFillTimeParameter.SetValue(time);
+            ShapeLinesTimeParameter.SetValue(time);
+        }
 
         public abstract void Update();
         public abstract void Draw(GraphicsDevice device, SpriteBatch batch);

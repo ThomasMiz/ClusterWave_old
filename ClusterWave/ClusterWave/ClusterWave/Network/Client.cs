@@ -93,13 +93,13 @@ namespace ClusterWave.Network
                     #region StatusChanged
                     if (incomingMsg.SenderConnection.Status == NetConnectionStatus.Connected)
                     {
-                        Console.WriteLine("Connected to Server at IP :" + incomingMsg.SenderConnection.RemoteEndPoint.Address);
+                        //Console.WriteLine("Connected to Server at IP :" + incomingMsg.SenderConnection.RemoteEndPoint.Address);
                         sendInfo();
                     }
                     #endregion
                 }
 
-                Console.WriteLine(incomingMsg.MessageType);
+                //Console.WriteLine(incomingMsg.MessageType);
                 incomingMsg = client.ReadMessage();
             }
 
