@@ -15,7 +15,8 @@ namespace ClusterWave.Scenario
 
         public Polygon(Vector2[] vertices, Body physicsBody, PrimitiveBuffer<VertexPositionTexture> buffer, PrimitiveBuffer<VertexPositionTexture> fillBuffer)
         {
-            //god forbid the unreadability of this constructor
+            // god forbid the unreadability of this constructor
+            // the readability has improved since that comment was written.
 
             #region CreateLineBuffer
             VertexPositionTexture[] data = new VertexPositionTexture[vertices.Length + vertices.Length + 2];
@@ -72,7 +73,6 @@ namespace ClusterWave.Scenario
                 fillBuffer.AddTriangleVertex(new VertexPositionTexture(new Vector3(currentVertices[lss].X, currentVertices[lss].Y, 0), Vector2.Zero));
                 fillBuffer.AddTriangleVertex(new VertexPositionTexture(new Vector3(currentVertices[0].X, currentVertices[0].Y, 0), Vector2.Zero));
             }
-            
             #endregion
         }
     }
