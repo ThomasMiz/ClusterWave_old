@@ -69,7 +69,7 @@ namespace ClusterWave.Scenario
 
             name = stream.ReadString();
 
-            backgroundType = (byte)(stream.ReadByte() % 3);
+            backgroundType = (byte)(1+(stream.ReadByte()-1) % 3);
 
             _width = stream.ReadFloat();
             _height = stream.ReadFloat();
