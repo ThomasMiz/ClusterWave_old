@@ -114,7 +114,7 @@ namespace ClusterWave.Scenario
                     background = new BackgroundTwo();
                     break;
                 case 2:
-                    background = new BackgroundOne();
+                    background = new BackgroundTwo();
                     break;
                 case 3:
                     background = new BackgroundOne();
