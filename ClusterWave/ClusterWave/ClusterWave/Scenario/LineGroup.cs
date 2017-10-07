@@ -11,24 +11,20 @@ namespace ClusterWave.Scenario
     {
         public const byte Type = 0;
 
-        public LineGroup(Vector2[] vertices, Body physicsBody)
+        public LineGroup(Vector2[] vertices, Body physicsBody, PrimitiveBuffer<VertexPositionTexture> buffer)
         {
-            lineBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionTexture), vertices.Length, BufferUsage.WriteOnly);
             VertexPositionTexture[] data = new VertexPositionTexture[vertices.Length + vertices.Length];
             for (int i = 0; i < vertices.Length; i++)
                 data[i] = CreateVertex(vertices[i]);
-            lineBuffer.SetData(data, 0, vertices.Length);
-            linePrimitiveCount = vertices.Length - 1;
+            buffer.AddLineStrip(data, 0, vertices.Length);
 
-            lightBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionTexture), vertices.Length + vertices.Length, BufferUsage.WriteOnly);
             int index = 0;
             for (int i = 0; i < vertices.Length; i++)
             {
                 data[index++] = CreateVertex(new Vector3(vertices[i], 0));
                 data[index++] = CreateVertex(new Vector3(vertices[i], LightWallZ));
             }
-            lightBuffer.SetData(data);
-            lightPrimitiveCount = data.Length - 2;
+            buffer.AddTriangleStrip(data);
 
             Fixture f;
             if (vertices.Length == 2)

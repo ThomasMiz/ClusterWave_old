@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -12,30 +8,22 @@ namespace ClusterWave
     /// Used to batch primitives for streaming them to the GPU, with each flush resetting the primitive batch to 0 items.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class PrimitiveBatch<T> : IDisposable where T : struct, IVertexType
+    class PrimitiveBuffer<T> where T : struct, IVertexType
     {
         protected int lineVertexCount, triangleVertexCount;
         protected T[] lines;
         protected T[] triangles;
 
-        DynamicVertexBuffer lineBuffer, triangleBuffer;
-
-        public PrimitiveBatch()
+        public PrimitiveBuffer()
         {
             lines = new T[128];
             triangles = new T[128];
-
-            lineBuffer = new DynamicVertexBuffer(Game1.game.GraphicsDevice, typeof(T), lines.Length, BufferUsage.WriteOnly);
-            triangleBuffer = new DynamicVertexBuffer(Game1.game.GraphicsDevice, typeof(T), triangles.Length, BufferUsage.WriteOnly);
         }
 
-        public PrimitiveBatch(int lineCount, int triangleCount)
+        public PrimitiveBuffer(int lineCount, int triangleCount)
         {
             lines = new T[lineCount];
             triangles = new T[triangleCount];
-
-            lineBuffer = new DynamicVertexBuffer(Game1.game.GraphicsDevice, typeof(T), lines.Length, BufferUsage.WriteOnly);
-            triangleBuffer = new DynamicVertexBuffer(Game1.game.GraphicsDevice, typeof(T), triangles.Length, BufferUsage.WriteOnly);
         }
 
         private void ExpandLineList(int newCapacity)
@@ -153,10 +141,10 @@ namespace ClusterWave
 
         public void AddTriangleFan(T[] arr)
         {
-            EnsureTriangleCapacity(triangleVertexCount + (arr.Length-2) * 3);
+            EnsureTriangleCapacity(triangleVertexCount + (arr.Length - 2) * 3);
 
             int m = arr.Length - 1;
-            for (int i = 1; i < m;)
+            for (int i = 1; i < m; )
             {
                 triangles[triangleVertexCount++] = arr[0];
                 triangles[triangleVertexCount++] = arr[i];
@@ -184,55 +172,32 @@ namespace ClusterWave
             triangles[triangleVertexCount++] = c;
         }
 
-        public void FlushAllLineFirst(GraphicsDevice device)
+        public void ClearLines()
         {
-            FlushLines(device);
-            FlushTriangles(device);
+            lineVertexCount = 0;
         }
 
-        public void FlushAllTriangleFirst(GraphicsDevice device)
+        public void ClearTriangles()
         {
-            FlushTriangles(device);
-            FlushLines(device);
+            triangleVertexCount = 0;
         }
 
-        public void FlushLines(GraphicsDevice device)
+        public VertexBuffer CreateTriangleBuffer()
         {
-            if (lineVertexCount != 0)
-            {
-                if (lineBuffer.VertexCount < lineVertexCount)
-                {
-                    lineBuffer.Dispose();
-                    lineBuffer = new DynamicVertexBuffer(Game1.game.GraphicsDevice, typeof(T), lines.Length, BufferUsage.WriteOnly);
-                }
-                //Game1.game.Window.Title = lineVertexCount.ToString() + "/" + lines.Length;
-                lineBuffer.SetData(lines, 0, lineVertexCount);
-                device.SetVertexBuffer(lineBuffer);
-                device.DrawPrimitives(PrimitiveType.LineList, 0, lineVertexCount / 2);
-                lineVertexCount = 0;
-            }
+            if (triangleVertexCount == 0)
+                return null;
+            VertexBuffer buffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(T), triangleVertexCount, BufferUsage.WriteOnly);
+            buffer.SetData(triangles, 0, triangleVertexCount);
+            return buffer;
         }
 
-        public void FlushTriangles(GraphicsDevice device)
+        public VertexBuffer CreateLineBuffer()
         {
-            if (triangleVertexCount != 0)
-            {
-                if (triangleBuffer.VertexCount < triangleVertexCount)
-                {
-                    triangleBuffer.Dispose();
-                    triangleBuffer = new DynamicVertexBuffer(Game1.game.GraphicsDevice, typeof(T), triangles.Length, BufferUsage.WriteOnly);
-                }
-                triangleBuffer.SetData(triangles, 0, triangleVertexCount);
-                device.SetVertexBuffer(triangleBuffer);
-                device.DrawPrimitives(PrimitiveType.TriangleList, 0, triangleVertexCount / 3);
-                triangleVertexCount = 0;
-            }
-        }
-
-        public void Dispose()
-        {
-            lineBuffer.Dispose();
-            triangleBuffer.Dispose();
+            if (lineVertexCount == 0)
+                return null;
+            VertexBuffer buffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(T), lineVertexCount, BufferUsage.WriteOnly);
+            buffer.SetData(lines, 0, lineVertexCount);
+            return buffer;
         }
     }
 }

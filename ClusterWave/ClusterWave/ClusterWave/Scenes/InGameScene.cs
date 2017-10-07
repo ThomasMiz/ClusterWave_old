@@ -234,8 +234,6 @@ namespace ClusterWave.Scenes
                 scenario.Dispose();
             if (debug != null)
                 debug.Dispose();
-            if (bg != null)
-                bg.Dispose();
 
             client.OnPacket -= OnPacket;
         }

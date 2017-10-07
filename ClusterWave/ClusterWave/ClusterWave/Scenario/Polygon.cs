@@ -13,24 +13,18 @@ namespace ClusterWave.Scenario
     {
         public const byte Type = 1;
 
-        VertexBuffer fillBuffer;
-        int fillPrimitiveCount;
-
-        public Polygon(Vector2[] vertices, Body physicsBody)
+        public Polygon(Vector2[] vertices, Body physicsBody, PrimitiveBuffer<VertexPositionTexture> buffer, PrimitiveBuffer<VertexPositionTexture> fillBuffer)
         {
             //god forbid the unreadability of this constructor
 
             #region CreateLineBuffer
-            lineBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionTexture), vertices.Length + 1, BufferUsage.WriteOnly);
             VertexPositionTexture[] data = new VertexPositionTexture[vertices.Length + vertices.Length + 2];
             int i = 0;
             for (; i < vertices.Length; i++)
                 data[i] = CreateVertex(vertices[i]);
             data[i] = data[0];
-            lineBuffer.SetData(data, 0, vertices.Length + 1);
-            linePrimitiveCount = vertices.Length;
-
-            lightBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionTexture), vertices.Length + vertices.Length + 2, BufferUsage.WriteOnly);
+            buffer.AddLineStrip(data, 0, vertices.Length+1);
+            
             int index = 0;
             Vector2 min = vertices[0], max = min;
             for (i = 0; i < vertices.Length; i++)
@@ -47,15 +41,10 @@ namespace ClusterWave.Scenario
             data[index++] = data[0];
             data[index++] = data[1];
 
-            lightBuffer.SetData(data);
-            lightPrimitiveCount = data.Length - 2;
+            buffer.AddTriangleStrip(data);
             #endregion
             
             List<Vertices> vert = Triangulate.ConvexPartition(new Vertices(vertices), TriangulationAlgorithm.Bayazit);
-            i = 0;
-            for (int c = 0; c < vert.Count; c++)
-                i += vert[c].Count * 3;
-            List<VertexPositionColorTexture> fillList = new List<VertexPositionColorTexture>(i);
 
             #region FillBuffer
             for (int c = 0; c < vert.Count; c++)
@@ -69,37 +58,22 @@ namespace ClusterWave.Scenario
                 f.Restitution = Constants.WallsRestitution;
                 #endregion
 
-                VertexPositionColorTexture z = new VertexPositionColorTexture(new Vector3(currentVertices[0], 0), Color.White, Vector2.Zero);
+                VertexPositionTexture z = new VertexPositionTexture(new Vector3(currentVertices[0], 0), Vector2.Zero);
 
-                for (int a = 0; a < currentVertices.Count - 1;)
+                int lss = currentVertices.Count - 1;
+                for (int a = 0; a < lss;)
                 {
-                    fillList.Add(z);
-                    fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[a].X, currentVertices[a].Y, 0), Color.White, Vector2.Zero));
+                    fillBuffer.AddTriangleVertex(z);
+                    fillBuffer.AddTriangleVertex(new VertexPositionTexture(new Vector3(currentVertices[a].X, currentVertices[a].Y, 0), Vector2.Zero));
                     a++;
-                    fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[a].X, currentVertices[a].Y, 0), Color.White, Vector2.Zero));
+                    fillBuffer.AddTriangleVertex(new VertexPositionTexture(new Vector3(currentVertices[a].X, currentVertices[a].Y, 0), Vector2.Zero));
                 }
-                int lesscount = currentVertices.Count-1;
-                fillList.Add(z);
-                fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[lesscount].X, currentVertices[lesscount].Y, 0), Color.White, Vector2.Zero));
-                fillList.Add(new VertexPositionColorTexture(new Vector3(currentVertices[0].X, currentVertices[0].Y, 0), Color.White, Vector2.Zero));
+                fillBuffer.AddTriangleVertex(z);
+                fillBuffer.AddTriangleVertex(new VertexPositionTexture(new Vector3(currentVertices[lss].X, currentVertices[lss].Y, 0), Vector2.Zero));
+                fillBuffer.AddTriangleVertex(new VertexPositionTexture(new Vector3(currentVertices[0].X, currentVertices[0].Y, 0), Vector2.Zero));
             }
-
-            fillBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionColorTexture), fillList.Count, BufferUsage.WriteOnly);
-            fillBuffer.SetData(fillList.ToArray());
-            fillPrimitiveCount = fillList.Count / 3;
+            
             #endregion
-        }
-
-        public override void DrawFill(GraphicsDevice device)
-        {
-            device.SetVertexBuffer(fillBuffer);
-            device.DrawPrimitives(PrimitiveType.TriangleList, 0, fillPrimitiveCount);
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            fillBuffer.Dispose();
         }
     }
 }

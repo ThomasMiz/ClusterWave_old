@@ -8,14 +8,12 @@ sampler samp = sampler_state{ Texture = tex; };
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
-	float4 Color : COLOR0;
 	float2 Coords : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
 	float4 Position : POSITION0;
-	float4 Color : COLOR0;
 	float2 Coords : TEXCOORD0;
 };
 
@@ -25,7 +23,6 @@ VertexShaderOutput VS(VertexShaderInput input)
 
     output.Position = mul(mul(input.Position, View), Projection);
 
-	output.Color = input.Color;
 	output.Coords = input.Position * 0.3;
 
     return output;

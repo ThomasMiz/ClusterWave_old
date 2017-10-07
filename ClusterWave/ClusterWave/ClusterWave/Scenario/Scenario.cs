@@ -26,6 +26,9 @@ namespace ClusterWave.Scenario
         bool done;
         Rectangle screenBounds;
 
+        PrimitiveBuffer<VertexPositionTexture> primitiveBuffer, fillPrimitiveBuffer;
+        VertexBuffer lineBuffer, lightTriangleBuffer, fillTriangleBuffer;
+
         Background background;
 
         /// <summary>Gets the Physics World for the scenario</summary>
@@ -95,6 +98,7 @@ namespace ClusterWave.Scenario
                         break;
                 }
             }
+            CreateBuffers();
         }
 
         /// <summary>Creates a scenario for loading from network. Call CreatePacketArrive for... packet arrivals</summary>
@@ -120,6 +124,8 @@ namespace ClusterWave.Scenario
                     background = new BackgroundOne();
                     break;
             }
+            fillPrimitiveBuffer = new PrimitiveBuffer<VertexPositionTexture>();
+            primitiveBuffer = new PrimitiveBuffer<VertexPositionTexture>();
             world = new World(Vector2.Zero);
             shapes = new List<Shape>(shapeCount);
             staticBody = new Body(world, Vector2.Zero, 0f, null);
@@ -129,6 +135,15 @@ namespace ClusterWave.Scenario
             staticBody.Friction = Constants.WallsFriction;
             staticBody.Restitution = Constants.WallsRestitution;
             AddRectangle(Vector2.Zero, new Vector2(_width, _height));
+        }
+
+        private void CreateBuffers()
+        {
+            lineBuffer = primitiveBuffer.CreateLineBuffer();
+            lightTriangleBuffer = primitiveBuffer.CreateTriangleBuffer();
+            fillTriangleBuffer = fillPrimitiveBuffer.CreateTriangleBuffer();
+            primitiveBuffer = null;
+            fillPrimitiveBuffer = null;
         }
 
         public void CreatePacketArrive(byte[] data)
@@ -178,6 +193,7 @@ namespace ClusterWave.Scenario
                 case 254:
                     #region End
                     done = true;
+                    CreateBuffers();
                     #endregion
                     break;
             }
@@ -192,12 +208,9 @@ namespace ClusterWave.Scenario
              * if the first byte is 4, read a string. That's the name. */
         }
 
-        private void AddPolygon(Vector2[] vertices)
-        {
-            shapes.Add(new Polygon(vertices, staticBody));
-        }
-        private void AddLinegroup(Vector2[] vertices) { shapes.Add(new LineGroup(vertices, staticBody)); }
-        private void AddRectangle(Vector2 pos, Vector2 size) { shapes.Add(new RectangleShape(pos, size, staticBody)); }
+        private void AddPolygon(Vector2[] vertices) { shapes.Add(new Polygon(vertices, staticBody, primitiveBuffer, fillPrimitiveBuffer)); }
+        private void AddLinegroup(Vector2[] vertices) { shapes.Add(new LineGroup(vertices, staticBody, primitiveBuffer)); }
+        private void AddRectangle(Vector2 pos, Vector2 size) { shapes.Add(new RectangleShape(pos, size, staticBody, primitiveBuffer)); }
 
         /// <summary>Calles world.Step and advances the physics by Game1.DeltaTime</summary>
         public void PhysicsStep(float time)
@@ -208,28 +221,37 @@ namespace ClusterWave.Scenario
         /// <summary>Draws the shapes whatever no need to explain, m8</summary>
         public void DrawShapeLines(GraphicsDevice device)
         {
-            Effect fx = background.ShapeLineFx;
-            fx.CurrentTechnique.Passes[0].Apply();
-            for (int i = 0; i < shapes.Count; i++)
-                shapes[i].DrawLines(device);
+            if (lineBuffer != null)
+            {
+                Effect fx = background.ShapeLineFx;
+                fx.CurrentTechnique.Passes[0].Apply();
+                device.SetVertexBuffer(lineBuffer);
+                device.DrawPrimitives(PrimitiveType.LineList, 0, lineBuffer.VertexCount / 2);
+            }
         }
 
         public void DrawShapeFill(GraphicsDevice device)
         {
-            Effect fx = background.ShapeFillFx;
-            fx.CurrentTechnique.Passes[0].Apply();
-            device.SamplerStates[0] = SamplerState.LinearWrap;
-            for (int i = 0; i < shapes.Count; i++)
-                shapes[i].DrawFill(device);
+            if (fillTriangleBuffer != null)
+            {
+                Effect fx = background.ShapeFillFx;
+                fx.CurrentTechnique.Passes[0].Apply();
+                device.SamplerStates[0] = SamplerState.LinearWrap;
+                device.SetVertexBuffer(fillTriangleBuffer);
+                device.DrawPrimitives(PrimitiveType.TriangleList, 0, fillTriangleBuffer.VertexCount / 3);
+            }
         }
 
         /// <summary>Draws all the light walls. Make sure to use the correct Effect, as this function doesn't control any of that stuff</summary>
         public void DrawLightWalls(GraphicsDevice device)
         {
-            Effect fx = background.RayLightFx;
-            fx.CurrentTechnique.Passes[0].Apply();
-            for (int i = 0; i < shapes.Count; i++)
-                shapes[i].DrawLight(device);
+            if (lightTriangleBuffer != null)
+            {
+                Effect fx = background.RayLightFx;
+                fx.CurrentTechnique.Passes[0].Apply();
+                device.SetVertexBuffer(lightTriangleBuffer);
+                device.DrawPrimitives(PrimitiveType.TriangleList, 0, lightTriangleBuffer.VertexCount / 3);
+            }
         }
 
         /// <summary>Creates a projection matrix centering the scenario in the screen</summary>
@@ -262,8 +284,12 @@ namespace ClusterWave.Scenario
         /// <summary>Disposes all the VertexBuffers from the shapes. If they are not disposed they will remain in memory.</summary>
         public void Dispose()
         {
-            for (int i = 0; i < shapes.Count; i++)
-                shapes[i].Dispose();
+            if (fillTriangleBuffer != null)
+                fillTriangleBuffer.Dispose();
+            if (lightTriangleBuffer != null)
+                lightTriangleBuffer.Dispose();
+            if (lineBuffer != null)
+                lineBuffer.Dispose();
             background.Dispose();
         }
     }
