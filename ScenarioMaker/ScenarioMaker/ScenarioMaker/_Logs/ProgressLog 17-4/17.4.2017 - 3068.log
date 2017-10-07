@@ -1,0 +1,30 @@
+Progress log for project ScenarioMaker
+Date: 17/4/2017 [DD/MM/YYYY]
+Time: 16:19 (418ms)
+Console log:
+ - Inspecting: 
+     |- Reading file: \EventInput.cs - 207 lines found;
+     |- Reading file: \Game1.cs - 157 lines found;
+     |- Reading file: \Program.cs - 23 lines found;
+     |- Reading file: \ScenarioStuff.cs - 195 lines found;
+     |- Reading file: \Scene.cs - 14 lines found;
+     |- Reading file: \Stuff.cs - 354 lines found;
+ - Inspecting: \Menus
+     |- Reading file: \Menus\MapOptionsMenu.cs - 156 lines found;
+     |- Reading file: \Menus\Menu.cs - 25 lines found;
+     |- Reading file: \Menus\ShapeSelectMenu.cs - 87 lines found;
+     |- Reading file: \Menus\SimpleTextMenu.cs - 50 lines found;
+     |- Reading file: \Menus\ToolsMenu.cs - 74 lines found;
+     |- Reading file: \Menus\VertexSelectMenu.cs - 78 lines found;
+     |- Reading file: \Menus\VerticalToolMenu.cs - 72 lines found;
+ - Inspecting: \Scenes
+     |- Reading file: \Scenes\Editor.cs - 544 lines found;
+     |- Reading file: \Scenes\MainMenu.cs - 81 lines found;
+ - Inspecting: \Tools
+     |- Reading file: \Tools\LineTool.cs - 105 lines found;
+     |- Reading file: \Tools\PolyTool.cs - 121 lines found;
+     |- Reading file: \Tools\RectTool.cs - 88 lines found;
+     |- Reading file: \Tools\ShapeSelectTool.cs - 310 lines found;
+     |- Reading file: \Tools\Tool.cs - 21 lines found;
+     |- Reading file: \Tools\VertexSelectTool.cs - 306 lines found;
+End reached. lineCount is 3068

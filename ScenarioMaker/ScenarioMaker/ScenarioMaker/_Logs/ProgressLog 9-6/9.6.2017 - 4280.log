@@ -1,0 +1,40 @@
+Progress log for project ScenarioMaker
+Date: 9/6/2017 [DD/MM/YYYY]
+Time: 12:14 (985ms)
+Console log:
+ - Inspecting: 
+     |- Reading file: \EventInput.cs - 206 lines found;
+     |- Reading file: \Game1.cs - 173 lines found;
+     |- Reading file: \Program.cs - 23 lines found;
+     |- Reading file: \ScenarioStuff.cs - 257 lines found;
+     |- Reading file: \Scene.cs - 15 lines found;
+     |- Reading file: \Stuff.cs - 577 lines found;
+ - Inspecting: \LinearMath
+     |- Reading file: \LinearMath\Function.cs - 12 lines found;
+     |- Reading file: \LinearMath\Line.cs - 75 lines found;
+     |- Reading file: \LinearMath\LineFunction.cs - 53 lines found;
+     |- Reading file: \LinearMath\Raycast.cs - 106 lines found;
+     |- Reading file: \LinearMath\VerticalFunc.cs - 36 lines found;
+ - Inspecting: \Menus
+     |- Reading file: \Menus\MapNameMenu.cs - 52 lines found;
+     |- Reading file: \Menus\MapOptionsMenu.cs - 234 lines found;
+     |- Reading file: \Menus\Menu.cs - 26 lines found;
+     |- Reading file: \Menus\PositionsMenu.cs - 145 lines found;
+     |- Reading file: \Menus\ShapeSelectMenu.cs - 87 lines found;
+     |- Reading file: \Menus\SimpleTextMenu.cs - 50 lines found;
+     |- Reading file: \Menus\ToolsMenu.cs - 74 lines found;
+     |- Reading file: \Menus\VertexSelectMenu.cs - 78 lines found;
+     |- Reading file: \Menus\VerticalToolMenu.cs - 105 lines found;
+ - Inspecting: \Scenes
+     |- Reading file: \Scenes\Editor.cs - 695 lines found;
+     |- Reading file: \Scenes\MainMenu.cs - 110 lines found;
+ - Inspecting: \Tools
+     |- Reading file: \Tools\LineTool.cs - 105 lines found;
+     |- Reading file: \Tools\PolyTool.cs - 151 lines found;
+     |- Reading file: \Tools\RectTool.cs - 88 lines found;
+     |- Reading file: \Tools\SetPlayerPosTool.cs - 43 lines found;
+     |- Reading file: \Tools\SetPowerupPosTool.cs - 40 lines found;
+     |- Reading file: \Tools\ShapeSelectTool.cs - 318 lines found;
+     |- Reading file: \Tools\Tool.cs - 21 lines found;
+     |- Reading file: \Tools\VertexSelectTool.cs - 325 lines found;
+End reached. lineCount is 4280

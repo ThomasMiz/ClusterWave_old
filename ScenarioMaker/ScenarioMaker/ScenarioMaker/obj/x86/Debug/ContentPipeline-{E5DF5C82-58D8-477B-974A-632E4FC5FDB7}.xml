@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>font.spritefont</Source>
+      <Name>font</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\thoma_001\documents\visual studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\bin\x86\Debug\Content\font.xnb</Output>
+      <Time>2017-04-13T00:13:20-03:00</Time>
+    </Item>
+    <Item>
+      <Source>cross.png</Source>
+      <Name>cross</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\thoma_001\documents\visual studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\bin\x86\Debug\Content\cross.xnb</Output>
+      <Time>2017-04-12T23:01:26-03:00</Time>
+    </Item>
+    <Item>
+      <Source>circle.png</Source>
+      <Name>circle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\thoma_001\documents\visual studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\bin\x86\Debug\Content\circle.xnb</Output>
+      <Time>2017-04-12T23:14:28-03:00</Time>
+    </Item>
+    <Item>
+      <Source>colorfx.fx</Source>
+      <Name>colorfx</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\thoma_001\Documents\Visual Studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\bin\x86\Debug\Content\colorfx.xnb</Output>
+      <Time>2017-05-26T21:50:26-03:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <ContentProjectGUID>{E5DF5C82-58D8-477B-974A-632E4FC5FDB7}</ContentProjectGUID>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>Reach</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>C:\Users\thoma_001\Documents\Visual Studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMakerContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\thoma_001\Documents\Visual Studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\thoma_001\Documents\Visual Studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\thoma_001\Documents\Visual Studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMaker\bin\x86\Debug\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-03:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2011-09-01T16:22:30-03:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-03:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-03:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2011-09-01T16:22:30-03:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2011-09-01T16:22:30-03:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2017-03-14T22:08:20.845573-03:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

@@ -1,0 +1,4 @@
+C:\Users\thoma_001\Documents\Visual Studio 2013\Projects\ScenarioMaker\ScenarioMaker\ScenarioMakerContent\obj\x86\Release\ScenarioMakerContent.contentprojResolveAssemblyReference.cache
+C:\Users\adm\Desktop\ScenarioMaker\ScenarioMaker\ScenarioMakerContent\obj\x86\Release\ScenarioMakerContent.contentprojResolveAssemblyReference.cache
+C:\Users\TEMP\Desktop\ScenarioMaker\ScenarioMaker\ScenarioMakerContent\obj\x86\Release\ScenarioMakerContent.contentprojResolveAssemblyReference.cache
+C:\Users\thoma_001\Desktop\ScenarioMaker\ScenarioMaker\ScenarioMakerContent\obj\x86\Release\ScenarioMakerContent.contentprojResolveAssemblyReference.cache
