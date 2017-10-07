@@ -13,7 +13,6 @@ namespace ClusterWave.Scenario.Backgrounds
             BackgroundTwo.Load1(Content);
         }
 
-        public abstract Texture2D ShapeTexture { get; }
         public abstract Effect ShapeFillFx { get; }
         public abstract Effect ShapeLineFx { get; }
         public abstract Effect RayLightFx { get; }

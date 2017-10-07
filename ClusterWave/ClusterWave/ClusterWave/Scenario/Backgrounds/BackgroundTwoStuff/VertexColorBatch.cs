@@ -42,5 +42,19 @@ namespace ClusterWave.Scenario.Backgrounds.BackgroundTwoStuff
                 lines[lineVertexCount++] = prev;
             }
         }
+
+        public void AddLineStrip(VertexPositionColor[] arr, float scale, Vector2 translation, Color color)
+        {
+            int less = arr.Length - 1;
+            EnsureLineCapacity(lineVertexCount + less * 2);
+            VertexPositionColor prev = new VertexPositionColor(new Vector3(arr[0].Position.X * scale + translation.X, arr[0].Position.Y * scale + translation.Y, arr[0].Position.Z), color);
+            for (int i = 0; i < less; )
+            {
+                lines[lineVertexCount++] = prev;
+                i++;
+                prev = new VertexPositionColor(new Vector3(arr[i].Position.X * scale + translation.X, arr[i].Position.Y * scale + translation.Y, arr[i].Position.Z), color);
+                lines[lineVertexCount++] = prev;
+            }
+        }
     }
 }

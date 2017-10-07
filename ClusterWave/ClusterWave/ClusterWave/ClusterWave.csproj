@@ -119,6 +119,7 @@
     <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Scenes\Windows95.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Stuff.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\Drawables\DrawMethod.cs" />
     <Compile Include="UI\Drawables\DrawSingleColor.cs" />

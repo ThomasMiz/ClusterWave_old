@@ -15,7 +15,7 @@ namespace ClusterWave
     class Game1 : Microsoft.Xna.Framework.Game
     {
         public static Game1 game;
-        public static int ScreenWidth, ScreenHeight, HalfScreenWidth, HalfScreenHeight;
+        public static int ScreenWidth, ScreenHeight, HalfScreenWidth, HalfScreenHeight, ScreenWidthXtra, ScreenHeightXtra;
         public static float Time = 0, DeltaTime = 0;
         public static KeyboardState ks, oldks;
         public static MouseState ms, oldms;
@@ -131,6 +131,8 @@ namespace ClusterWave
             {
                 ScreenWidth = Math.Max(Window.ClientBounds.Width, 1);
                 ScreenHeight = Math.Max(Window.ClientBounds.Height, 1);
+                ScreenWidthXtra = ScreenWidth + 250;
+                ScreenHeightXtra = ScreenHeight + 250;
                 
                 int chatHeight = Math.Min(ScreenHeight * 3 / 4, 900);
                 client.chat.SetBounds(new Rectangle(10, ScreenHeight - chatHeight - 20, Math.Min(800, ScreenWidth), chatHeight));

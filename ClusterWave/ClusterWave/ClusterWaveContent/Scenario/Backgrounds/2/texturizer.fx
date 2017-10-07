@@ -9,14 +9,14 @@ struct VertexShaderInput
 {
     float4 Position : POSITION0;
 	float4 Color : COLOR0;
-	float2 Coord : TEXCOORD0;
+	float2 Coords : TEXCOORD0;
 };
 
 struct VertexShaderOutput
 {
 	float4 Position : POSITION0;
 	float4 Color : COLOR0;
-	float2 Coord : TEXCOORD0;
+	float2 Coords : TEXCOORD0;
 };
 
 VertexShaderOutput VS(VertexShaderInput input)
@@ -26,7 +26,7 @@ VertexShaderOutput VS(VertexShaderInput input)
     output.Position = mul(mul(input.Position, View), Projection);
 
 	output.Color = input.Color;
-	output.Coord = input.Position * 0.3;
+	output.Coords = input.Position * 0.3;
 
     return output;
 }
@@ -39,9 +39,13 @@ float wave(float x){
 
 float4 PS(VertexShaderOutput input) : COLOR0
 {
-	float2 coords = input.Coord * 1;
-	coords.xy += time * 0.1;
-	return tex2D(samp, coords) * input.Color;
+	float2 c = input.Coords;
+	c.x = c.x * 7.61 + time * 39.612;
+	c.y = c.y * 7.61 + time * 74.512;
+	float4 f = tex2D(samp, c);
+		f.xyz *= 0.5;
+	f.xyz -= 0.25;
+	return f;
 }
 
 technique Technique1

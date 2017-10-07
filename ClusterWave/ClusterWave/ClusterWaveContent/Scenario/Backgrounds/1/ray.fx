@@ -4,6 +4,9 @@ float time;
 float2 lightPos;
 float2 size;
 
+texture noise;
+sampler samp = sampler_state { Texture = noise; };
+
 struct VertexShaderInput
 {
     float4 Position : POSITION0;
@@ -31,10 +34,24 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     return output;
 }
 
+float wave(float x){
+	x = frac(x * 0.5) * 2;
+	if (x < 1) return -2 * x * (x - 1) + 0.5;
+	return (x - 1) * (x - 2) * 2 + 0.5;
+}
+
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	if (input.Coords.x > 0 && input.Coords.y > 0 && input.Coords.x < size.x && input.Coords.y < size.y)
-		return float4(0, 0, 0, 1); //if inside scenario bounds
+	{ //if inside scenario bounds
+		float2 c = input.Coords;
+		c.x = c.x * 7.61 + time * 57.1512;
+		c.y = c.y * 7.61 + time * 14.512;
+		float4 f = tex2D(samp, c);
+		f.xyz *= 0.125;
+		f.xyz -= 0.05;
+		return f;
+	}
 	return float4(0, 0, 0, 0);
 }
 

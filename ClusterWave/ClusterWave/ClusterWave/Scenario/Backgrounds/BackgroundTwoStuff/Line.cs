@@ -29,22 +29,22 @@ namespace ClusterWave.Scenario.Backgrounds.BackgroundTwoStuff
                 t -= 4;
                 bg.AddParticle(new Particle(center));
             }
-            float cs = Stuff.CheapSineWave(Game1.Time) * 10;
+            float cs = Stuff.CheapSineWave(Game1.Time * csMult + csOff) * 10;
             if (t < 2)
             {
                 float wid = (-t * (t - 2)) * 100;
                 float min = center.X - wid, max = center.X + wid;
                 batch.AddLine(
-                    new VertexPositionColor(new Vector3(min, center.Y, 0), Color.White),
-                    new VertexPositionColor(new Vector3(max, center.Y, 0), Color.White)
+                    new VertexPositionColor(new Vector3(min, center.Y, 0), Color.DimGray),
+                    new VertexPositionColor(new Vector3(max, center.Y, 0), Color.DimGray)
                 );
 
-                batch.AddLineStrip(BackgroundTwo.circle, cs, new Vector2(min, center.Y));
-                batch.AddLineStrip(BackgroundTwo.circle, cs, new Vector2(max, center.Y));
+                batch.AddLineStrip(BackgroundTwo.circle, cs, new Vector2(min, center.Y), Color.DimGray);
+                batch.AddLineStrip(BackgroundTwo.circle, cs, new Vector2(max, center.Y), Color.DimGray);
             }
             else
             {
-                batch.AddLineStrip(BackgroundTwo.circle, cs, center);
+                batch.AddLineStrip(BackgroundTwo.circle, cs, center, Color.DimGray);
             }
         }
     }

@@ -9,13 +9,14 @@ namespace ClusterWave.Scenario.Backgrounds
 {
     class BackgroundTwo : Background
     {
+        const int CircleVertex = 12;
         public static VertexPositionColor[] circle;
-        public static Texture2D shapeTexture;
+        public static Texture2D noiseTexture;
         public static Effect RayFx, LinesFx, TextureFx;
         public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
         public static void Load1(ContentManager Content)
         {
-            shapeTexture = Content.Load<Texture2D>("Scenario/Backgrounds/2/shape");
+            noiseTexture = BackgroundOne.Noise128;
             RayFx = Content.Load<Effect>("Scenario/Backgrounds/2/ray");
             LinesFx = Content.Load<Effect>("Scenario/Backgrounds/2/lines");
             TextureFx = Content.Load<Effect>("Scenario/Backgrounds/2/texturizer");
@@ -27,7 +28,6 @@ namespace ClusterWave.Scenario.Backgrounds
             linesTimeParam = LinesFx.Parameters["time"];
         }
 
-        public override Texture2D ShapeTexture { get { return shapeTexture; } }
         public override Effect ShapeFillFx { get { return TextureFx; } }
         public override Effect ShapeLineFx { get { return LinesFx; } }
         public override Effect RayLightFx { get { return RayFx; } }
@@ -46,15 +46,16 @@ namespace ClusterWave.Scenario.Backgrounds
         {
             pBatch = new VertexColorBatch();
             fx = new BasicEffect(Game1.game.GraphicsDevice);
-            TextureFx.Parameters["tex"].SetValue(shapeTexture);
+            fx.VertexColorEnabled = true;
+            TextureFx.Parameters["tex"].SetValue(noiseTexture);
 
-            circle = new VertexPositionColor[33];
-            for(int i=0; i<32; i++)
+            circle = new VertexPositionColor[CircleVertex+1];
+            for(int i=0; i<CircleVertex; i++)
             {
-                float rot = i * MathHelper.TwoPi / 32;
+                float rot = i * MathHelper.TwoPi / CircleVertex;
                 circle[i] = new VertexPositionColor(new Vector3((float)Math.Cos(rot), (float)Math.Sin(rot), 0), Color.White);
             }
-            circle[32] = circle[0];
+            circle[CircleVertex] = circle[0];
             lines = new List<Line>();
             particles = new LinkedList<Particle>();
         }
@@ -75,12 +76,11 @@ namespace ClusterWave.Scenario.Backgrounds
                 lines[i].Draw(pBatch);
 
             LinkedListNode<Particle> p = particles.First;
-            int c = 0;
             while (p != null)
             {
-                c++;
-                p.Value.Draw(pBatch);
+                Particle v = p.Value;
                 p = p.Next;
+                v.Draw(pBatch);
             }
 
             fx.CurrentTechnique.Passes[0].Apply();
@@ -90,11 +90,6 @@ namespace ClusterWave.Scenario.Backgrounds
         public void AddParticle(Particle p)
         {
             p.node = particles.AddLast(p);
-        }
-
-        public void RemoveParticle(LinkedListNode<Particle> node)
-        {
-            particles.Remove(node);
         }
 
         public override void Resize()

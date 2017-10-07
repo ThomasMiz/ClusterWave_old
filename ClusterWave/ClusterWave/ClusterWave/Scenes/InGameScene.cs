@@ -182,7 +182,7 @@ namespace ClusterWave.Scenes
 
             bg.Draw(GraphicsDevice, batch);
 
-            /*float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
+            float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
 
             #region Batch: Bullets & Players
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, PlayerDrawMatrix);
@@ -206,7 +206,7 @@ namespace ClusterWave.Scenes
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);
 
-            client.chat.Draw(batch);*/
+            client.chat.Draw(batch);
 
             //debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
         }
