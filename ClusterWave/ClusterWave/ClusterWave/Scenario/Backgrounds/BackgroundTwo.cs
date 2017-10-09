@@ -72,8 +72,12 @@ namespace ClusterWave.Scenario.Backgrounds
 
         public override void Draw(GraphicsDevice device, SpriteBatch batch)
         {
+            fx.CurrentTechnique.Passes[0].Apply();
+
             for (int i = 0; i < lines.Count; i++)
                 lines[i].Draw(pBatch);
+
+            pBatch.FlushAllLineFirst(device);
 
             LinkedListNode<Particle> p = particles.First;
             while (p != null)
@@ -83,7 +87,6 @@ namespace ClusterWave.Scenario.Backgrounds
                 v.Draw(pBatch);
             }
 
-            fx.CurrentTechnique.Passes[0].Apply();
             pBatch.FlushAllLineFirst(device);
         }
 

@@ -32,9 +32,10 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 }
 
 float wave(float x){
-	x = frac(x * 0.5) * 2;
+	return sin(x * 3.14159265);
+	/*x = frac(x * 0.5) * 2;
 	if (x < 1) return -4 * x * (x - 1);
-	return (x - 1) * (x - 2) * 4;
+	return (x - 1) * (x - 2) * 4;*/
 }
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
@@ -43,14 +44,24 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	{ //if inside scenario bounds
 		float2 coords = input.Coords;
 		float n = 0;
-		n += wave(time * 0.841 + coords.x * 0.312 + coords.y * 0.409) * 0.1;
+
+		n += wave(mad(time, 0.841, mad(coords.x, 0.312, coords.y * 0.409))) * 0.1;
+		n += wave(mad(time, 0.646, mad(coords.x, -0.468, coords.y * 0.549))) * 0.1;
+		n += wave(mad(time, 0.983, mad(coords.x, 0.765, coords.y * -0.232))) * 0.1;
+
+		n += wave(mad(time, 1.046, coords.y * -0.441)) * 0.1;
+		n += wave(mad(time, -0.718, coords.y * -0.468)) * 0.1;
+		n += wave(mad(time, 0.812, coords.y * 0.915)) * 0.1;
+
+		/*n += wave(time * 0.841 + coords.x * 0.312 + coords.y * 0.409) * 0.1;
 		n += wave(time * 0.646 + coords.x * -0.468 + coords.y * 0.549) * 0.1;
 		n += wave(time * 0.983 + coords.x * 0.765 + coords.y * -0.232) * 0.1;
+
 		n += wave(time * 1.046 + coords.y * -0.441) * 0.1;
 		n += wave(time * -0.718 + coords.y * 0.275) * 0.1;
-		n += wave(time * 0.812 + coords.y * 0.915) * 0.1;
+		n += wave(time * 0.812 + coords.y * 0.915) * 0.1;*/
 
-		n = n * 0.6 + 0.2;
+		n = mad(n, 0.6, 0.2); //fuck you HLSL compiler for apparently not auto-recognizing and optimizing MADs
 		if (n < 0.1) n = 0.1;
 
 		return float4(n, n, n, 1);

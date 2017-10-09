@@ -34,12 +34,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     return output;
 }
 
-float wave(float x){
-	x = frac(x * 0.5) * 2;
-	if (x < 1) return -2 * x * (x - 1) + 0.5;
-	return (x - 1) * (x - 2) * 2 + 0.5;
-}
-
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	if (input.Coords.x > 0 && input.Coords.y > 0 && input.Coords.x < size.x && input.Coords.y < size.y)

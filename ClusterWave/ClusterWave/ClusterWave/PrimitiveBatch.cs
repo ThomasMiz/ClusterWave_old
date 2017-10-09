@@ -200,6 +200,7 @@ namespace ClusterWave
         {
             if (lineVertexCount != 0)
             {
+                device.SetVertexBuffer(null);
                 if (lineBuffer.VertexCount < lineVertexCount)
                 {
                     lineBuffer.Dispose();
