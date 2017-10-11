@@ -12,16 +12,20 @@ namespace ClusterWave
         public const Category BulletsCategory = Category.Cat3;
         public const Category ParticleCategory = Category.Cat4;
         public const Category ShieldCategory = Category.Cat5;
+        public const Category PowerupCategory = Category.Cat6;
 
         public const Category PlayersCollideWith = PlayerCategory | WallsCategory | BulletsCategory;
         public const Category WallsCollideWith = Category.All;
         public const Category BulletsCollideWith = BulletsCategory | PlayerCategory | WallsCategory;
         public const Category ParticleCollideWith = WallsCategory | ShieldCategory;
         public const Category ShieldCollideWith = PlayerCategory | BulletsCategory;
+        public const Category PowerupCollideWith = PlayerCategory;
 
         public const float PlayerRestitution = 0f;
         public const float PlayerFriction = 0f;
         public const float PlayerColliderSize = 1f / 6f;
+
+        public const float PlayerMovementSpeedMPS = 1.3f;
 
         public const float WallsRestitution = 0f;
         public const float WallsFriction = 0f;
@@ -33,5 +37,8 @@ namespace ClusterWave
         public const float BulletDensity = 0.01f;
         public const float BulletRestitution = 1f;
         public const float BulletFriction = 0f;
+
+        public const float PowerupRadius = 1.6f;
+        
     }
 }
