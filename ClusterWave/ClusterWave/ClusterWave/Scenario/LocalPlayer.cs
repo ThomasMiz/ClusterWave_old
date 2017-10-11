@@ -20,20 +20,20 @@ namespace ClusterWave.Scenario
             Vector2 spd = Vector2.Zero;
             if (Game1.ks.IsKeyDown(Keys.Left))
             {
-                spd.X = -MovementSpeed;
+                spd.X = -Constants.PlayerMovementSpeedMPS;
             }
             else if (Game1.ks.IsKeyDown(Keys.Right))
             {
-                spd.X = MovementSpeed;
+                spd.X = Constants.PlayerMovementSpeedMPS;
             }
 
             if (Game1.ks.IsKeyDown(Keys.Up))
             {
-                spd.Y = -MovementSpeed;
+                spd.Y = -Constants.PlayerMovementSpeedMPS;
             }
             else if (Game1.ks.IsKeyDown(Keys.Down))
             {
-                spd.Y = MovementSpeed;
+                spd.Y = Constants.PlayerMovementSpeedMPS;
             }
             body.LinearVelocity = spd;
 

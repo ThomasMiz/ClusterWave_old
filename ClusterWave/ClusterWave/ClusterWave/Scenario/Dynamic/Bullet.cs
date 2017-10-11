@@ -42,7 +42,7 @@ namespace ClusterWave.Scenario.Dynamic
 
         private void Init(Vector2 pos, Vector2 movement, float rot)
         {
-            body = new Body(physicsWorld, pos, rot, null);
+            body = new Body(physicsWorld, pos, rot, this);
             body.BodyType = BodyType.Dynamic;
             body.LinearVelocity = movement;
             Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity));

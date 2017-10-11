@@ -99,7 +99,7 @@ namespace ClusterWave.Scenario.Backgrounds
 
         public override void Draw(GraphicsDevice device, SpriteBatch batch)
         {
-            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone);
             batch.Draw(target, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f/resolutionMultiply, SpriteEffects.None, 0f);
             batch.End();
         }

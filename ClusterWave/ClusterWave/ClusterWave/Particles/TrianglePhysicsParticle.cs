@@ -11,7 +11,7 @@ namespace ClusterWave.Particles
     class TrianglePhysicsParticle : Particle
     {
         private const float Friction = 0f, Restitution = 1.05f;
-        private const float ForceValue = 0.05f, ForceRandomDelta = 1.5f, ForceMinRandom = 0.25f;
+        private const float ForceValue = 0.075f, ForceRandomDelta = 1.5f, ForceMinRandom = 0.25f;
 
         VertexBuffer[] buffers;
         Body[] bodies;
@@ -74,7 +74,7 @@ namespace ClusterWave.Particles
             arr[1] = new VertexPositionTexture(new Vector3(b, 0f), Vector2.Zero);
             arr[2] = new VertexPositionTexture(new Vector3(c, 0f), Vector2.Zero);
 
-            PolygonShape pol = new PolygonShape(vert, 0.25f);
+            PolygonShape pol = new PolygonShape(vert, 0.1f);
             Fixture f = bo.CreateFixture(pol);
             f.CollisionCategories = Constants.ParticleCategory;
             f.CollidesWith = Constants.ParticleCollideWith;

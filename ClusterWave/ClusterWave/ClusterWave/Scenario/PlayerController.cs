@@ -10,8 +10,7 @@ namespace ClusterWave.Scenario
 {
     abstract class PlayerController
     {
-        protected const float PlayerSize = Constants.PlayerColliderSize / 0.33f;
-        protected const float MovementSpeed = 0.75f;
+        protected const float PlayerDrawSize = Constants.PlayerColliderSize / 0.33f;
         const int FrameWidth = 24, FrameHeight = 21;
         public static Texture2D[] PlayerTextures;
         public static void Load(ContentManager Content)
@@ -54,7 +53,7 @@ namespace ClusterWave.Scenario
 
             texture = PlayerTextures[0/*player.ColorIndex*/];
             origin = new Vector2(texture.Width/2f, texture.Height/2f);
-            scale = PlayerSize / texture.Width;
+            scale = PlayerDrawSize / texture.Width;
             source = new Rectangle(0, 0, FrameWidth, FrameHeight);
         }
 
