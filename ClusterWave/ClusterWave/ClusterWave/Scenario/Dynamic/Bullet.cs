@@ -61,7 +61,7 @@ namespace ClusterWave.Scenario.Dynamic
         bool body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {
             if (--bouncesLeft == -1)
-                physicsWorld.RemoveBody(body);
+                GetRekkt();
             contact.Restitution = 1;
             check = true;
             return true;
