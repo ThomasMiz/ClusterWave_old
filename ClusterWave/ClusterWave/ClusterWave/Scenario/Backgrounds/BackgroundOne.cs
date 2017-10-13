@@ -79,15 +79,22 @@ namespace ClusterWave.Scenario.Backgrounds
             device.SetRenderTarget(target);
             device.Clear(Color.White);
             float time = Game1.Time;
-            timeParameter.SetValue(time);
-            time *= 0.2f;
-            float hw = Game1.HalfScreenWidth, hh = Game1.HalfScreenHeight;
+            timeParameter.SetValue(time * 0.33f);
+            time *= 0.064f; //0.2f;
+            /*float hw = Game1.HalfScreenWidth, hh = Game1.HalfScreenHeight;
             Vector2[] values = new Vector2[]{
                 new Vector2((float)Math.Sin(time*0.177)*hw+hw, (float)Math.Sin(time*1.92+9.0)*hh+hh),
                 new Vector2((float)Math.Sin(time*0.316+1.0)*hw+hw, (float)Math.Sin(time*1.284+5.0)*hh+hh),
                 new Vector2((float)Math.Sin(time*0.583+2.0)*hw+hw, (float)Math.Sin(time*0.195+6.0)*hh+hh),
                 new Vector2((float)Math.Sin(time*0.815+3.0)*hw+hw, (float)Math.Sin(time*0.553+7.0)*hh+hh),
                 new Vector2((float)Math.Sin(time*1.174+4.0)*hw+hw, (float)Math.Sin(time*0.817+8.0)*hh+hh),
+            };*/
+            Vector2[] values = new Vector2[]{
+                new Vector2(Stuff.CheapWave(time*0.177f+0.0f)*Game1.ScreenWidth, Stuff.CheapWave(time*1.92f+9.0f)*Game1.ScreenHeight),
+                new Vector2(Stuff.CheapWave(time*0.316f+1.0f)*Game1.ScreenWidth, Stuff.CheapWave(time*1.284f+5.0f)*Game1.ScreenHeight),
+                new Vector2(Stuff.CheapWave(time*0.583f+2.0f)*Game1.ScreenWidth, Stuff.CheapWave(time*0.195f+6.0f)*Game1.ScreenHeight),
+                new Vector2(Stuff.CheapWave(time*0.815f+3.0f)*Game1.ScreenWidth, Stuff.CheapWave(time*0.553f+7.0f)*Game1.ScreenHeight),
+                new Vector2(Stuff.CheapWave(time*1.174f+4.0f)*Game1.ScreenWidth, Stuff.CheapWave(time*0.817f+8.0f)*Game1.ScreenHeight),
             };
             pointsParameter.SetValue(values);
             worldParameter.SetValue(Matrix.CreateTranslation(1, 1, 0) * Matrix.CreateScale(resolutionMultiply) * Matrix.CreateTranslation(-1, -1, 0));
