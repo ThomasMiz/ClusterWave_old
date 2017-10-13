@@ -3,7 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace ClusterWaveServer.Scenarios
+namespace ClusterWaveServer.Scenario
 {
     delegate void OnScenarioLoaderPacket(byte[] data);
 

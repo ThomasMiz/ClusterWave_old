@@ -9,6 +9,7 @@ namespace ClusterWaveServer.Network
     class PlayerInfo
     {
         String name;
+        #pragma warning disable //disable warning para que no moleste hasta que hagas algo con esto
         int roundsWon, roundsLost;
         bool doneLoading;
         int id;

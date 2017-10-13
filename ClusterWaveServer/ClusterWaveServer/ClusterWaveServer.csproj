@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,15 +21,17 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FarseerPhysics XNA, Version=3.5.0.27755, Culture=neutral, processorArchitecture=x86">
@@ -57,17 +59,16 @@
     <Compile Include="Network\Server.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenarios\Dynamic\Bullet.cs" />
-    <Compile Include="Scenarios\Dynamic\BulletList.cs" />
-    <Compile Include="Scenarios\Dynamic\Shield.cs" />
-    <Compile Include="Scenarios\Dynamic\ShieldList.cs" />
-    <Compile Include="Scenarios\NetPlayer.cs" />
-    <Compile Include="Scenarios\PlayerController.cs" />
-    <Compile Include="Scenarios\Scenario.cs" />
-    <Compile Include="Scenarios\ScenarioLoader.cs" />
+    <Compile Include="Scenario\Dynamic\Bullet.cs" />
+    <Compile Include="Scenario\Dynamic\BulletList.cs" />
+    <Compile Include="Scenario\Dynamic\Shield.cs" />
+    <Compile Include="Scenario\Dynamic\ShieldList.cs" />
+    <Compile Include="Scenario\NetPlayer.cs" />
+    <Compile Include="Scenario\PlayerController.cs" />
+    <Compile Include="Scenario\Scenario.cs" />
+    <Compile Include="Scenario\ScenarioLoader.cs" />
     <Compile Include="Scenes\InGameScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
-    <Compile Include="Stuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

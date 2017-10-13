@@ -27,25 +27,8 @@ namespace ClusterWave
             color.B = (byte)(color.B * v);
         }
 
-        /// <summary>THIS DOESNT WORK PROPERLY ON S AND V ARE NOT 1</summary>
-        /// <param name="h">The Hue value</param>
-        /// <param name="s">"This must be 1.0f" #FuckYou</param>
-        /// <param name="v">"This must be 1.0f" #FuckYou</param>
-        /// <returns></returns>
-        public static Color ColorFromHSV(float h, float s, float v)
-        {
-            h %= 1f;
-            Color hue = ColorFromHue(h);
-            SaturateColor(ref hue, s);
-            MultiplyColor(ref hue, v);
-            return hue;
-        }
-
-        /// <summary>
-        /// Cheap parabola-based wave that oscilates with amplitud of 1 and wavelength of 2.
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <summary>Cheap parabola-based wave that oscilates with amplitud of 1 and wavelength of 2</summary>
+        /// <param name="x">... dont make me fucking explain this param</param>
         public static float CheapSineWave(float x)
         {
             x = x % 2;
@@ -54,13 +37,25 @@ namespace ClusterWave
 
         /// <summary>
         /// Cheap parabola-based wave that oscilates in between [0, 1] and has a wavelength of 2.
+        /// <para>After a bit of testing, this takes about 2/3s as much time as Math.Sin</para>
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
+        /// <param name="x">fuck u dusto</param>
         public static float CheapWave(float x)
         {
             x = x % 2;
             return x < 1 ? (-2 * x * (x - 1) + 0.5f) : (2 * (x - 1) * (x - 2) + 0.5f);
+        }
+
+        /// <summary>Rotates a vector around (0, 0)</summary>
+        /// <param name="vec">A reference to the vector to rotate</param>
+        /// <param name="rot">The rotation in radians</param>
+        public static void RotateVector(this Vector2 vec, float rot)
+        {
+            float cos = (float)Math.Cos(rot);
+            float sin = (float)Math.Sin(rot);
+            float x = vec.X, y = vec.Y;
+            vec.X = cos * x - sin * y;
+            vec.Y = sin * x + cos * y;
         }
     }
 }

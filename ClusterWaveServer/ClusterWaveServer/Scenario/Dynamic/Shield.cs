@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Dynamics;
 
-namespace ClusterWaveServer.Scenarios.Dynamic
+namespace ClusterWaveServer.Scenario.Dynamic
 {
     class Shield
     {

@@ -6,16 +6,12 @@ using FarseerPhysics.Common;
 using System.Collections.Generic;
 using FarseerPhysics.Common.Decomposition;
 
-namespace ClusterWaveServer.Scenarios
+namespace ClusterWaveServer.Scenario
 {
     /// <summary>Encapsulates a Scenario with physics.</summary>
     class Scenario
     {
-        const Category ShapeCollisionCategory = Category.Cat1, ShapeCollidesWith = Category.All;
-        const float ShapeFriction = 1;
-        const float ShapeRestitution = 0;
-
-        float width, height, _halfw, _halfh;
+        float width, height;
         World world;
         Body staticBody;
         byte bgType;
@@ -27,12 +23,8 @@ namespace ClusterWaveServer.Scenarios
         public World PhysicsWorld { get { return world; } }
         /// <summary>Gets the Width (in meters)</summary>
         public float Width { get { return width; } }
-        /// <summary>Gets the Width (in meters) devided by two</summary>
-        public float HalfWidth { get { return _halfw; } }
         /// <summary>Gets the Height (in meters)</summary>
         public float Height { get { return height; } }
-        /// <summary>Gets the Height (in meters) devided by two</summary>
-        public float HalfHeight { get { return _halfh; } }
         /// <summary>Gets the number corresponding to which background the game should use</summary>
         public byte BackgroundType { get { return bgType; } }
         /// <summary>Gets the maximum amount of players the scenario supports</summary>
@@ -74,10 +66,10 @@ namespace ClusterWaveServer.Scenarios
                 if (loop) v.RemoveAt(v.Count - 1);
                 f = staticBody.CreateFixture(new ChainShape(v, loop));
             }
-            f.CollisionCategories = ShapeCollisionCategory;
-            f.CollidesWith = ShapeCollidesWith;
-            f.Friction = ShapeFriction;
-            f.Restitution = ShapeRestitution;
+            f.CollisionCategories = Constants.WallsCategory;
+            f.CollidesWith = Constants.WallsCollideWith;
+            f.Friction = Constants.WallsFriction;
+            f.Restitution = Constants.WallsRestitution;
         }
         public void AddPolygon(Vector2[] vertices)
         {

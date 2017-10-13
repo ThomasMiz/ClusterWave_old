@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FarseerPhysics.Dynamics;
-using ClusterWaveServer.Scenarios;
+using ClusterWaveServer.Scenario;
 using ClusterWaveServer.Network;
 using Lidgren.Network;
 
@@ -14,9 +14,9 @@ namespace ClusterWaveServer.Scenes
     {
         protected Server server;
 
-        public Scene(Server server)
+        public Scene()
         {
-            this.server = server;
+            this.server = Program.server;
         }
 
         public abstract void Update();

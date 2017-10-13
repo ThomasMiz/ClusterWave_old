@@ -21,10 +21,30 @@ namespace ClusterWave.Scenario
             PlayerTextures[0] = Content.Load<Texture2D>("Player/dusto");
         }
 
+        /// <summary>
+        /// The player's body in the physics simulation. This can be used to get and set the position and velocity.
+        /// <para>For changing rotation, see <see cref="PlayerController.rotation"/></para>
+        /// </summary>
         protected Body body;
+
+        /// <summary>
+        /// The rotation the player is facing. This value is used just for drawing
+        /// </summary>
         protected float rotation;
 
+        /// <summary>
+        /// The Player this PlayerController is assigned to
+        /// </summary>
         protected Player player;
+
+        /// <summary>
+        /// Gets the Player this PlayerController is assigned to
+        /// </summary>
+        public Player Player { get { return player; } }
+
+        /// <summary>
+        /// The <see cref="ClusterWave.Scenes.InGameScene"/> object controlling this shiet
+        /// </summary>
         protected InGameScene scene;
 
         private Texture2D texture;
@@ -37,17 +57,23 @@ namespace ClusterWave.Scenario
         /// </summary>
         public Vector2 Position { get { return body.Position; } }
 
+        /// <summary>
+        /// Creates a PlayerController, assigning it a given position, scene and it's assigned Player.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="scene"></param>
+        /// <param name="player"></param>
         public PlayerController(Vector2 position, InGameScene scene, Player player)
         {
             this.scene = scene;
             rotation = 0;
             this.player = player;
             body = new Body(scene.Scenario.PhysicsWorld, position, 0f, null);
-            body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(Constants.PlayerColliderSize, 1f), null);
+            body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(Constants.PlayerColliderSize, Constants.PlayerDensity), this);
             body.BodyType = BodyType.Dynamic;
             body.FixedRotation = true;
-            body.Friction = 0.5f;
-            body.Restitution = 0;
+            body.Friction = Constants.PlayerFriction;
+            body.Restitution = Constants.PlayerRestitution;
             body.CollidesWith = Constants.PlayersCollideWith;
             body.CollisionCategories = Constants.PlayerCategory;
 

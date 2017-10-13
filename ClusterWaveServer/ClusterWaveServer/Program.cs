@@ -6,22 +6,33 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ClusterWaveServer.Network;
-using ClusterWaveServer.Scenarios;
+using ClusterWaveServer.Scenario;
 
 namespace ClusterWaveServer
 {
     class Program
     {
-        static Stopwatch watch;
-        static Server server;
+        /// <summary>
+        /// The Update rate in milliseconds. Set to update the game 60 times per second.
+        /// </summary>
+        private const float UpdateRate = 1000f / 60f;
+
+        /// <summary>
+        /// The elapsed game time in seconds
+        /// </summary>
+        public static float DeltaTime = 0;
+        
+        /// <summary>
+        /// THE SERVER :O
+        /// </summary>
+        public static Server server;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Game made with help of \"EL BRUFE\" fuck you \"Dusto\"");
-            watch = new Stopwatch();
             server = new Server();
 
-            Thread thread = new Thread(serverthread);
+            Thread thread = new Thread(ServerThreadFunction);
             thread.Start();
 
             while (true)
@@ -29,18 +40,20 @@ namespace ClusterWaveServer
                 String cmd = Console.ReadLine();
                 Console.WriteLine("yes.");
 
-                server.SendScenario(cmd);
+                server.SendScenario(cmd); //aca hay q poner para que pruebe hacer comandos (que llame una funcion que lo haga en otro lado?)
             }
         }
 
-        static void serverthread()
+        static void ServerThreadFunction()
         {
+            Stopwatch watch = new Stopwatch();
             while (true)
             {
-                const double fps = 1000.0 / 60.0;
+                DeltaTime = (float)watch.Elapsed.TotalSeconds;
                 watch.Restart();
                 server.UpdateServer();
-                int slp = (int)(fps - watch.ElapsedMilliseconds);
+                int slp = (int)(UpdateRate - watch.ElapsedMilliseconds);
+                watch.Restart();
                 if (slp > 0)
                     Thread.Sleep(slp);
             }

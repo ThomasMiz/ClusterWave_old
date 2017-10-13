@@ -98,6 +98,7 @@ namespace ClusterWave.Scenario.Dynamic
         public void GetRekkt()
         {
             list.Remove(listNode);
+            physicsWorld.RemoveBody(body);
         }
     }
 }

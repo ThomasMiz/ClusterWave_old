@@ -143,9 +143,9 @@ namespace ClusterWaveServer.Network
         public void SendScenario(String file)
         {
             //para el juego terminado, agregar checkeo de que se haya cargado bien? (load.IsOk)
-            Scenarios.ScenarioLoader load = new Scenarios.ScenarioLoader(file);
+            Scenario.ScenarioLoader load = new Scenario.ScenarioLoader(file);
             load.OnCreationPacket += sendByteArray;
-            scene = new InGameScene(this, load.CreateScenario());
+            scene = new InGameScene(load.CreateScenario());
             load.OnCreationPacket -= sendByteArray;
         }
 

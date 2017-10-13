@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using FarseerPhysics.Dynamics;
+﻿using FarseerPhysics.Dynamics;
 
 namespace ClusterWave
 {
@@ -37,6 +34,8 @@ namespace ClusterWave
         public const float PlayerRestitution = 0f;
         /// <summary>The Friction value to be applied to player's physic bodies</summary>
         public const float PlayerFriction = 0f;
+        /// <summary>The Density value to be applied to player's colliders</summary>
+        public const float PlayerDensity = 1f;
         /// <summary>The Radius of the circle shape for player's collider</summary>
         public const float PlayerColliderSize = 1f / 6f;
         /// <summary>The maximum/starting amount of health a player gets</summary>

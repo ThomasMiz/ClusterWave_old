@@ -7,12 +7,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Common;
 
-namespace ClusterWaveServer.Scenarios.Dynamic
+namespace ClusterWaveServer.Scenario.Dynamic
 {
     class Bullet
     {
         private int idCounter = 0;
-        public const float Radius = 0.0666f, Friction = 0f, Restitution = 1f;
 
         private LinkedList<Bullet> list;
         private LinkedListNode<Bullet> listNode;
@@ -26,7 +25,7 @@ namespace ClusterWaveServer.Scenarios.Dynamic
 
         public Bullet(World physicsWorld, Vector2 pos, float rot, float speed, int bounces)
         {
-            this.id = idCounter++;
+            id = idCounter++;
             this.physicsWorld = physicsWorld;
             this.bouncesLeft = bounces;
             this.spd = speed;
@@ -35,14 +34,14 @@ namespace ClusterWaveServer.Scenarios.Dynamic
 
         private void Init(Vector2 pos, Vector2 movement, float rot)
         {
-            body = new Body(physicsWorld, pos, rot, null);
+            body = new Body(physicsWorld, pos, rot, this);
             body.BodyType = BodyType.Dynamic;
             body.LinearVelocity = movement;
-            Fixture f = body.CreateFixture(new CircleShape(Radius, 0.5f));
-            f.Friction = Friction;
-            f.Restitution = Restitution;
-            body.Friction = Friction;
-            body.Restitution = Restitution;
+            Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity));
+            f.Friction = Constants.BulletFriction;
+            f.Restitution = Constants.BulletRestitution;
+            body.Friction = Constants.BulletFriction;
+            body.Restitution = Constants.BulletRestitution;
             body.AngularDamping = 0f;
             body.LinearDamping = 0f;
             body.CollidesWith = Constants.BulletsCollideWith;
@@ -54,7 +53,10 @@ namespace ClusterWaveServer.Scenarios.Dynamic
         bool body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {
             if (--bouncesLeft == -1)
-                physicsWorld.RemoveBody(body);
+            {
+                GetRekkt();
+                return false;
+            }
             contact.Restitution = 1;
             check = true;
             return true;
@@ -70,7 +72,9 @@ namespace ClusterWaveServer.Scenarios.Dynamic
         {
             if (check)
             {
-                body.Rotation = (float)Math.Atan2(body.LinearVelocity.Y, body.LinearVelocity.X);
+                Vector2 lv = body.LinearVelocity;
+                if (lv.X != 0 && lv.Y != 0)
+                    body.Rotation = (float)Math.Atan2(lv.Y, lv.X);
                 body.LinearVelocity = new Vector2((float)Math.Cos(body.Rotation) * spd, (float)Math.Sin(body.Rotation) * spd);
                 check = false;
             }
@@ -79,6 +83,7 @@ namespace ClusterWaveServer.Scenarios.Dynamic
         public void GetRekkt()
         {
             list.Remove(listNode);
+            physicsWorld.RemoveBody(body);
         }
     }
 }

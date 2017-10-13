@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ClusterWaveServer.Scenarios;
+using ClusterWaveServer.Scenario;
 using ClusterWaveServer.Network;
 using Lidgren.Network;
 
@@ -11,16 +11,18 @@ namespace ClusterWaveServer.Scenes
 {
     class InGameScene : Scene
     {
-        Scenario world;
+        Scenario.Scenario scenario;
 
-        public InGameScene(Server server,Scenario world) : base(server)
+        public Scenario.Scenario Scenario { get { return scenario; } }
+
+        public InGameScene(Scenario.Scenario scenario) : base()
         {
-            this.world = world;
+            this.scenario = scenario;
         }
 
         public override void Update()
         {
-            
+            scenario.PhysicsStep(Program.DeltaTime);
         }
 
         public override void OnPacket(Lidgren.Network.NetIncomingMessage msg)
@@ -50,7 +52,7 @@ namespace ClusterWaveServer.Scenes
             }
         }
 
-        void playerMoveUp()
+        /*void playerMoveUp() //que son estas? no se, no las quiero ver a menos que tengas una buena explicacion.
         {
             
         }
@@ -68,6 +70,6 @@ namespace ClusterWaveServer.Scenes
         void playerMoveRight()
         {
 
-        }
+        }*/
     }
 }

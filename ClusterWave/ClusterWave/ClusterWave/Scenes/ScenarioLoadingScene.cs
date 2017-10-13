@@ -37,7 +37,8 @@ namespace ClusterWave.Scenes
             client.chat.PreDraw(GraphicsDevice, batch);
             GraphicsDevice.SetRenderTarget(null);
 
-            Color back = Stuff.ColorFromHSV(Game1.Time * 0.2f, 1f, 0.2f);
+            Color back = Stuff.ColorFromHue(Game1.Time * 0.2f);
+            Stuff.MultiplyColor(ref back, 0.2f);
             GraphicsDevice.Clear(back);
 
             batch.Begin();

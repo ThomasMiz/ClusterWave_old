@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ClusterWaveServer.Scenarios.Dynamic
+namespace ClusterWaveServer.Scenario.Dynamic
 {
     class ShieldList
     {
