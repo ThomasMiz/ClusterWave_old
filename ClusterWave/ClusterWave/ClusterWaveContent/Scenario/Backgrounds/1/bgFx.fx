@@ -1,5 +1,4 @@
 float4x4 World;
-float4x4 View;
 float4x4 Proj;
 
 texture colors;
@@ -26,7 +25,7 @@ struct PixelShaderInput
 PixelShaderInput VertexShaderFunction(VertexShaderInput input)
 {
 	PixelShaderInput ret;
-	ret.Pos = mul(mul(mul(input.Pos, World), View), Proj);
+	ret.Pos = mul(mul(input.Pos, World), Proj);//mul(mul(mul(input.Pos, World), View), Proj);
 	ret.Color = input.Color;
 	ret.Coords = input.Coords;
 	return ret;

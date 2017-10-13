@@ -12,7 +12,7 @@ namespace ClusterWave.Scenario.Backgrounds
 
         public static Texture2D BackgroundTexture, Noise128;
         public static Effect BackgroundFx;
-        private static EffectParameter worldParameter, viewParameter, projParameter, timeParameter, sizeParameter, pointsParameter;
+        private static EffectParameter worldParameter, projParameter, timeParameter, sizeParameter, pointsParameter;
         public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
         public static void Load1(ContentManager Content)
         {
@@ -28,7 +28,6 @@ namespace ClusterWave.Scenario.Backgrounds
             BackgroundTexture = Content.Load<Texture2D>("Scenario/Backgrounds/1/texture");
             BackgroundFx = Content.Load<Effect>("Scenario/Backgrounds/1/bgFx");
             worldParameter = BackgroundFx.Parameters["World"];
-            viewParameter = BackgroundFx.Parameters["View"];
             projParameter = BackgroundFx.Parameters["Proj"];
             timeParameter = BackgroundFx.Parameters["time"];
             sizeParameter = BackgroundFx.Parameters["size"];
@@ -38,7 +37,6 @@ namespace ClusterWave.Scenario.Backgrounds
             linesTimeParam = LinesFx.Parameters["time"];
 
             worldParameter.SetValue(Matrix.Identity);
-            viewParameter.SetValue(Matrix.Identity);
             projParameter.SetValue(Matrix.CreateOrthographicOffCenter(-1, 1, 1, -1, 0f, 10f));
             BackgroundFx.Parameters["colors"].SetValue(BackgroundTexture);
         }
