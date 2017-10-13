@@ -66,20 +66,14 @@ namespace ClusterWave
             typingText = new StringBuilder(MaxAllowedChars);
             typingTextSize = new Vector2(0, Normal.MeasureString("M").Y);
 
-            /*Add("h &blue;a tdos&red; los pts &italics;co &ekid;e mo &bold;&cyan;gra&reset;afeeeeeeeeeeeeeeee eeeeeeeeeeeeeeeabc &magenta;abcdefghijk&violet;lmnopqrstuvwxyzekidekidekidekidekidekidekidekidekidekidekidekidekidekidekidekidekidekidekide&pink;kidekidekidekidekidekidekidekidekidekidekide");
-            //Add("hol&blue;a a tod&w;o&r;s!");
-            Add("ola&w;1234567890123456789012345&r;E&w;678901234567890123456789012345678901234567890123456789&r;EKIDE LOLAZO PAPA&w;012345678901234567890EKIDEKIDE KIDEKIDEKIDE&r;12345");
-
-            Add("Se que nadie quiere&red; ver si esta mie&blue;rda anda &w;pero yo tendr&macri;ia que arre&pink;glarla &r;y es mi prob&macri;lema xdddd &w;me voy a s&red;uicidar &r;lol voy a ex&bold;tender un poco cua&italics;ndo dura este texto agregando cu&pink;alquier pelotude&niceblue;z que se me venga a la ca&cyan;beza que sea un toque razonab&w;le o watever ni t&b;engo idea p&green;or que hago estooooeoeoeoeoeoeoeoe&w;oeoeoeoeoeoeoeoeo&red;eoeoeoeoeo&n;eoeoeoeoeoeoe&7;oeoeoeoeoeoeoeoeoe&2;oeoeoeoeoeoe&4;oeoeoeoeoeoeoeoeoeoeoe");
-
-            Add("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&w;eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&r;eeeeeeeeeeeee&w;eeeeeeeeeeeeee&r;eeeeeeeeeeeeeee&w;eeeeeeeeeeeeeeee&r;eeeeeeeeeeeeeeeee&w;eeeeeeeeeeeeeeeeeee&r;eeeeeeeeeeeeeeeeee&w;eeeeeeeeeeee");
-
-            StringBuilder build = new StringBuilder(1000);
-            for (int i = 0; i < 100; i++)
-                build.Append("&n;eeeeeeee&w;eeeeeeee");
-            for (int i = 0; i < 10; i++)
-                build.Insert(Game1.r.Next(build.Length), String.Concat("&", ChatLine.GetRandomColorName(), ';'));
-            Add(build.ToString());*/
+            StringBuilder builder = new StringBuilder();
+            builder.Append("Hey there! wass uuuuup!");
+            builder.Append("\nRemember u can du &red;all &blue;sorts &w;efejfeomf o&r; &green;of &w;efheinfhe12432 &r; &macri;colors &cyan;of &lime;all &niceblue;sort &brown;of &violet;shades!");
+            builder.Append("\n\nSuch as:");
+            builder.Append("\n&red; - red!");
+            builder.Append("\n&blue; - blue!");
+            builder.Append("\n&macri; - macri!");
+            Add(builder.ToString());
 
             EventInput.CharEntered += OnCharEnter;
         }
@@ -181,58 +175,66 @@ namespace ClusterWave
         }
 
         /// <summary>Adds a text to the chat, processing text formatting and wrapping the text to it doesn't overflow</summary>
-        /// <param name="text">The raw text to add. DO NOT USE \n CHARACTERS</param>
-        public void Add(String text)
+        /// <param name="text">The raw text to add.</param>
+        public void Add(String fullText)
         {
             ChatLine last = null;
-            int index = 0, lastSpace = -1, lastCutEnd = 0;
             SpriteFont font = Normal;
-            float width = 0;
 
-            while (index < text.Length && text[index] == '&' && ChatLine.AdvanceIfNecesary(ref text, ref index, ref font)) ;
-
-            while (index < text.Length)
+            String[] fullSplit = fullText.Split('\n');
+            for (int i = 0; i < fullSplit.Length; i++)
             {
-                if (text[index] == ' ')
-                    lastSpace = index;
-
-                width += font.MeasureString(text[index++].ToString()).X;
-                if (width >= MaxCharsWidth)
-                {
-                    int begin = lastCutEnd;
-                    int end;
-                    if (lastSpace == -1)
-                        end = index-1;
-                    else
-                        end = lastSpace;
-
-                    last = new ChatLine(text.Substring(begin, end-begin), last);
-                    Add(last);
-
-                    if (lastSpace == -1)
-                    {
-                        lastCutEnd = end;
-                        width = font.MeasureString(text[lastCutEnd].ToString()).X;
-                    }
-                    else
-                    {
-                        lastCutEnd = end+1;
-                        lastSpace = -1;
-                        width -= last.MeasureX();
-
-                    }
-                }
+                String text = fullSplit[i];
+                float width = 0;
+                int index = 0, lastSpace = -1, lastCutEnd = 0;
 
                 while (index < text.Length && text[index] == '&' && ChatLine.AdvanceIfNecesary(ref text, ref index, ref font)) ;
-            }
 
-            Add(new ChatLine(text.Substring(lastCutEnd), last));
+                while (index < text.Length)
+                {
+                    if (text[index] == ' ')
+                        lastSpace = index;
+
+                    width += font.MeasureString(text[index++].ToString()).X;
+                    if (width >= MaxCharsWidth)
+                    {
+                        int begin = lastCutEnd;
+                        int end;
+                        if (lastSpace == -1)
+                            end = index - 1;
+                        else
+                            end = lastSpace;
+
+                        last = new ChatLine(text.Substring(begin, end - begin), last);
+                        addLine(last);
+
+                        if (lastSpace == -1)
+                        {
+                            lastCutEnd = end;
+                            width = font.MeasureString(text[lastCutEnd].ToString()).X;
+                        }
+                        else
+                        {
+                            lastCutEnd = end + 1;
+                            lastSpace = -1;
+                            width -= last.MeasureX();
+
+                        }
+                    }
+
+                    while (index < text.Length && text[index] == '&' && ChatLine.AdvanceIfNecesary(ref text, ref index, ref font)) ;
+                }
+
+                ChatLine tmp = new ChatLine(text.Substring(lastCutEnd), last);
+                if (tmp.MeasureX() > 0)
+                    addLine(tmp);
+            }
 
             lineDrawIndex = lines.Count;
             lineDrawCount = Math.Min(lineDrawIndex, linesToShow);
         }
 
-        private void Add(ChatLine chatLine)
+        private void addLine(ChatLine chatLine)
         {
             lines.Add(chatLine);
             newLines.Add(new NewChatLine(newLines, chatLine));
