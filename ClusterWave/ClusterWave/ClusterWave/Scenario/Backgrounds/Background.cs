@@ -11,6 +11,7 @@ namespace ClusterWave.Scenario.Backgrounds
         {
             BackgroundOne.Load1(Content);
             BackgroundTwo.Load1(Content);
+            BackgroundThree.Load1(Content);
         }
 
         public abstract Effect ShapeFillFx { get; }
@@ -23,7 +24,7 @@ namespace ClusterWave.Scenario.Backgrounds
         public abstract EffectParameter ShapeLinesTimeParameter { get; }
         public virtual Color ClearColor { get { return Color.Black; } }
 
-        public void SetTimeParameters(float time)
+        public virtual void SetTimeParameters(float time)
         {
             RayTimeParameter.SetValue(time);
             ShapeFillTimeParameter.SetValue(time);

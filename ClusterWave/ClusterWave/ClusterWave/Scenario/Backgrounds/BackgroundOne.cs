@@ -7,13 +7,14 @@ namespace ClusterWave.Scenario.Backgrounds
 {
     class BackgroundOne : Background
     {
-        public static Texture2D shapeTexture;
-        public static Effect RayFx, LinesFx, TextureFx;
+        private static Texture2D shapeTexture;
+        private static Effect RayFx, LinesFx, TextureFx;
 
-        public static Texture2D BackgroundTexture, Noise128;
-        public static Effect BackgroundFx;
+        public static Texture2D Noise128;
+        private static Texture2D BackgroundTexture;
+        private static Effect BackgroundFx;
         private static EffectParameter worldParameter, projParameter, timeParameter, sizeParameter, pointsParameter;
-        public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
+        private static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
         public static void Load1(ContentManager Content)
         {
             shapeTexture = Content.Load<Texture2D>("Scenario/Backgrounds/1/shape");

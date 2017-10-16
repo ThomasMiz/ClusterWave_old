@@ -99,6 +99,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Scenario\Backgrounds\Background.cs" />
     <Compile Include="Scenario\Backgrounds\BackgroundOne.cs" />
+    <Compile Include="Scenario\Backgrounds\BackgroundThree.cs" />
     <Compile Include="Scenario\Backgrounds\BackgroundTwo.cs" />
     <Compile Include="Scenario\Backgrounds\BackgroundTwoStuff\Line.cs" />
     <Compile Include="Scenario\Backgrounds\BackgroundTwoStuff\Particle.cs" />

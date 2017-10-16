@@ -9,11 +9,11 @@ namespace ClusterWave.Scenario.Backgrounds
 {
     class BackgroundTwo : Background
     {
-        const int CircleVertex = 12;
+        private const int CircleVertex = 12;
         public static VertexPositionColor[] circle;
-        public static Texture2D noiseTexture;
-        public static Effect RayFx, LinesFx, TextureFx;
-        public static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
+        private static Texture2D noiseTexture;
+        private static Effect RayFx, LinesFx, TextureFx;
+        private static EffectParameter lightPosParam, scenarioSizeParam, rayTimeParam, shapeTimeParam, linesTimeParam;
         public static void Load1(ContentManager Content)
         {
             noiseTexture = BackgroundOne.Noise128;

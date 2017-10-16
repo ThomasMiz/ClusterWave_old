@@ -264,7 +264,6 @@ namespace ClusterWave
                             String s = typingText.ToString();
                             if (OnLineEntered != null)
                                 OnLineEntered(ref s);
-                            Game1.game.Window.Title = typingText.ToString();
                             typingText.Clear();
                             typingIndex = 0;
                             showTyping.Clear();
@@ -384,7 +383,6 @@ namespace ClusterWave
         public void Draw(SpriteBatch batch, float y)
         {
             float alpha = Math.Min(1, timeEnd - Game1.Time);
-            Game1.game.Window.Title = alpha.ToString();
             if (alpha < 0)
                 list.Remove(this);
             else
