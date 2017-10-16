@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using ClusterWave.Network;
+using System.Diagnostics;
 
 namespace ClusterWave
 {
@@ -37,10 +38,11 @@ namespace ClusterWave
 
         Scenes.Scene scene;
         public Client client;
+        Stopwatch watch = new Stopwatch();
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = false };
+            graphics = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = true };
             Content.RootDirectory = "Content";
         }
 
@@ -92,6 +94,7 @@ namespace ClusterWave
 
         protected override void Update(GameTime gameTime)
         {
+            watch.Start();
             oldks = ks;
             oldms = ms;
             ms = Mouse.GetState();

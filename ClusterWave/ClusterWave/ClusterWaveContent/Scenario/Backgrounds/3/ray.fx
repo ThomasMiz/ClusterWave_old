@@ -55,7 +55,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	if (input.Coords.x > 0 && input.Coords.y > 0 && input.Coords.x < size.x && input.Coords.y < size.y)
 	{
-		return float4(0.1, 0, 0.1, 0.5);
+		return float4(0.1, 0, 0.1, 1);
 		//return float4(lerp(float3(0, 0, 1), float3(1, 0, 1), sin(input.Coords.x + time)*0.5+0.5), 1);
 
 		/*const float3 c1 = float3(0.5, 0.0, 0.1);

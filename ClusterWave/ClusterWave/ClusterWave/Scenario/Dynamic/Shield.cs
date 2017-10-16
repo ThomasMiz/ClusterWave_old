@@ -97,7 +97,7 @@ namespace ClusterWave.Scenario.Dynamic
             if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
                 health += 0.01f;
             //Game1.game.Window.Title = health.ToString();
-            body.Rotation += 0.01f;
+            body.Rotation += Game1.DeltaTime;
             if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.B))
             {
                 if (Game1.oldks.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.B))
