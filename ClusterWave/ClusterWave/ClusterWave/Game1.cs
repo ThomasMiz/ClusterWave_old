@@ -112,10 +112,6 @@ namespace ClusterWave
         {
             scene.Draw();
 
-            //batch.Begin();
-            //batch.DrawString(font, (((int)(100.0 / gameTime.ElapsedGameTime.TotalSeconds)) / 100.0).ToString(), Vector2.Zero, Color.Black);
-            //batch.End();
-
             GraphicsDevice.SetVertexBuffer(null);
             base.Draw(gameTime);
         }
@@ -149,7 +145,7 @@ namespace ClusterWave
 
                 graphics.PreferredBackBufferWidth = ScreenWidth;
                 graphics.PreferredBackBufferHeight = ScreenHeight;
-                //graphics.ApplyChanges();
+                graphics.ApplyChanges();
 
                 scene.OnResize();
 

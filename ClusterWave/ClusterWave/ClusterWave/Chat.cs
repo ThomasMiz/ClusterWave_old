@@ -50,7 +50,7 @@ namespace ClusterWave
         int lineDrawCount, lineDrawIndex;
 
         List<ChatLine> lines;
-        AutisticChatLine showTyping;
+        SpecialChatLine showTyping;
 
         List<NewChatLine> newLines;
 
@@ -62,7 +62,7 @@ namespace ClusterWave
         {
             newLines = new List<NewChatLine>(8);
             lines = new List<ChatLine>(256);
-            showTyping = new AutisticChatLine();
+            showTyping = new SpecialChatLine();
             typingText = new StringBuilder(MaxAllowedChars);
             typingTextSize = new Vector2(0, Normal.MeasureString("M").Y);
 

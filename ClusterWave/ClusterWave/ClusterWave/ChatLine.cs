@@ -15,8 +15,6 @@ namespace ClusterWave
 
         #region StaticShit
 
-        //static bool DidLastFindEndGetToTheEnd = false;
-
         public static Color[] AllColors = new Color[] { 
             new Color(0, 0, 0), //black
             new Color(128, 128, 128), //gray
@@ -243,7 +241,6 @@ namespace ClusterWave
 
         private static String FindEnd(ref String line, ref int index)
         {
-            //DidLastFindEndGetToTheEnd = false;
             int start = index;
             while (++index < line.Length)
             {
@@ -259,7 +256,6 @@ namespace ClusterWave
                     return new String(new char[] { }); //si encuentra un & o el caracter no pertenece a (0-9 o a-z)
                 }
             }
-            //DidLastFindEndGetToTheEnd = true;
             index = start;
             return new String(new char[] { });
         }
@@ -365,12 +361,8 @@ namespace ClusterWave
         }
     }
 
-    /// <summary>Dont even ask why on the fuck's name this is named like this. I just couldn't think of an appropiate name -_("/)_-</summary>
-    class AutisticChatLine
+    class SpecialChatLine
     {
-        /// <summary>This name has nothing to do with the fact that this class is named with the word "Autistic".
-        /// I realised it might sound offensive after writting it and realised "special" could be mis-interpreted so...
-        /// xddddd</summary>
         static Color SpecialColor = new Color(196, 196, 196, 128);
 
         List<String> textList;
@@ -384,7 +376,7 @@ namespace ClusterWave
 
         float[] positions;
 
-        public AutisticChatLine()
+        public SpecialChatLine()
         {
             textList = new List<string>(16);
             colorList = new List<Color>(16);
@@ -392,7 +384,7 @@ namespace ClusterWave
             fontList = new List<SpriteFont>(16);
             isSpecial = new List<bool>(16);
         }
-        ~AutisticChatLine()
+        ~SpecialChatLine()
         {
             target.Dispose();
         }

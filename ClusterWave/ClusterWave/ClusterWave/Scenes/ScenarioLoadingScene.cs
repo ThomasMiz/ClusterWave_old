@@ -28,8 +28,7 @@ namespace ClusterWave.Scenes
 
         public override void Update()
         {
-            //enable for client-side stuff testing. This loades "data.map" and just shows that.
-            //game.SetScene(new InGameScene(client));
+
         }
 
         public override void Draw()
