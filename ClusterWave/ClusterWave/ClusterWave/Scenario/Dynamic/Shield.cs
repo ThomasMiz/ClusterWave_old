@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ClusterWave.Particles;
 using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Common;
 
 namespace ClusterWave.Scenario.Dynamic
 {
@@ -78,8 +79,12 @@ namespace ClusterWave.Scenario.Dynamic
             particles = particleList;
             health = 1;
             body = new Body(world, position, rotation, this);
+            body.BodyType = BodyType.Kinematic;
             body.CollidesWith = Constants.ShieldCollideWith;
             body.CollisionCategories = Constants.ShieldCategory;
+            Fixture f = body.CreateFixture(new PolygonShape(new Vertices(new Vector2[]{ new Vector2(-0.1f, -0.3f), new Vector2(0.1f, 0f), new Vector2(-0.1f, 0.3f) }), Constants.ShieldDensity));
+            f.Friction = Constants.ShieldFriction;
+            f.Restitution = Constants.ShieldRestitution;
 
             body.OnCollision += OnCollision;
         }
@@ -128,6 +133,7 @@ namespace ClusterWave.Scenario.Dynamic
             }
             particles.Add(new TrianglePhysicsParticle(vert, world, body.Position));
             list.Remove(this);
+            world.RemoveBody(body);
         }
 
         public void DecreseHealth(float amount)

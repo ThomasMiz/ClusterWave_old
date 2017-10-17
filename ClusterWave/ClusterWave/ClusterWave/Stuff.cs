@@ -58,4 +58,19 @@ namespace ClusterWave
             vec.Y = sin * x + cos * y;
         }
     }
+
+    class SosUnPelotudoException : Exception
+    {
+        public SosUnPelotudoException()
+            : base("sos un pelotudo")
+        {
+
+        }
+
+        public SosUnPelotudoException(String msg)
+            : base(msg)
+        {
+
+        }
+    }
 }

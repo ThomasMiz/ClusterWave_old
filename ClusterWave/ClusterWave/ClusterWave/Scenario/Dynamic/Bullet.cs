@@ -31,6 +31,9 @@ namespace ClusterWave.Scenario.Dynamic
         bool check = false;
         float spd;
 
+        /// <summary>
+        /// Creates a Bullet. Do not use this constructor, use Bullet.Create variations instead
+        /// </summary>
         public Bullet(int id, World physicsWorld, Vector2 pos, float rot, float speed, int bounces)
         {
             this.id = id;
@@ -95,10 +98,62 @@ namespace ClusterWave.Scenario.Dynamic
 
         }
 
+        /// <summary>
+        /// Kills the bullet, removing it from the update list and removing it's physics body from the simulation
+        /// </summary>
         public void GetRekkt()
         {
             list.Remove(listNode);
             physicsWorld.RemoveBody(body);
+        }
+        
+        /// <summary></summary>
+        public static Bullet Create(int type, int id, World world, Vector2 pos, float rot)
+        {
+            switch(type)
+            {
+                case Constants.ShotgunId:
+                    return CreateShotgun(id, world, pos, rot);
+
+                case Constants.SniperId:
+                    return CreateSniper(id, world, pos, rot);
+
+                case Constants.MachinegunId:
+                    return CreateShotgun(id, world, pos, rot);
+
+                default:
+                    throw new SosUnPelotudoException();
+            }
+        }
+
+        /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
+        /// <param name="id">The Bullet's id</param>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="pos">The center position the bullet should be created at</param>
+        /// <param name="rot">The rotation the bullet should be facing and going to</param>
+        public static Bullet CreateShotgun(int id, World world, Vector2 pos, float rot)
+        {
+            return new Bullet(id, world, pos, rot, Constants.ShotgunBulletSpeed, Constants.MachinegunBulletBounceCount);
+        }
+
+        /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
+        /// <param name="id">The Bullet's id</param>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="pos">The center position the bullet should be created at</param>
+        /// <param name="rot">The rotation the bullet should be facing and going to</param>
+        public static Bullet CreateSniper(int id, World world, Vector2 pos, float rot)
+        {
+            return new Bullet(id, world, pos, rot, Constants.SniperBulletSpeed, Constants.SniperBulletBounceCount);
+        }
+
+        /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
+        /// <param name="id">The Bullet's id</param>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="pos">The center position the bullet should be created at</param>
+        /// <param name="rot">The rotation the bullet should be facing and going to</param>
+        public static Bullet CreateMachinegun(int id, World world, Vector2 pos, float rot)
+        {
+            return new Bullet(id, world, pos, rot, Constants.MachinegunBulletSpeed, Constants.MachinegunBulletBounceCount); 
         }
     }
 }
