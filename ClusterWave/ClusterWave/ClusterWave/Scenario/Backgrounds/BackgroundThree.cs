@@ -39,6 +39,7 @@ namespace ClusterWave.Scenario.Backgrounds
             linesTimeParam = LinesFx.Parameters["time"];
             backgroundTimeParam = BackgroundFx.Parameters["time"];
             backgroundPrevParam = BackgroundFx.Parameters["prev"];
+            RayFx.Parameters["noise"].SetValue(BackgroundOne.Noise128);
         }
 
         int wid, hei;
@@ -109,23 +110,19 @@ namespace ClusterWave.Scenario.Backgrounds
             blurTexParam.SetValue(newer);
             BlurFx.CurrentTechnique.Passes[0].Apply();
             device.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
-
-            //batch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone);
-            //batch.Draw(newer, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, new Vector2((float)Game1.ScreenWidth / wid, (float)Game1.ScreenHeight / hei), SpriteEffects.None, 0f);
-            //batch.End();
         }
 
         public override void Resize()
         {
-            wid = Game1.ScreenWidth / 2;
-            hei = Game1.ScreenHeight / 2;
+            wid = Math.Max(Game1.ScreenWidth / 2, 1);
+            hei = Math.Max(Game1.ScreenHeight / 2, 1);
 
             Vector2 pix = new Vector2(wid, hei);
             TextureFx.Parameters["size"].SetValue(pix);
             pix.X = 1f / pix.X;
             pix.Y = 1f / pix.Y;
             BackgroundFx.Parameters["pix"].SetValue(pix);
-            BlurFx.Parameters["pix"].SetValue(pix);
+            BlurFx.Parameters["pix"].SetValue(pix * 2f);
 
             if (prev != null)
                 prev.Dispose();

@@ -22,7 +22,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	VertexShaderOutput output;
 
 	output.Position = mul(input.Position, Proj);
-	output.Coords = input.Coords + pix * 0.5;
+	output.Coords = input.Coords + pix * 0.76;
 
 	return output;
 }
