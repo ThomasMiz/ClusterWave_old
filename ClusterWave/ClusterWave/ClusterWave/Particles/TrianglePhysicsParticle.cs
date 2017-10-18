@@ -56,8 +56,8 @@ namespace ClusterWave.Particles
             centroid = (a + b + c) / 3.0f;
 
             Body bo = new Body(w, centroid, 0f, null);
-            bo.CollidesWith = Constants.ParticleCollideWith;
             bo.CollisionCategories = Constants.ParticleCategory;
+            bo.CollidesWith = Constants.ParticleCollideWith;
             bo.BodyType = BodyType.Dynamic;
             bo.Restitution = Restitution;
             bo.Friction = Friction;

@@ -85,6 +85,8 @@ namespace ClusterWave.Scenario.Dynamic
             Fixture f = body.CreateFixture(new PolygonShape(new Vertices(new Vector2[]{ new Vector2(-0.1f, -0.3f), new Vector2(0.1f, 0f), new Vector2(-0.1f, 0.3f) }), Constants.ShieldDensity));
             f.Friction = Constants.ShieldFriction;
             f.Restitution = Constants.ShieldRestitution;
+            f.CollisionCategories = Constants.ShieldCategory;
+            f.CollidesWith = Constants.ShieldCollideWith;
 
             body.OnCollision += OnCollision;
         }

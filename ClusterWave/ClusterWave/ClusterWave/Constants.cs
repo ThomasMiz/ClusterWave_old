@@ -18,15 +18,15 @@ namespace ClusterWave
         public const Category PowerupCategory = Category.Cat6;
 
         /// <summary>The Categories with which players can collide with</summary>
-        public const Category PlayersCollideWith = PlayerCategory | WallsCategory | BulletsCategory;
+        public const Category PlayersCollideWith = PlayerCategory | WallsCategory | BulletsCategory | ShieldCategory | PowerupCategory;
         /// <summary>The Categories with which walls can collide with</summary>
         public const Category WallsCollideWith = Category.All;
         /// <summary>The Categories with which bullets can collide with</summary>
-        public const Category BulletsCollideWith = BulletsCategory | PlayerCategory | WallsCategory;
+        public const Category BulletsCollideWith = BulletsCategory | PlayerCategory | WallsCategory | ShieldCategory;
         /// <summary>The Categories with which particles can collide with</summary>
         public const Category ParticleCollideWith = WallsCategory | ShieldCategory;
         /// <summary>The Categories with which shields can collide with</summary>
-        public const Category ShieldCollideWith = PlayerCategory | BulletsCategory;
+        public const Category ShieldCollideWith = PlayerCategory | BulletsCategory | ParticleCategory;
         /// <summary>The Categories with which powerups can collide with</summary>
         public const Category PowerupCollideWith = PlayerCategory;
 
