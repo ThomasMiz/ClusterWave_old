@@ -27,5 +27,9 @@ namespace ClusterWaveServer.Scenes
         {
 
         }
+
+        public override void OnExit()
+        {
+        }
     }
 }

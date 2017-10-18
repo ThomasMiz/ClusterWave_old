@@ -49,6 +49,11 @@ namespace ClusterWaveServer.Scenes
             }
         }
 
+        public override void OnExit()
+        {
+
+        }
+
         void CreatePlayer(Vector2 pos,int id,PlayerInfo player)
         {
             new NetPlayer(pos, this, player);
