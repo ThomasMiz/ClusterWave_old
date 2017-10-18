@@ -69,6 +69,7 @@
     <Compile Include="Scenario\ScenarioLoader.cs" />
     <Compile Include="Scenes\InGameScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
+    <Compile Include="Stuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

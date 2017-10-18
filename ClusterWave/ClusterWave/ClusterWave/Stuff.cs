@@ -61,16 +61,6 @@ namespace ClusterWave
 
     class SosUnPelotudoException : Exception
     {
-        public SosUnPelotudoException()
-            : base("sos un pelotudo")
-        {
-
-        }
-
-        public SosUnPelotudoException(String msg)
-            : base(msg)
-        {
-
-        }
+        public SosUnPelotudoException() : base("sos un pelotudo") { }
     }
 }

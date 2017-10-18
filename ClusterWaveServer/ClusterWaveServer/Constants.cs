@@ -64,6 +64,12 @@ namespace ClusterWaveServer
         public const float SniperBulletDamage = 75f;
         /// <summary>The damage machinegun bullets inflict</summary>
         public const float MachinegunBulletDamage = 5f;
+        /// <summary>The speed Shotgun bullets should have</summary>
+        public const float ShotgunBulletSpeed = 10f;
+        /// <summary>The Speed Sniper bullets should have</summary>
+        public const float SniperBulletSpeed = 25f;
+        /// <summary>The Speed Machinegun bullets should have</summary>
+        public const float MachinegunBulletSpeed = 10f;
         /// <summary>The maximum/starting amount of shotgun bullets a player can have</summary>
         public const int ShotgunMaxBullets = 8;
         /// <summary>The maximum/starting amount of sniper bullets a player can have</summary>
@@ -93,6 +99,8 @@ namespace ClusterWaveServer
         public const float ShieldRestitution = WallsRestitution;
         /// <summary>The Friction value to be assigned to shield physic bodies</summary>
         public const float ShieldFriction = WallsFriction;
+        /// <summary>The Density value to be assigned to shield colliders</summary>
+        public const float ShieldDensity = 1f;
         /// <summary>The amount of damage a shield can take before being destroyed</summary>
         public const float ShieldMaxHealth = 150;
         /// <summary>The time in seconds after using a shield until that player can place down another shield</summary>
@@ -104,6 +112,13 @@ namespace ClusterWaveServer
         public const float PowerupRadius = 1.6f;
         /// <summary>The time in seconds a powerup's effect lasts after it's been picked up</summary>
         public const float PowerupDurationSeconds = 15f;
+
+        /// <summary>The number by which the Shotgun is identified</summary>
+        public const int ShotgunId = 0;
+        /// <summary>The number by which the Sniper is identified</summary>
+        public const int SniperId = 1;
+        /// <summary>The number by which the Machinegun is identified</summary>
+        public const int MachinegunId = 2;
 
         /// <summary>Whether we wrote enough "fuck you dusto"-s</summary>
         public const bool DidWeWriteEnoughFuckUDustos = false;

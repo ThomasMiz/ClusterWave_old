@@ -47,10 +47,10 @@ namespace ClusterWaveServer.Scenario
             world = new World(Vector2.Zero);
             staticBody = new Body(world, Vector2.Zero, 0f, null);
             staticBody.BodyType = BodyType.Static;
-            staticBody.CollisionCategories = ShapeCollisionCategory;
-            staticBody.Friction = ShapeFriction;
-            staticBody.Restitution = ShapeRestitution;
-            staticBody.CollidesWith = ShapeCollidesWith;
+            staticBody.CollisionCategories = Constants.WallsCategory;
+            staticBody.Friction = Constants.WallsFriction;
+            staticBody.Restitution = Constants.WallsRestitution;
+            staticBody.CollidesWith = Constants.WallsCollideWith;
             AddRectangle(Vector2.Zero, new Vector2(width, height));
         }
 
@@ -77,10 +77,10 @@ namespace ClusterWaveServer.Scenario
             for (int i = 0; i < vert.Count; i++)
             {
                 Fixture f = staticBody.CreateFixture(new PolygonShape(vert[i], 1f));
-                f.Friction = ShapeFriction;
-                f.Restitution = ShapeRestitution;
-                f.CollisionCategories = ShapeCollisionCategory;
-                f.CollidesWith = ShapeCollidesWith;
+                f.Friction = Constants.WallsFriction;
+                f.Restitution = Constants.WallsRestitution;
+                f.CollisionCategories = Constants.WallsCategory;
+                f.CollidesWith = Constants.WallsCollideWith;
             }
         }
         public void AddRectangle(Vector2 topLeft, Vector2 size)
@@ -93,10 +93,10 @@ namespace ClusterWaveServer.Scenario
             vert.Add(new Vector2(bottomRight.X, bottomRight.Y));
             vert.Add(new Vector2(topLeft.X, bottomRight.Y));
             Fixture f = staticBody.CreateFixture(new ChainShape(vert, true));
-            f.CollisionCategories = ShapeCollisionCategory;
-            f.CollidesWith = ShapeCollidesWith;
-            f.Friction = ShapeFriction;
-            f.Restitution = ShapeRestitution;
+            f.Friction = Constants.WallsFriction;
+            f.Restitution = Constants.WallsRestitution;
+            f.CollisionCategories = Constants.WallsCategory;
+            f.CollidesWith = Constants.WallsCollideWith;
         }
 
         /// <summary>Calles world.Step and advances the physics by Game1.DeltaTime</summary>

@@ -106,8 +106,12 @@ namespace ClusterWave.Scenario.Dynamic
             list.Remove(listNode);
             physicsWorld.RemoveBody(body);
         }
-        
-        /// <summary></summary>
+
+        /// <summary>Creates a Bullet of the specified gun type with the corresponding id, physics world, position and rotation to go to</summary>
+        /// <param name="id">The Bullet's id</param>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="pos">The center position the bullet should be created at</param>
+        /// <param name="rot">The rotation the bullet should be facing and going to</param>
         public static Bullet Create(int type, int id, World world, Vector2 pos, float rot)
         {
             switch(type)

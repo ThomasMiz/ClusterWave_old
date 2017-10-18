@@ -139,6 +139,8 @@ namespace ClusterWave.Scenario.Dynamic
         public void DecreseHealth(float amount)
         {
             health -= amount;
+            if (health <= 0)
+                BreakAndDelete();
         }
 
         public void OnPacketArrive(Lidgren.Network.NetIncomingMessage msg)

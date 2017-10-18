@@ -97,7 +97,7 @@ namespace ClusterWave.Scenario
         }
 
         /// <summary>
-        /// Call to start playing the walking animation. If another animation is in progress, that one will finish first.
+        /// Call to start playing the walking animation. If another animation is in progress, that one will finish first
         /// <param name="time">The time at which the animation began, for calculating offset. Ignored if another animation is currently happening</param>
         /// </summary>
         protected void StartMovingAnimation(float time)
@@ -106,8 +106,17 @@ namespace ClusterWave.Scenario
         }
 
         /// <summary>
-        /// Call to instantly play the shooting animation (and then idle)
-        /// <param name="time">The time at which the animation began, for calculating offset.</param>
+        /// Sets the gun the player is currently holding for drawing purposes
+        /// </summary>
+        /// <param name="gunType">The desired gun's id value from Constants</param>
+        protected void SetAnimationGunType(int gunType)
+        {
+
+        }
+
+        /// <summary>
+        /// Call to instantly play the shooting animation and then idles (unless StartMovingAnimation is called before this ends)
+        /// <param name="time">The time at which the animation began, for calculating offset</param>
         /// </summary>
         protected void StartShootingAnimation(float time)
         {
@@ -116,9 +125,18 @@ namespace ClusterWave.Scenario
 
         /// <summary>
         /// Call to instantly play the shield animation (and then idle)
-        /// <param name="time">The time at which the animation began, for calculating offset.</param>
+        /// <param name="time">The time at which the animation began, for calculating offset</param>
         /// </summary>
         protected void StartShieldAnimation(float time)
+        {
+
+        }
+
+        /// <summary>
+        /// Plays the Dash animation and then idles (unless StartMovingAnimation is called before this ends)
+        /// </summary>
+        /// <param name="time">The time at which the animation began, for calculating offset</param>
+        protected void StartDashAnimation(float time)
         {
 
         }
