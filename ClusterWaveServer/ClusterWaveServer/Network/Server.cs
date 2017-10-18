@@ -173,7 +173,7 @@ namespace ClusterWaveServer.Network
             }
         }
 
-        void sendByteArray(byte[] byteArray)
+        public void sendByteArray(byte[] byteArray)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.scenarioRecieve);                                 

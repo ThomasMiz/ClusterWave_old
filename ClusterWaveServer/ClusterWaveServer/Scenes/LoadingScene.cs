@@ -8,9 +8,12 @@ namespace ClusterWaveServer.Scenes
 {
     class LoadingScene
     {
+
+        Scenario.Scenario scenario;
+
         public LoadingScene() : base()
         {
-
+            
         }
 
         public override void Update()
