@@ -156,6 +156,16 @@ namespace ClusterWaveServer.Network
             load.OnCreationPacket -= sendByteArray;
         }
 
+        public void SetScene(Scene scene)
+        {
+            this.scene = scene;
+        }
+
+        public void Start()
+        {
+
+        }
+
         void startMatch() 
         {
             matchInProcess = true;

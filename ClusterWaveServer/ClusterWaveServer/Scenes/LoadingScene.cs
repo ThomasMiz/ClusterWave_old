@@ -11,9 +11,12 @@ namespace ClusterWaveServer.Scenes
 
         Scenario.Scenario scenario;
 
-        public LoadingScene() : base()
+        public LoadingScene(string scenarioToLoad) : base()
         {
-            
+            Scenario.ScenarioLoader load = new Scenario.ScenarioLoader(scenarioToLoad);
+            load.OnCreationPacket += Program.server.sendByteArray;
+            Program.server.SetScene(new InGameScene(load.CreateScenario()));
+            load.OnCreationPacket -= Program.server.sendByteArray;
         }
 
         public override void Update()

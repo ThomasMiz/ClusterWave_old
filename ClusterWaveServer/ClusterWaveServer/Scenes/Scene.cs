@@ -12,11 +12,10 @@ namespace ClusterWaveServer.Scenes
 {
     abstract class Scene
     {
-        protected Server server;
 
         public Scene()
         {
-            this.server = Program.server;
+
         }
 
         public abstract void Update();
