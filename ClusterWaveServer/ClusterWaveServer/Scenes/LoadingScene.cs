@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ClusterWaveServer.Scenes
 {
-    class LoadingScene
+    class LoadingScene : Scene
     {
-
-        Scenario.Scenario scenario;
 
         public LoadingScene(string scenarioToLoad) : base()
         {
