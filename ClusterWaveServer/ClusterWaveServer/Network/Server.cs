@@ -17,9 +17,13 @@ namespace ClusterWaveServer.Network
 
         PlayerInfo[] players;
 
+        string scenario;
+
         int connectedPlayers;
         int maximumCapacity = 7;
         int loadedPlayers;
+
+        bool matchInProcess = false;
 
         public Dictionary<NetConnection, int> ConnectionToId;
         //26200 = Port
@@ -138,14 +142,27 @@ namespace ClusterWaveServer.Network
             }
         }
 
-        public void SendScenario(String file)
+        public void SetScenario(string file)
+        {
+            scenario = file;
+        }
+
+        public void SendScenario()
         {
             //para el juego terminado, agregar checkeo de que se haya cargado bien? (load.IsOk)
-            Scenario.ScenarioLoader load = new Scenario.ScenarioLoader(file);
+            Scenario.ScenarioLoader load = new Scenario.ScenarioLoader(scenario);
             load.OnCreationPacket += sendByteArray;
             scene = new InGameScene(load.CreateScenario());
             load.OnCreationPacket -= sendByteArray;
         }
+
+        void startMatch() 
+        {
+            matchInProcess = true;
+            createPlayers();
+        }
+
+        void createPlayers();
 
         void sendByteArray(byte[] byteArray)
         {

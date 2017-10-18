@@ -38,9 +38,14 @@ namespace ClusterWaveServer
             while (true)
             {
                 String cmd = Console.ReadLine();
-                Console.WriteLine("yes.");
-
-                server.SendScenario(cmd); //aca hay q poner para que pruebe hacer comandos (que llame una funcion que lo haga en otro lado?)
+                if (cmd == "scenario")
+                {
+                    string scenario = Console.ReadLine();
+                    server.SetScenario(scenario);
+                    Console.WriteLine("Scenario Set to : " + scenario);
+                }
+                if (cmd == "start") server.SendScenario();
+                 //aca hay q poner para que pruebe hacer comandos (que llame una funcion que lo haga en otro lado?)
             }
         }
 
