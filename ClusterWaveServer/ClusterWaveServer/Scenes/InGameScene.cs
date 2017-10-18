@@ -54,24 +54,5 @@ namespace ClusterWaveServer.Scenes
             new NetPlayer(pos, this, player);
         }
 
-        /*void playerMoveUp() //que son estas? no se, no las quiero ver a menos que tengas una buena explicacion.
-        {
-            
-        }
-
-        void playerMoveDown()
-        {
-
-        }
-
-        void playerMoveLeft()
-        {
-
-        }
-
-        void playerMoveRight()
-        {
-
-        }*/
     }
 }
