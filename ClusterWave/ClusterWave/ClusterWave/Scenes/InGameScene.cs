@@ -164,6 +164,7 @@ namespace ClusterWave.Scenes
             particles.DrawParticles(batch, GraphicsDevice);
             shields.DrawShields(GraphicsDevice);
 
+            GraphicsDevice.BlendState = BlendState.Opaque;
             Viewport prevView = GraphicsDevice.Viewport;
             GraphicsDevice.Viewport = new Viewport(scenario.ScreenBounds);
             bg.LightPosParameter.SetValue(localPlayer.Position);
@@ -171,6 +172,7 @@ namespace ClusterWave.Scenes
 
             scenario.DrawLightWalls(GraphicsDevice);
             GraphicsDevice.Viewport = prevView;
+            GraphicsDevice.BlendState = BlendState.NonPremultiplied;
 
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);
