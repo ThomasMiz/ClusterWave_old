@@ -162,7 +162,16 @@ namespace ClusterWaveServer.Network
             createPlayers();
         }
 
-        void createPlayers();
+        void createPlayers()
+        {
+            for (int id = 0; id <= maximumCapacity; id++)
+            {
+                if (players[id] != null)
+                {
+                    
+                }
+            }
+        }
 
         void sendByteArray(byte[] byteArray)
         {

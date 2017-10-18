@@ -49,7 +49,7 @@ namespace ClusterWaveServer.Scenes
             }
         }
 
-        public void CreatePlayer(Vector2 pos,int id,PlayerInfo player)
+        void CreatePlayer(Vector2 pos,int id,PlayerInfo player)
         {
             new NetPlayer(pos, this, player);
         }
