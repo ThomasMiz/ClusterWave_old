@@ -69,7 +69,7 @@ namespace ClusterWave.Scenario
 
             name = stream.ReadString();
 
-            backgroundType = (byte)(1+(stream.ReadByte()-1) % 3);
+            backgroundType = (byte)(1 + (stream.ReadByte() - 1) % 3);
 
             _width = stream.ReadFloat();
             _height = stream.ReadFloat();
@@ -273,10 +273,10 @@ namespace ClusterWave.Scenario
             screenScale *= 1.05f;
 
 
-            screenBounds.X = (int)(-_halfw / screenScale + Game1.HalfScreenWidth);
-            screenBounds.Y = (int)(-_halfh / screenScale + Game1.HalfScreenHeight);
-            screenBounds.Width = (int)(_width / screenScale);
-            screenBounds.Height = (int)(_height / screenScale);
+            screenBounds.X = (int)Math.Ceiling(-_halfw / screenScale + Game1.HalfScreenWidth);
+            screenBounds.Y = (int)Math.Ceiling(-_halfh / screenScale + Game1.HalfScreenHeight);
+            screenBounds.Width = (int)Math.Floor(_width / screenScale);
+            screenBounds.Height = (int)Math.Floor(_height / screenScale);
 
             return Matrix.CreateOrthographic(size.X, -size.Y, 0f, 100f);
         }

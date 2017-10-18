@@ -53,50 +53,16 @@ namespace ClusterWave.Scenes
         /// </summary>
         [Obsolete("NO USEN ESTE CONSTRUCTOR DE MIERDA, DEPRECATED AF (es para cargar sin server)", false)]
         public InGameScene(Client client)
+            : this(client, Stuff.TryLoadScenario("data.map"))
         {
-            this.client = client;
-            if (!System.IO.File.Exists("data.map"))
-            {
-                Game1.game.Exit();
-                return;
-            }
 
-            ByteStream b = new ByteStream(System.IO.File.ReadAllBytes("data.map"));
-            if (!(b.HasNext(56) && b.ReadByte() == 222 && b.ReadByte() == 111 && b.ReadByte() == 41 && b.ReadByte() == 231 && b.ReadByte() == 60))
-            {
-                Game1.game.Exit();
-                return;
-            }
-
-            scenario = new Scenario.Scenario(b);
-
-            bg = scenario.BackgroundObject;
-            shields = new ShieldList();
-            bullets = new BulletList();
-            particles = new ParticleList();
-            shields.Add(new Shield(0, scenario.PhysicsWorld, particles, new Vector2(2.1f, 0.8f), 0f));
-
-            float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
-            Matrix view = Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up);
-            bg.ShapeFillFx.Parameters["View"].SetValue(view);
-            bg.ShapeLineFx.Parameters["View"].SetValue(view);
-            bg.RayLightFx.Parameters["View"].SetValue(view);
-            Shield.shieldFx.Parameters["View"].SetValue(view);
-            bg.ShapeLineFx.Parameters["size"].SetValue(new Vector2(scenario.Width, scenario.Height));
-            colorFx.Parameters[1].SetValue(view);
-            bg.ScenarioSizeParameter.SetValue(new Vector2(scenario.Width, scenario.Height));
-
-            netPlayers = new NetPlayer[0];
-            localPlayer = new LocalPlayer(scenario.PlayersPos[0], this, null);
-
-            debug = new DebugViewXNA(scenario.PhysicsWorld);
-            debug.LoadContent(GraphicsDevice, game.Content);
         }
 
         /// <summary>
         /// Creates an InGameScene with the loaded Scenario and Client. This should be done from the ScenarioLoadingScene
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="client">The Client... do I really need to explain what this is for?</param>
+        /// <param name="scenario">The Scenario object for the game round.</param>
         public InGameScene(Client client, Scenario.Scenario scenario)
         {
             this.client = client;
@@ -146,7 +112,7 @@ namespace ClusterWave.Scenes
             }*/
             #endregion
 
-            if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f)*0.5f, 1000));
+            if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f) * 0.5f, 1000));
 
 
             bullets.UpdateBullets();
@@ -198,17 +164,20 @@ namespace ClusterWave.Scenes
             particles.DrawParticles(batch, GraphicsDevice);
             shields.DrawShields(GraphicsDevice);
 
+            Viewport prevView = GraphicsDevice.Viewport;
+            GraphicsDevice.Viewport = new Viewport(scenario.ScreenBounds);
             bg.LightPosParameter.SetValue(localPlayer.Position);
             bg.RayTimeParameter.SetValue(Game1.Time);
 
             scenario.DrawLightWalls(GraphicsDevice);
+            GraphicsDevice.Viewport = prevView;
 
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);
 
             client.chat.Draw(batch);
 
-            debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
+            //debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
         }
 
         public override void OnResize()
@@ -216,7 +185,7 @@ namespace ClusterWave.Scenes
             if (scenario != null)
             {
                 Matrix Projection = scenario.CreateProjectionMatrix();
-                bg.RayLightFx.Parameters["Projection"].SetValue(Projection);
+                bg.RayLightFx.Parameters["Projection"].SetValue(Matrix.CreateOrthographicOffCenter(-scenario.HalfWidth, scenario.HalfWidth, scenario.HalfHeight, -scenario.HalfHeight, 0, 10));
                 bg.ShapeFillFx.Parameters["Projection"].SetValue(Projection);
                 bg.ShapeLineFx.Parameters["Projection"].SetValue(Projection);
                 colorFx.Parameters["Projection"].SetValue(Projection);
@@ -224,7 +193,7 @@ namespace ClusterWave.Scenes
 
                 bg.Resize();
 
-                PlayerDrawMatrix = Matrix.CreateTranslation(-scenario.HalfWidth, -scenario.HalfHeight, 0) * Matrix.CreateScale(1f/scenario.ScreenToSizeRatio) * Matrix.CreateTranslation(Game1.HalfScreenWidth, Game1.HalfScreenHeight, 0);
+                PlayerDrawMatrix = Matrix.CreateTranslation(-scenario.HalfWidth, -scenario.HalfHeight, 0) * Matrix.CreateScale(1f / scenario.ScreenToSizeRatio) * Matrix.CreateTranslation(Game1.HalfScreenWidth, Game1.HalfScreenHeight, 0);
             }
         }
 

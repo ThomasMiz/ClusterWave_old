@@ -57,10 +57,28 @@ namespace ClusterWave
             vec.X = cos * x - sin * y;
             vec.Y = sin * x + cos * y;
         }
+
+        /// <summary>
+        /// Tries to load a Scenario from a file. 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static Scenario.Scenario TryLoadScenario(String file)
+        {
+            if (System.IO.File.Exists(file))
+            {
+                ByteStream b = new ByteStream(System.IO.File.ReadAllBytes(file));
+                if (!(b.HasNext(56) && b.ReadByte() == 222 && b.ReadByte() == 111 && b.ReadByte() == 41 && b.ReadByte() == 231 && b.ReadByte() == 60))
+                    return null;
+                return new Scenario.Scenario(b);
+            }
+            return null;
+        }
     }
 
     class SosUnPelotudoException : Exception
     {
         public SosUnPelotudoException() : base("sos un pelotudo") { }
+        public SosUnPelotudoException(String msg) : base(msg) { }
     }
 }
