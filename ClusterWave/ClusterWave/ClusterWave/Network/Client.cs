@@ -126,16 +126,38 @@ namespace ClusterWave.Network
         public void signalLoadingIsFinished()
         {
             NetOutgoingMessage msg = client.CreateMessage();
-            msg.Write(MsgIndex.scenarioRecieve);
+            msg.Write(MsgIndex.disconnect);
+            msg.Write(MsgIndex.subIndex.doneLoading);
             client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
-        public void sendMove(byte dir) //wtf es esto?
-        {
+        public void MoveLeft() {
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.playerMove);
-            msg.Write(dir);
+            msg.Write(MsgIndex.subIndex.left);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }
+
+        public void MoveRight() {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.right);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void MoveUp() {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.up);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void MoveDown() {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.down);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
     }
 }

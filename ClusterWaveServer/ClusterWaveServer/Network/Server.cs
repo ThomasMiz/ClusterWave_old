@@ -18,9 +18,10 @@ namespace ClusterWaveServer.Network
         PlayerInfo[] players;
 
         int connectedPlayers;
-        int maximumCapacity = 8;
+        int maximumCapacity = 7;
+        int loadedPlayers;
 
-        Dictionary<NetConnection, int> ConnectionToId;
+        public Dictionary<NetConnection, int> ConnectionToId;
         //26200 = Port
 
 
@@ -105,13 +106,10 @@ namespace ClusterWaveServer.Network
                                 }
                                 if (subIndex == MsgIndex.subIndex.doneLoading)
                                 {
-                                    for (int i = 0; i <= maximumCapacity; i++)
-                                    {
-                                        if (players[i] == null)
-                                        {
-
-                                        }
-                                    }
+                                    int id = ConnectionToId[incomingMsg.SenderConnection]; 
+                                    players[id].DoneLoading();
+                                    loadedPlayers++;
+                                    Console.WriteLine("Player " + players[id].Name + " has finished loading");
                                 }
                                 #endregion
                                 break;
@@ -152,7 +150,7 @@ namespace ClusterWaveServer.Network
         void sendByteArray(byte[] byteArray)
         {
             NetOutgoingMessage msg = server.CreateMessage();
-            msg.Write(MsgIndex.scenarioRecieve);                                 //cambia esto por una const
+            msg.Write(MsgIndex.scenarioRecieve);                                 
             msg.Write(byteArray);
             server.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }

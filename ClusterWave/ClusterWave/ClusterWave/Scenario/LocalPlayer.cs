@@ -18,22 +18,26 @@ namespace ClusterWave.Scenario
         public void UpdatePrePhysics(Vector2 mousePos)
         {
             Vector2 spd = Vector2.Zero;
-            if (Game1.ks.IsKeyDown(Keys.Left))
+            if (Game1.ks.IsKeyDown(Keys.A))
             {
                 spd.X = -Constants.PlayerMovementSpeed;
+                scene.Client.MoveLeft();
             }
-            else if (Game1.ks.IsKeyDown(Keys.Right))
+            else if (Game1.ks.IsKeyDown(Keys.D))
             {
                 spd.X = Constants.PlayerMovementSpeed;
+                scene.Client.MoveRight();
             }
 
-            if (Game1.ks.IsKeyDown(Keys.Up))
+            if (Game1.ks.IsKeyDown(Keys.W))
             {
                 spd.Y = -Constants.PlayerMovementSpeed;
+                scene.Client.MoveUp();
             }
-            else if (Game1.ks.IsKeyDown(Keys.Down))
+            else if (Game1.ks.IsKeyDown(Keys.S))
             {
                 spd.Y = Constants.PlayerMovementSpeed;
+                scene.Client.MoveDown();
             }
             body.LinearVelocity = spd;
 

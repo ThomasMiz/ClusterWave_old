@@ -27,5 +27,13 @@ namespace ClusterWaveServer.Network
             this.id = id;
         }
 
+        public void LostRound() { roundsLost--; }
+
+        public void WonRound() { roundsWon++; }
+
+        public void DoneLoading() { doneLoading = true; }
+
+        public bool IsLoaded() { return doneLoading; }
+
     }
 }

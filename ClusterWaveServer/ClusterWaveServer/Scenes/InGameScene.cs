@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using ClusterWaveServer.Scenario;
 using ClusterWaveServer.Network;
 using Lidgren.Network;
@@ -14,6 +15,8 @@ namespace ClusterWaveServer.Scenes
         Scenario.Scenario scenario;
 
         public Scenario.Scenario Scenario { get { return scenario; } }
+
+        NetPlayer[] netPlayers;
 
         public InGameScene(Scenario.Scenario scenario) : base()
         {
@@ -30,13 +33,7 @@ namespace ClusterWaveServer.Scenes
             byte index = msg.ReadByte();
             switch (index)
             {
-                case MsgIndex.chat:
-                    //el chat msg no lo handlees aca, seria copiar y pegar codigo en cada scene. Que el Server lo haga que es lo mismo siempre que hacer con el chat
-                    break;
                 case MsgIndex.statusUpdate:
-
-                    break;
-                case MsgIndex.disconnect:
 
                     break;
                 case MsgIndex.error:
@@ -50,6 +47,11 @@ namespace ClusterWaveServer.Scenes
                     break;
 
             }
+        }
+
+        public void CreatePlayer(Vector2 pos,int id,PlayerInfo player)
+        {
+            new NetPlayer(pos, this, player);
         }
 
         /*void playerMoveUp() //que son estas? no se, no las quiero ver a menos que tengas una buena explicacion.
