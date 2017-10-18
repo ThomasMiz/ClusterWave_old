@@ -86,6 +86,7 @@
     <Compile Include="Scenario\Scenario.cs" />
     <Compile Include="Scenario\ScenarioLoader.cs" />
     <Compile Include="Scenes\InGameScene.cs" />
+    <Compile Include="Scenes\LoadingScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Stuff.cs" />
   </ItemGroup>
