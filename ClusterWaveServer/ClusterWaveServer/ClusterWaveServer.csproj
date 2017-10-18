@@ -43,8 +43,12 @@
       <HintPath>..\..\ClusterWave_lib\Lidgren.Network.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="OpenTK">
+      <HintPath>..\..\ClusterWave_lib\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +58,20 @@
   <ItemGroup>
     <Compile Include="ByteStream.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="DebugRenderer\DebugManager.cs" />
+    <Compile Include="DebugRenderer\DebugViewTK.cs" />
+    <Compile Include="DebugRenderer\DebugWindow.cs" />
+    <Compile Include="DebugRenderer\MizTK\DynamicVertexBuffer.cs" />
+    <Compile Include="DebugRenderer\MizTK\IVertex.cs" />
+    <Compile Include="DebugRenderer\MizTK\PrimitiveBatch.cs" />
+    <Compile Include="DebugRenderer\MizTK\Shaders\ShaderProgram.cs" />
+    <Compile Include="DebugRenderer\MizTK\Shaders\ShaderUniform.cs" />
+    <Compile Include="DebugRenderer\MizTK\Shaders\ShaderUniformList.cs" />
+    <Compile Include="DebugRenderer\MizTK\VertexBuffer.cs" />
+    <Compile Include="DebugRenderer\MizTK\VertexColor.cs" />
+    <Compile Include="DebugRenderer\MizTK\VertexColorTexture.cs" />
+    <Compile Include="DebugRenderer\MizTK\VertexDefinition.cs" />
+    <Compile Include="DebugRenderer\MizTK\VertexPosition.cs" />
     <Compile Include="Network\MsgIndex.cs" />
     <Compile Include="Network\PlayerInfo.cs" />
     <Compile Include="Network\Server.cs" />
