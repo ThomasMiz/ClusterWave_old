@@ -45,9 +45,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float mult = 2.0 - dis;
 	if (mult > 0)
 	{
-		float wav = sin(mad(time, -2, dis * 16.0));
+		float wav = sin(mad(time, -2, dis * 20.0));
 		float2 lel = normalize(input.Pos - pos);
-		Coords.xy += lel * wav * mult / 2.0 * 0.002;
+		Coords.xy += lel * wav * mult / 2.0 * 0.0023333;
 		float cd = mult * 0.005;
 
 		float4 me = tex2D(samp, Coords);

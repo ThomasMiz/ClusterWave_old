@@ -39,7 +39,23 @@ namespace ClusterWave.Scenario
                 spd.Y = Constants.PlayerMovementSpeed;
                 scene.Client.MoveDown();
             }
+
+            if (Game1.ks.IsKeyDown(Keys.D1) && Game1.oldks.IsKeyUp(Keys.D1))
+                SetAnimationGunType(Constants.ShotgunId);
+            else if (Game1.ks.IsKeyDown(Keys.D2) && Game1.oldks.IsKeyUp(Keys.D2))
+                SetAnimationGunType(Constants.SniperId);
+            else if (Game1.ks.IsKeyDown(Keys.D3) && Game1.oldks.IsKeyUp(Keys.D3))
+                SetAnimationGunType(Constants.MachinegunId);
+
+            if (Game1.ms.LeftButton == ButtonState.Pressed)
+                StartShootingAnimation(Game1.Time);
+
             body.LinearVelocity = spd;
+
+            if (spd.X == 0 && spd.Y == 0)
+                ResetAnimation();
+            else
+                StartMovingAnimation(Game1.Time);
 
             rotation = (float)Math.Atan2(mousePos.Y - body.Position.Y, mousePos.X - body.Position.X);
         }

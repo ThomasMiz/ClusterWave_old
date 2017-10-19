@@ -24,10 +24,12 @@ Content\Scenario\shield.xnb
 Content\Scenario\Backgrounds\1\texture.xnb
 Content\Player\dusto.xnb
 Content\Scenario\Bullet\texture.xnb
-Content\Player\1.xnb
-Content\Player\2.xnb
 Content\Scenario\Backgrounds\1\noise128.xnb
 Content\Scenario\Backgrounds\3\colors.xnb
 Content\Scenario\Powerup\texture.xnb
 Content\Scenario\Powerup\distort.xnb
+Content\Player\machinegun.xnb
+Content\Player\shotgun.xnb
+Content\Player\sniper.xnb
+Content\Player\walk1.xnb
 data.map

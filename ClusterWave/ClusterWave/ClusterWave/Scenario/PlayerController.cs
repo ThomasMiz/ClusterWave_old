@@ -5,20 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 using FarseerPhysics.Dynamics;
 using ClusterWave.Scenario;
 using ClusterWave.Scenes;
+using ClusterWave.Scenario.PlayerAnimation;
 
 namespace ClusterWave.Scenario
 {
     abstract class PlayerController
     {
-        protected const float PlayerDrawSize = Constants.PlayerColliderSize / 0.33f;
-        const int FrameWidth = 24, FrameHeight = 21;
-        public static Texture2D[] PlayerTextures;
         public static void Load(ContentManager Content)
         {
-            PlayerTextures = new Texture2D[2];
-            //for (int i = 0; i < 2;)
-            //    PlayerTextures[i] = Content.Load<Texture2D>("Player/" + ++i);
-            PlayerTextures[0] = Content.Load<Texture2D>("Player/dusto");
+            PlayerAnimator.Load(Content);
         }
 
         /// <summary>
@@ -47,10 +42,7 @@ namespace ClusterWave.Scenario
         /// </summary>
         protected InGameScene scene;
 
-        private Texture2D texture;
-        private Vector2 origin;
-        private Rectangle source;
-        private float scale;
+        private PlayerAnimator animator;
 
         /// <summary>
         /// Returns the position of this player's physics body
@@ -77,15 +69,12 @@ namespace ClusterWave.Scenario
             body.CollidesWith = Constants.PlayersCollideWith;
             body.CollisionCategories = Constants.PlayerCategory;
 
-            texture = PlayerTextures[0/*player.ColorIndex*/];
-            origin = new Vector2(texture.Width/2f, texture.Height/2f);
-            scale = PlayerDrawSize / texture.Width;
-            source = new Rectangle(0, 0, FrameWidth, FrameHeight);
+            animator = new PlayerAnimator(this);
         }
 
         public void Draw(SpriteBatch batch)
         {
-            batch.Draw(texture, body.Position, null, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+            animator.Draw(batch, body.Position, rotation);
         }
 
         /// <summary>
@@ -93,7 +82,7 @@ namespace ClusterWave.Scenario
         /// </summary>
         protected void ResetAnimation()
         {
-
+            animator.ResetAnimation();
         }
 
         /// <summary>
@@ -102,7 +91,7 @@ namespace ClusterWave.Scenario
         /// </summary>
         protected void StartMovingAnimation(float time)
         {
-
+            animator.StartMovingAnimation(time);
         }
 
         /// <summary>
@@ -111,7 +100,7 @@ namespace ClusterWave.Scenario
         /// <param name="gunType">The desired gun's id value from Constants</param>
         protected void SetAnimationGunType(int gunType)
         {
-
+            animator.SetGunType(gunType);
         }
 
         /// <summary>
@@ -120,7 +109,7 @@ namespace ClusterWave.Scenario
         /// </summary>
         protected void StartShootingAnimation(float time)
         {
-
+            animator.StartShootingAnimation(time);
         }
 
         /// <summary>

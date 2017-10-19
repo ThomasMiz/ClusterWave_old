@@ -112,6 +112,11 @@
     <Compile Include="Scenario\LineGroup.cs" />
     <Compile Include="Scenario\LocalPlayer.cs" />
     <Compile Include="Scenario\NetPlayer.cs" />
+    <Compile Include="Scenario\PlayerAnimation\Anim.cs" />
+    <Compile Include="Scenario\PlayerAnimation\IdleAnim.cs" />
+    <Compile Include="Scenario\PlayerAnimation\MoveAnim.cs" />
+    <Compile Include="Scenario\PlayerAnimation\PlayerAnimator.cs" />
+    <Compile Include="Scenario\PlayerAnimation\ShootingAnim.cs" />
     <Compile Include="Scenario\PlayerController.cs" />
     <Compile Include="Scenario\Polygon.cs" />
     <Compile Include="Scenario\RectangleShape.cs" />

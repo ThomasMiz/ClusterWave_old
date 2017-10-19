@@ -43,7 +43,6 @@ namespace ClusterWave.Scenes
         NetPlayer[] netPlayers;
 
         Powerup powerup;
-        float powerupScaleThingy;
 
         RenderTarget2D renderTarget;
         VertexBuffer vertexBuffer;
@@ -221,7 +220,7 @@ namespace ClusterWave.Scenes
 
             client.chat.Draw(batch);
 
-            //debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
+            debug.RenderDebugData(scenario.CreateProjectionMatrix(), Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up));
         }
 
         public override void OnResize()
