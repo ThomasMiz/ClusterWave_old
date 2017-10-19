@@ -42,6 +42,12 @@ namespace ClusterWave.Scenes
         LocalPlayer localPlayer;
         NetPlayer[] netPlayers;
 
+        Powerup powerup;
+        float powerupScaleThingy;
+
+        RenderTarget2D renderTarget;
+        VertexBuffer vertexBuffer;
+
         public Scenario.Scenario Scenario { get { return scenario; } }
         public Client Client { get { return client; } }
 
@@ -89,12 +95,23 @@ namespace ClusterWave.Scenes
 
             netPlayers = new NetPlayer[0];
             localPlayer = new LocalPlayer(new Vector2(Game1.Random(scenario.Width), Game1.Random(scenario.Height)), this, null);
+
+            powerup = new Powerup(scenario.PowerupPos, scenario.PhysicsWorld);
+
+            vertexBuffer = new VertexBuffer(Game1.game.GraphicsDevice, typeof(VertexPositionTexture), 4, BufferUsage.WriteOnly);
+            vertexBuffer.SetData(new VertexPositionTexture[]{
+                new VertexPositionTexture(new Vector3(-1, -1, 0), new Vector2(0, 1)),
+                new VertexPositionTexture(new Vector3(-1, 1, 0), new Vector2(0, 0)),
+                new VertexPositionTexture(new Vector3(1, -1, 0), new Vector2(1, 1)),
+                new VertexPositionTexture(new Vector3(1, 1, 0), new Vector2(1, 0)),
+            });
         }
 
         public override void Update()
         {
-            mousePos.X = (Game1.ms.X - Game1.HalfScreenWidth) * scenario.ScreenToSizeRatio + scenario.HalfWidth;
-            mousePos.Y = (Game1.ms.Y - Game1.HalfScreenHeight) * scenario.ScreenToSizeRatio + scenario.HalfHeight;
+            //mousePos.X = (Game1.ms.X - Game1.HalfScreenWidth) * scenario.ScreenToSizeRatio + scenario.HalfWidth;
+            //mousePos.Y = (Game1.ms.Y - Game1.HalfScreenHeight) * scenario.ScreenToSizeRatio + scenario.HalfHeight;
+            mousePos = scenario.TransformScreenToGame(new Vector2(Game1.ms.X, Game1.ms.Y));
 
             #region Weeeee Colorful Physics Particles
             /*if (Game1.ms.LeftButton == ButtonState.Pressed && Game1.oldms.LeftButton == ButtonState.Released && Game1.ms.X > 0 && Game1.ms.X < Game1.ScreenWidth && Game1.ms.Y > 0 && Game1.ms.Y < Game1.ScreenHeight)
@@ -114,7 +131,7 @@ namespace ClusterWave.Scenes
 
             if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f) * 0.5f, 1000));
 
-
+            powerup.Update();
             bullets.UpdateBullets();
 
             for (int i = 0; i < netPlayers.Length; i++)
@@ -143,7 +160,7 @@ namespace ClusterWave.Scenes
             client.chat.PreDraw(GraphicsDevice, batch);
             bg.PreDraw(GraphicsDevice, batch);
 
-            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(bg.ClearColor);
 
             bg.Draw(GraphicsDevice, batch);
@@ -164,6 +181,8 @@ namespace ClusterWave.Scenes
             particles.DrawParticles(batch, GraphicsDevice);
             shields.DrawShields(GraphicsDevice);
 
+            #region DrawFOVLight
+
             GraphicsDevice.BlendState = BlendState.Opaque;
             Viewport prevView = GraphicsDevice.Viewport;
             GraphicsDevice.Viewport = new Viewport(scenario.ScreenBounds);
@@ -174,8 +193,31 @@ namespace ClusterWave.Scenes
             GraphicsDevice.Viewport = prevView;
             GraphicsDevice.BlendState = BlendState.NonPremultiplied;
 
+            #endregion
+
             scenario.DrawShapeFill(GraphicsDevice);
             scenario.DrawShapeLines(GraphicsDevice);
+
+            #region ApplyPowerupEffect
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearClamp;
+            Powerup.DistortTimeParam.SetValue(Game1.Time);
+            Powerup.DistortTexParam.SetValue(renderTarget);
+            Powerup.DistortEffect.CurrentTechnique.Passes[0].Apply();
+            GraphicsDevice.SetVertexBuffer(vertexBuffer);
+            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
+
+            #endregion
+
+            #region DrawPowerup
+
+            batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, PlayerDrawMatrix);
+            powerup.Draw(batch, GraphicsDevice);
+            batch.End();
+
+            #endregion
 
             client.chat.Draw(batch);
 
@@ -192,10 +234,20 @@ namespace ClusterWave.Scenes
                 bg.ShapeLineFx.Parameters["Projection"].SetValue(Projection);
                 colorFx.Parameters["Projection"].SetValue(Projection);
                 Shield.shieldFx.Parameters["Projection"].SetValue(Projection);
+                Powerup.DistortEffect.Parameters["World"].SetValue(Matrix.CreateTranslation(1f / Game1.ScreenWidth, 1f / Game1.ScreenHeight, 0));
+
+                Powerup.DistortEffect.Parameters["size"].SetValue(new Vector2(Game1.ScreenWidth, Game1.ScreenHeight));
+                Powerup.DistortEffect.Parameters["pos"].SetValue(scenario.TransformGameToScreen(powerup.Position));
+                Powerup.DistortEffect.Parameters["scale"].SetValue(scenario.ScreenToSizeRatio);
 
                 bg.Resize();
 
                 PlayerDrawMatrix = Matrix.CreateTranslation(-scenario.HalfWidth, -scenario.HalfHeight, 0) * Matrix.CreateScale(1f / scenario.ScreenToSizeRatio) * Matrix.CreateTranslation(Game1.HalfScreenWidth, Game1.HalfScreenHeight, 0);
+
+                if (renderTarget != null)
+                    renderTarget.Dispose();
+
+                renderTarget = new RenderTarget2D(GraphicsDevice, Game1.ScreenWidth, Game1.ScreenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
             }
         }
 
@@ -205,6 +257,10 @@ namespace ClusterWave.Scenes
                 scenario.Dispose();
             if (debug != null)
                 debug.Dispose();
+            if (renderTarget != null)
+                renderTarget.Dispose();
+            if (vertexBuffer != null)
+                vertexBuffer.Dispose();
 
             client.OnPacket -= OnPacket;
         }

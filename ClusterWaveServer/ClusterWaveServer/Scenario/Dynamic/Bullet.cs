@@ -39,6 +39,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
         {
             body = new Body(physicsWorld, pos, rot, this);
             body.BodyType = BodyType.Dynamic;
+            body.IsBullet = true;
             body.LinearVelocity = movement;
             Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity));
             f.Friction = Constants.BulletFriction;

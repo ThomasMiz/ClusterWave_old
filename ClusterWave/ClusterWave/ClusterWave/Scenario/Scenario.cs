@@ -55,6 +55,8 @@ namespace ClusterWave.Scenario
         /// <summary>Returns the Scenario.Backgrounds.Background object</summary>
         public Background BackgroundObject { get { return background; } }
 
+        public Vector2 PowerupPos { get { return powerupPos; } }
+
         public Rectangle ScreenBounds { get { return screenBounds; } }
 
         public bool DoneLoading { get { return done; } }
@@ -182,6 +184,7 @@ namespace ClusterWave.Scenario
                     _height = msg.ReadFloat();
                     _halfh = _height / 2f;
                     _halfw = _width / 2f;
+                    powerupPos = new Vector2(msg.ReadFloat(), msg.ReadFloat());
                     _Init(msg.ReadInt32());
                     #endregion
                     break;
@@ -291,6 +294,26 @@ namespace ClusterWave.Scenario
             if (lineBuffer != null)
                 lineBuffer.Dispose();
             background.Dispose();
+        }
+
+        /// <summary>
+        /// Transforms the given vector from screen position in pixels to game position in units according to the projection matrix from CreateProjectionMatrix()
+        /// </summary>
+        public Vector2 TransformScreenToGame(Vector2 other)
+        {
+            other.X = (other.X - Game1.HalfScreenWidth) * screenScale + _halfw;
+            other.Y = (other.Y - Game1.HalfScreenHeight) * screenScale + _halfh;
+            return other;
+        }
+
+        /// <summary>
+        /// Transforms the given vector from game position in units to screen position in pixels according to the projection matrix from CreateProjectionMatrix()
+        /// </summary>
+        public Vector2 TransformGameToScreen(Vector2 other)
+        {
+            other.X = (other.X - _halfw) / screenScale + Game1.HalfScreenWidth;
+            other.Y = (other.Y - _halfh) / screenScale + Game1.HalfScreenHeight;
+            return other;
         }
     }
 }

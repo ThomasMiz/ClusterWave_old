@@ -157,7 +157,7 @@ namespace ClusterWaveServer.Scenario
                 if (OnCreationPacket != null)
                 {
                     #region SendData
-                    byte[] b = new byte[14];
+                    byte[] b = new byte[22];
                     b[0] = 3; // "this is scenario data"
                     b[1] = _bgType;
                     byte[] get = BitConverter.GetBytes(_width);
@@ -177,6 +177,18 @@ namespace ClusterWaveServer.Scenario
                     b[11] = get[1];
                     b[12] = get[2];
                     b[13] = get[3];
+
+                    get = BitConverter.GetBytes(powerupPos.X);
+                    b[14] = get[0];
+                    b[15] = get[1];
+                    b[16] = get[2];
+                    b[17] = get[3];
+
+                    get = BitConverter.GetBytes(powerupPos.Y);
+                    b[18] = get[0];
+                    b[19] = get[1];
+                    b[20] = get[2];
+                    b[21] = get[3];
 
                     OnCreationPacket(b);
                     #endregion

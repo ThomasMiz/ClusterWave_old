@@ -38,7 +38,6 @@ namespace ClusterWave
 
         Scenes.Scene scene;
         public Client client;
-        Stopwatch watch = new Stopwatch();
 
         public Game1()
         {
@@ -71,13 +70,13 @@ namespace ClusterWave
             whiteSquare.SetData(new Color[] { Color.White });
 
             Scenes.Windows95.Load(Content);
-
             Scenes.InGameScene.Load(Content);
 
-            ClusterWave.Scenario.Dynamic.Bullet.Load(Content);
-            ClusterWave.Scenario.Backgrounds.Background.Load(Content);
-            ClusterWave.Scenario.Dynamic.Shield.Load(Content);
-            ClusterWave.Scenario.PlayerController.Load(Content);
+            Scenario.Dynamic.Bullet.Load(Content);
+            Scenario.Backgrounds.Background.Load(Content);
+            Scenario.Dynamic.Shield.Load(Content);
+            Scenario.PlayerController.Load(Content);
+            Scenario.Dynamic.Powerup.Load(Content);
 
             if (client == null)
                 client = new Client();
@@ -95,7 +94,6 @@ namespace ClusterWave
 
         protected override void Update(GameTime gameTime)
         {
-            watch.Start();
             oldks = ks;
             oldms = ms;
             ms = Mouse.GetState();

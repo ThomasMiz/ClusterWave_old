@@ -28,4 +28,6 @@ Content\Player\1.xnb
 Content\Player\2.xnb
 Content\Scenario\Backgrounds\1\noise128.xnb
 Content\Scenario\Backgrounds\3\colors.xnb
+Content\Scenario\Powerup\texture.xnb
+Content\Scenario\Powerup\distort.xnb
 data.map
