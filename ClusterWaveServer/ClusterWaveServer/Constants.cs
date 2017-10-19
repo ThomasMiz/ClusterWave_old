@@ -109,9 +109,11 @@ namespace ClusterWaveServer
         public const float ShieldDurationSeconds = 15f;
 
         /// <summary>The radius of the circle shape attached to powerup's physic bodies</summary>
-        public const float PowerupRadius = 1.6f;
+        public const float PowerupRadius = 0.3f;
         /// <summary>The time in seconds a powerup's effect lasts after it's been picked up</summary>
         public const float PowerupDurationSeconds = 15f;
+        /// <summary>The time in seconds the powerup takes to respawn after being picked up</summary>
+        public const float PowerupRespawnTime = 40f;
 
         /// <summary>The number by which the Shotgun is identified</summary>
         public const int ShotgunId = 0;
