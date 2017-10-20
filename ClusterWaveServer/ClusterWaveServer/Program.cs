@@ -58,7 +58,7 @@ namespace ClusterWaveServer
                 watch.Restart();
                 server.UpdateServer();
                 int slp = (int)(UpdateRate - watch.ElapsedMilliseconds);
-                watch.Restart();
+                
                 if (slp > 0)
                     Thread.Sleep(slp);
             }
