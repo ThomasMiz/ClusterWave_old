@@ -18,6 +18,7 @@ Content\Scenario\Backgrounds\3\ray.xnb
 Content\Scenario\Backgrounds\3\texturizer.xnb
 Content\Scenario\Backgrounds\3\initFx.xnb
 Content\Scenario\Backgrounds\3\blur.xnb
+Content\Scenario\Powerup\distort.xnb
 Content\Scenario\colors.xnb
 Content\Scenario\Backgrounds\1\shape.xnb
 Content\Scenario\shield.xnb
@@ -27,7 +28,6 @@ Content\Scenario\Bullet\texture.xnb
 Content\Scenario\Backgrounds\1\noise128.xnb
 Content\Scenario\Backgrounds\3\colors.xnb
 Content\Scenario\Powerup\texture.xnb
-Content\Scenario\Powerup\distort.xnb
 Content\Player\machinegun.xnb
 Content\Player\shotgun.xnb
 Content\Player\sniper.xnb
