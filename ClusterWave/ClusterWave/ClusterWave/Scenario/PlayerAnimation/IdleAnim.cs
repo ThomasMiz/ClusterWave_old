@@ -17,12 +17,11 @@ namespace ClusterWave.Scenario.PlayerAnimation
 
         public override void Update()
         {
-            Game1.game.Window.Title = "idle";
+
         }
 
         public override void OnApplied()
         {
-            animator.gunSource.X = 0;
             animator.gunSource.Y = 0;
             animator.playerSource.X = 0;
             animator.playerSource.Y = 0;

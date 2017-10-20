@@ -17,15 +17,15 @@ namespace ClusterWave.Scenario.PlayerAnimation
 
         public override void Update()
         {
-            int x = (animator.playerSource.X + PlayerAnimator.FrameWidth);
-            if (x > PlayerAnimator.FrameWidth * 7)
+            int frame = (int)((Game1.Time - startTime) * 10);
+            if (frame >= PlayerAnimator.FrameCount)
             {
-                x = 0;
+                startTime += PlayerAnimator.FrameCount / 10f;
                 animator.AnimDone();
             }
-            animator.playerSource.X = x;
 
-            Game1.game.Window.Title = "move";
+            animator.playerSource.X = (frame % PlayerAnimator.FrameCount) * PlayerAnimator.FrameWidth;
+
         }
     }
 }

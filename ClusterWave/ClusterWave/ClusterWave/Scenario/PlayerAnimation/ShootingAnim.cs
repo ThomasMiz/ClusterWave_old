@@ -17,7 +17,23 @@ namespace ClusterWave.Scenario.PlayerAnimation
 
         public override void Update()
         {
-            Game1.game.Window.Title = "shoot";
+            int frame = (int)((Game1.Time - startTime) * 10);
+
+            if (frame >= PlayerAnimator.FrameCount)
+            {
+                animator.playerSource.X = 0;
+                animator.gunSource.Y = 0;
+                animator.AnimDone();
+            }
+            else
+            {
+                animator.playerSource.X = frame * PlayerAnimator.FrameWidth;
+            }
+        }
+
+        public override void OnApplied()
+        {
+            animator.gunSource.Y = PlayerAnimator.FrameHeight;
         }
     }
 }

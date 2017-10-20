@@ -8,7 +8,7 @@ namespace ClusterWave.Scenario.PlayerAnimation
     class PlayerAnimator
     {
         protected const float PlayerDrawSize = Constants.PlayerColliderSize / 0.33f;
-        public const int FrameWidth = 24, FrameHeight = 21;
+        public const int FrameWidth = 24, FrameHeight = 21, FrameCount = 7;
         public static Texture2D[] PlayerTextures, GunTextures;
         static Vector2 playerOrigin, gunOrigin;
         static float playerScale, gunScale;
@@ -49,14 +49,15 @@ namespace ClusterWave.Scenario.PlayerAnimation
             gunSource = new Rectangle(0, 0, FrameWidth, FrameHeight);
 
             hasNext = false;
-            currentAnim = new IdleAnim(this, Game1.Time);
+            currentAnim = new MoveAnim(this, Game1.Time);
         }
 
         public void Draw(SpriteBatch batch, Vector2 pos, float rotation)
         {
-            //currentAnim.Update();
+            currentAnim.Update();
 
             rotation += MathHelper.PiOver2;
+            gunSource.X = playerSource.X;
             batch.Draw(playerTexture, pos, playerSource, Color.White, rotation, playerOrigin, playerScale, SpriteEffects.None, 0f);
             batch.Draw(gunTexture, pos, gunSource, Color.White, rotation, gunOrigin, gunScale, SpriteEffects.None, 0f);
         }
@@ -76,8 +77,11 @@ namespace ClusterWave.Scenario.PlayerAnimation
             if (currentAnim.IsIdleAnim)
                 return;
 
-            if (hasNext && nextAnim.IsIdleAnim)
-                nextAnim.startTime = Game1.Time;
+            if (hasNext)
+            {
+                if (!nextAnim.IsIdleAnim)
+                    nextAnim = new IdleAnim(this, Game1.Time);
+            }
             else
             {
                 hasNext = true;
@@ -88,64 +92,53 @@ namespace ClusterWave.Scenario.PlayerAnimation
         public void StartMovingAnimation(float time)
         {
             if (currentAnim.IsMovingAnim)
-            {
                 return;
-            }
 
             if (currentAnim.IsIdleAnim)
             {
                 currentAnim = new MoveAnim(this, time);
+                currentAnim.OnApplied();
                 return;
             }
 
-            if (hasNext)
+            if(currentAnim.IsShootingAnim)
             {
-                if (nextAnim.IsMovingAnim)
-                    nextAnim.startTime = time;
+                if (hasNext)
+                {
+                    if (!nextAnim.IsMovingAnim)
+                        nextAnim = new MoveAnim(this, time);
+                }
                 else
+                {
+                    hasNext = true;
                     nextAnim = new MoveAnim(this, time);
-            }
-            else
-            {
-                hasNext = true;
-                nextAnim = new MoveAnim(this, time);
+                }
             }
         }
 
         public void StartShootingAnimation(float time)
         {
-            if (currentAnim.IsShootingAnim)
-            {
-                if (!hasNext || !nextAnim.IsShootingAnim)
-                {
-                    hasNext = true;
-                    nextAnim = new ShootingAnim(this, time);
-                }
-                return;
-            }
-
-            if(currentAnim.IsIdleAnim)
+            if (!currentAnim.IsShootingAnim)
             {
                 currentAnim = new ShootingAnim(this, time);
-                return;
+                currentAnim.OnApplied();
             }
-
-            if (hasNext && nextAnim.IsShootingAnim)
-            {
-                nextAnim.startTime = time;
-            }
-            else
-            {
-                hasNext = true;
-                nextAnim = new ShootingAnim(this, time);
-            }
+            return;
         }
 
         public void AnimDone()
         {
-            currentAnim = nextAnim;
-            nextAnim = null;
-            hasNext = false;
+            if (hasNext)
+            {
+                currentAnim = nextAnim;
+                currentAnim.OnApplied();
+                nextAnim = null;
+                hasNext = false;
+            }
+            /*else if (currentAnim.IsMovingAnim)
+            {
+                
+            }*/
         }
     }
 }
