@@ -28,7 +28,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
 
         public void Add(Bullet bullet)
         {
-            list.AddLast(bullet);
+            bullet.SetList(list, list.AddLast(bullet));
         }
 
         public void Remove(LinkedListNode<Bullet> bullet)

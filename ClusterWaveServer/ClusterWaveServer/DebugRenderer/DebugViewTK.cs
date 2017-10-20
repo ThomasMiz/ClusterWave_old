@@ -111,8 +111,10 @@ namespace ClusterWaveServer.DebugRenderer
 
         public void RenderDebug()
         {
-            foreach (Body b in world.BodyList)
+            //foreach (Body b in world.BodyList)
+            for (int xdddd = 0; xdddd < world.BodyList.Count; xdddd++ )
             {
+                Body b = world.BodyList[xdddd];
                 Transform transform;
                 b.GetTransform(out transform);
                 DrawTransform(transform);
@@ -121,8 +123,10 @@ namespace ClusterWaveServer.DebugRenderer
                 Color4 light = new Color4(col.R, col.G, col.B, col.A * 0.5f);
                 //Matrix4 mat = Matrix4.CreateRotationZ(b.Rotation) * Matrix4.CreateTranslation(b.Position.X, b.Position.Y, 0);
 
-                foreach (Fixture f in b.FixtureList)
+                //foreach (Fixture f in b.FixtureList)
+                for (int nose = 0; nose < b.FixtureList.Count; nose++ )
                 {
+                    Fixture f = b.FixtureList[nose];
                     Vertices v;
                     switch (f.Shape.ShapeType)
                     {

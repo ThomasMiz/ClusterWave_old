@@ -1,4 +1,5 @@
 ﻿using ClusterWaveServer.Scenario;
+using ClusterWaveServer.Scenario.Dynamic;
 using FarseerPhysics.Collision.Shapes;
 using FarseerPhysics.Common;
 using FarseerPhysics.Dynamics;
@@ -23,9 +24,13 @@ namespace ClusterWaveServer.DebugRenderer
 
         DebugViewTK debug;
 
+        BulletList bl;
+        
+
         public DebugWindow(Scenario.Scenario scenario)
         {
             this.scenario = scenario;
+            bl = new BulletList();
         }
 
         private float rand(float min, float max)
@@ -35,7 +40,7 @@ namespace ClusterWaveServer.DebugRenderer
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-
+            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -45,12 +50,13 @@ namespace ClusterWaveServer.DebugRenderer
 
             if (ms.LeftButton == ButtonState.Pressed && time > next)
             {
-                #region Shieeet Y'all
-                next += 0.1f;
                 Microsoft.Xna.Framework.Vector2 pos = new Microsoft.Xna.Framework.Vector2(
                     (Mouse.X - Width / 2) * screenScale + scenario.Width*0.5f,
                     (Mouse.Y - Height / 2) * screenScale + scenario.Height*0.5f
                 );
+
+                #region Shieeet Y'all
+                /*next += 0.1f;
 
                 Body b = new Body(scenario.PhysicsWorld, pos, 0f, null);
                 Vertices vert = new Vertices((int)rand(3, 5));
@@ -69,6 +75,8 @@ namespace ClusterWaveServer.DebugRenderer
                 b.LinearDamping = 0f;
                 b.AngularDamping = 0.2f;
                 b.LinearVelocity = new Microsoft.Xna.Framework.Vector2(rand(-5, 5), rand(-5, 5));
+                b.IsBullet = true;
+                */
                 #endregion
             }
 
