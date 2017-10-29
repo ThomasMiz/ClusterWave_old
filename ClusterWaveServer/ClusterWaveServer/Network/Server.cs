@@ -164,9 +164,22 @@ namespace ClusterWaveServer.Network
             {
                 if (players[id] != null)
                 {
-                    
+                    NetOutgoingMessage newPlayerMsg = server.CreateMessage();
+                    newPlayerMsg.Write(MsgIndex.statusUpdate);
+                    newPlayerMsg.Write(MsgIndex.subIndex.playerCreate);
+                    newPlayerMsg.Write((byte)id);
+                    //newPlayerMsg.Write()
+                    server.SendUnconnectedToSelf(newPlayerMsg);
                 }
             }
+        }
+
+        public void SendScenario()
+        {
+            Scenario.ScenarioLoader load = new Scenario.ScenarioLoader(scenario);
+            load.OnCreationPacket += Program.server.sendByteArray;
+            Program.server.SetScene(new InGameScene(load.CreateScenario()));
+            load.OnCreationPacket -= Program.server.sendByteArray;
         }
 
         public void sendByteArray(byte[] byteArray)

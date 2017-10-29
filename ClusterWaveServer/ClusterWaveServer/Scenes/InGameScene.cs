@@ -34,7 +34,12 @@ namespace ClusterWaveServer.Scenes
             switch (index)
             {
                 case MsgIndex.statusUpdate:
-
+                    if (msg.ReadByte() == MsgIndex.subIndex.playerCreate)
+                    {
+                        Random r = new Random();
+                        byte id = msg.ReadByte();
+                        netPlayers[id] = new NetPlayer(new Vector2(r.Next( 0 , (int)scenario.Width), r.Next(0 , (int)scenario.Height)), this, null);
+                    }
                     break;
                 case MsgIndex.error:
 
