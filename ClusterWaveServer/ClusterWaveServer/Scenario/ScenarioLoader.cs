@@ -172,19 +172,19 @@ namespace ClusterWaveServer.Scenario
                     b[8] = get[2];
                     b[9] = get[3];
 
-                    get = BitConverter.GetBytes(shapeDatas.Count);
+                    get = BitConverter.GetBytes(powerupPos.X);
                     b[10] = get[0];
                     b[11] = get[1];
                     b[12] = get[2];
                     b[13] = get[3];
 
-                    get = BitConverter.GetBytes(powerupPos.X);
+                    get = BitConverter.GetBytes(powerupPos.Y);
                     b[14] = get[0];
                     b[15] = get[1];
                     b[16] = get[2];
                     b[17] = get[3];
 
-                    get = BitConverter.GetBytes(powerupPos.Y);
+                    get = BitConverter.GetBytes(shapeDatas.Count);
                     b[18] = get[0];
                     b[19] = get[1];
                     b[20] = get[2];
