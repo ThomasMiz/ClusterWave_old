@@ -81,8 +81,8 @@ namespace ClusterWave
             if (client == null)
                 client = new Client();
             if (scene == null)
-                scene = new Scenes.ScenarioLoadingScene(client);
-                //scene = new Scenes.InGameScene(client);
+                //scene = new Scenes.ScenarioLoadingScene(client);
+                scene = new Scenes.InGameScene(client);
 
             Window_ClientSizeChanged(null, null);
         }
