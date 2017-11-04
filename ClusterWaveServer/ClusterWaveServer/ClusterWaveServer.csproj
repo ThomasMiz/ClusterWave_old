@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenario\Dynamic\Bullet.cs" />
     <Compile Include="Scenario\Dynamic\BulletList.cs" />
+    <Compile Include="Scenario\Dynamic\Powerup.cs" />
     <Compile Include="Scenario\Dynamic\Shield.cs" />
     <Compile Include="Scenario\Dynamic\ShieldList.cs" />
     <Compile Include="Scenario\NetPlayer.cs" />

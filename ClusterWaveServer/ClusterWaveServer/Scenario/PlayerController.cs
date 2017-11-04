@@ -19,6 +19,9 @@ namespace ClusterWaveServer.Scenario
         /// </summary>
         protected float rotation;
 
+
+        protected float health;
+
         /// <summary>
         /// The Player this PlayerController is assigned to
         /// </summary>
@@ -50,7 +53,7 @@ namespace ClusterWaveServer.Scenario
             rotation = 0;
             this.scene = scene;
             this.player = player;
-            body = new Body(scene.Scenario.PhysicsWorld, position, 0f, null);
+            body = new Body(scene.Scenario.PhysicsWorld, position, 0f, this);
             body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(Constants.PlayerColliderSize, Constants.PlayerDensity), this);
             body.BodyType = BodyType.Dynamic;
             body.FixedRotation = true;
@@ -59,5 +62,11 @@ namespace ClusterWaveServer.Scenario
             body.CollidesWith = Constants.PlayersCollideWith;
             body.CollisionCategories = Constants.PlayerCategory;
         }
+
+        /// <summary>
+        /// Override this method and apply any logic for damaging a player and checking whether it's dead.
+        /// </summary>
+        /// <param name="amount">The amount of damage the bullet inflicts</param>
+        public abstract void Damage(float amount);
     }
 }

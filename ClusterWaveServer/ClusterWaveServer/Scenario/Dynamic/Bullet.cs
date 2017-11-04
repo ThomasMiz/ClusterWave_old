@@ -19,19 +19,20 @@ namespace ClusterWaveServer.Scenario.Dynamic
         public readonly int id;
         private Body body;
         private World physicsWorld;
-        private int bouncesLeft;
+        private int bouncesLeft, bounceCount;
         bool check = false;
-        float spd;
+        float spd, dmg;
 
         /// <summary>
         /// Creates a Bullet. Do not use this constructor, use Bullet.Create variations instead
         /// </summary>
-        public Bullet(World physicsWorld, Vector2 pos, float rot, float speed, int bounces)
+        public Bullet(World physicsWorld, Vector2 pos, float rot, float speed, int bounces, float damage)
         {
             id = idCounter++;
             this.physicsWorld = physicsWorld;
             this.bouncesLeft = bounces;
             this.spd = speed;
+            this.dmg = damage;
             Init(pos, new Vector2((float)Math.Cos(rot) * speed, (float)Math.Sin(rot) * speed), rot);
         }
 
@@ -41,7 +42,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
             body.BodyType = BodyType.Dynamic;
             body.IsBullet = true;
             body.LinearVelocity = movement;
-            Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity));
+            Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity), this);
             f.Friction = Constants.BulletFriction;
             f.Restitution = Constants.BulletRestitution;
             body.Friction = Constants.BulletFriction;
@@ -56,8 +57,37 @@ namespace ClusterWaveServer.Scenario.Dynamic
 
         bool body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {
+            object userData = (fixtureA.Body == body ? fixtureB : fixtureA).UserData;
+            if (userData != null)
+            {
+                #region CheckForDamage
+                PlayerController player = userData as PlayerController;
+                if (player != null)
+                {
+                    player.Damage(dmg * (bounceCount * 0.5f + 1));
+
+                    GetRekkt();
+                    return false;
+                }
+
+                Shield shield = userData as Shield;
+                if (shield != null)
+                {
+                    shield.Damage(dmg * (bounceCount * 0.5f + 1));
+
+                    GetRekkt();
+                    return false;
+                }
+                #endregion
+            }
+
             if (--bouncesLeft == -1)
+            {
                 GetRekkt();
+                return false;
+            }
+
+            bounceCount++;
             contact.Restitution = 1;
             check = true;
             return true;
@@ -117,7 +147,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
         public static Bullet CreateShotgun(World world, Vector2 pos, float rot)
         {
-            return new Bullet(world, pos, rot, Constants.ShotgunBulletSpeed, Constants.MachinegunBulletBounceCount);
+            return new Bullet(world, pos, rot, Constants.ShotgunBulletSpeed, Constants.ShotgunBulletBounceCount, Constants.ShotgunBulletDamage);
         }
 
         /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
@@ -127,7 +157,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
         public static Bullet CreateSniper(World world, Vector2 pos, float rot)
         {
-            return new Bullet(world, pos, rot, Constants.SniperBulletSpeed, Constants.SniperBulletBounceCount);
+            return new Bullet(world, pos, rot, Constants.SniperBulletSpeed, Constants.SniperBulletBounceCount, Constants.SniperBulletDamage);
         }
 
         /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
@@ -137,7 +167,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
         public static Bullet CreateMachinegun(int id, World world, Vector2 pos, float rot)
         {
-            return new Bullet(world, pos, rot, Constants.MachinegunBulletSpeed, Constants.MachinegunBulletBounceCount);
+            return new Bullet(world, pos, rot, Constants.MachinegunBulletSpeed, Constants.MachinegunBulletBounceCount, Constants.MachinegunBulletDamage);
         }
     }
 }

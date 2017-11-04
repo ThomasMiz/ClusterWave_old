@@ -28,19 +28,11 @@ namespace ClusterWaveServer.Scenario.Dynamic
             body.CollidesWith = Constants.ShieldCollideWith;
             body.CollisionCategories = Constants.ShieldCategory;
 
-            Fixture f = body.CreateFixture(new PolygonShape(new Vertices(vertices), Constants.ShieldDensity));
+            Fixture f = body.CreateFixture(new PolygonShape(new Vertices(vertices), Constants.ShieldDensity), this);
             f.Friction = Constants.ShieldFriction;
             f.Restitution = Constants.ShieldRestitution;
             f.CollisionCategories = Constants.ShieldCategory;
             f.CollidesWith = Constants.ShieldCollideWith;
-
-            body.OnCollision += OnCollision;
-        }
-
-        bool OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
-        {
-            
-            return true;
         }
 
         private void BreakAndDelete()
@@ -48,16 +40,11 @@ namespace ClusterWaveServer.Scenario.Dynamic
             list.Remove(this);
         }
 
-        public void DecreseHealth(float amount)
+        public void Damage(float amount)
         {
-            health -= amount;
+            health -= amount * 0.333f;
             if (health <= 0)
                 BreakAndDelete();
-        }
-
-        public void OnPacketArrive(Lidgren.Network.NetIncomingMessage msg)
-        {
-
         }
     }
 }

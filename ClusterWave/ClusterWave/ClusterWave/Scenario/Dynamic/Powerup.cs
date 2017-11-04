@@ -30,20 +30,15 @@ namespace ClusterWave.Scenario.Dynamic
             DistortMultParam.SetValue(1f);
         }
 
-
         private Vector2 pos, origin;
-        private bool active;
         private Body body;
 
-        //float m = 1;
-
         public Vector2 Position { get { return pos; } }
-        public bool IsActive { get { return active; } }
+        public bool IsActive { get { return body.Enabled; } }
 
         public Powerup(Vector2 pos, World physicsWorld)
         {
             this.pos = pos;
-            active = true;
             body = new Body(physicsWorld, pos, 0f, this);
             body.BodyType = BodyType.Static;
             body.IsSensor = true;
@@ -52,14 +47,7 @@ namespace ClusterWave.Scenario.Dynamic
             Fixture f = body.CreateFixture(new CircleShape(Constants.PowerupRadius, 1f));
             f.CollisionCategories = Constants.PowerupCategory;
             f.CollidesWith = Constants.PowerupCollideWith;
-            body.OnCollision += body_OnCollision;
             origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-        }
-
-        bool body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
-        {
-            active = false;
-            return false;
         }
 
         public void Update()
@@ -84,7 +72,12 @@ namespace ClusterWave.Scenario.Dynamic
 
         public void SetActive()
         {
-            active = true;
+            body.Enabled = true;
+        }
+
+        public void SetInactive()
+        {
+            body.Enabled = false;
         }
 
         public void OnPacket(NetIncomingMessage msg)

@@ -21,5 +21,14 @@ namespace ClusterWaveServer.Scenario
         {
 
         }
+
+        public override void Damage(float amount)
+        {
+            health -= amount;
+            if (health <= 0)
+            {
+                // implement: lack of existence.
+            }
+        }
     }
 }
