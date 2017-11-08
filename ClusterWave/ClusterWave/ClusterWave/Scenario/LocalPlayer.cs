@@ -46,6 +46,10 @@ namespace ClusterWave.Scenario
                 SetAnimationGunType(Constants.SniperId);
             else if (Game1.ks.IsKeyDown(Keys.D3) && Game1.oldks.IsKeyUp(Keys.D3))
                 SetAnimationGunType(Constants.MachinegunId);
+            else if (Game1.ks.IsKeyDown(Keys.D4) && Game1.oldks.IsKeyUp(Keys.D4))
+            {
+                //add shield
+            }
 
             if (Game1.ms.LeftButton == ButtonState.Pressed)
                 StartShootingAnimation(Game1.Time);

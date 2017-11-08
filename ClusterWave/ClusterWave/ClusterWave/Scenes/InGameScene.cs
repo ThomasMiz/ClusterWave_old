@@ -49,6 +49,8 @@ namespace ClusterWave.Scenes
 
         public Scenario.Scenario Scenario { get { return scenario; } }
         public Client Client { get { return client; } }
+        public ShieldList Shields { get { return shields; } }
+        public ParticleList Particles { get { return particles; } }
 
         /// <summary>Debug Renderer for Farseer Physics</summary>
         DebugViewXNA debug;

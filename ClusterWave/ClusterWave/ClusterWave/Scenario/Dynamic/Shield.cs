@@ -71,14 +71,13 @@ namespace ClusterWave.Scenario.Dynamic
         World world;
         Body body;
 
-        public Shield(int id, World physicsWorld, Particles.ParticleList particleList, Vector2 position, float rotation)
+        public Shield(int id, World physicsWorld, Particles.ParticleList particleList, Vector2 centerPosition, float rotation)
         {
             this.id = id;
-            rotation = 1;
             this.world = physicsWorld;
             particles = particleList;
             health = 1;
-            body = new Body(world, position, rotation, this);
+            body = new Body(world, centerPosition, rotation, this);
             body.BodyType = BodyType.Kinematic;
             body.CollidesWith = Constants.ShieldCollideWith;
             body.CollisionCategories = Constants.ShieldCategory;
@@ -104,7 +103,7 @@ namespace ClusterWave.Scenario.Dynamic
             if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
                 health += 0.01f;
             //Game1.game.Window.Title = health.ToString();
-            body.Rotation += Game1.DeltaTime;
+        
             if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.B))
             {
                 if (Game1.oldks.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.B))

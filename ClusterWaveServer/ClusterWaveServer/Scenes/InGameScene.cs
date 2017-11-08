@@ -15,12 +15,14 @@ namespace ClusterWaveServer.Scenes
         Scenario.Scenario scenario;
 
         public Scenario.Scenario Scenario { get { return scenario; } }
+        DebugRenderer.DebugManager debugManager;
 
         NetPlayer[] netPlayers;
 
         public InGameScene(Scenario.Scenario scenario) : base()
         {
             this.scenario = scenario;
+            debugManager = new DebugRenderer.DebugManager(scenario).Start();
         }
 
         public override void Update()
@@ -56,7 +58,7 @@ namespace ClusterWaveServer.Scenes
 
         public override void OnExit()
         {
-
+            debugManager.Exit();
         }
 
         void CreatePlayer(Vector2 pos,int id,PlayerInfo player)

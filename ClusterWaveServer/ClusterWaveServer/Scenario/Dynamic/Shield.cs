@@ -18,7 +18,14 @@ namespace ClusterWaveServer.Scenario.Dynamic
         World world;
         Body body;
 
-        public Shield(int id, World physicsWorld, Vector2 position, float rotation)
+        /// <summary>
+        /// Creates a shield centered in the specified position with the specified Rotation.
+        /// Use the other constructor instead of this one
+        /// </summary>
+        /// <param name="physicsWorld"></param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        public Shield(World physicsWorld, Vector2 position, float rotation)
         {
             this.id = idCounter++;
             rotation = 1;
@@ -33,6 +40,19 @@ namespace ClusterWaveServer.Scenario.Dynamic
             f.Restitution = Constants.ShieldRestitution;
             f.CollisionCategories = Constants.ShieldCategory;
             f.CollidesWith = Constants.ShieldCollideWith;
+        }
+
+        /// <summary>
+        /// Creates a shield in the specified InGameScene as if placed by a player in the specified position.
+        /// The shield will be placed slightly forward and facing the specified rotation
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="playerPos"></param>
+        /// <param name="playerRotation"></param>
+        public Shield(Scenes.InGameScene scene, Vector2 playerPos, float playerRotation)
+            : this(scene.Scenario.PhysicsWorld, playerPos + new Vector2(0.5f * (float)Math.Cos(playerRotation), 0.5f * (float)Math.Sin(playerRotation)), playerRotation)
+        {
+
         }
 
         private void BreakAndDelete()
