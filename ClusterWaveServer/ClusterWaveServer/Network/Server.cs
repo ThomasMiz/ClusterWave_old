@@ -15,12 +15,12 @@ namespace ClusterWaveServer.Network
         NetPeerConfiguration config;
         Scene scene;
 
-        PlayerInfo[] players;
+        public PlayerInfo[] players;
 
         string scenario;
 
         int connectedPlayers;
-        int maximumCapacity = 7;
+        int maximumCapacity = 8;
         int loadedPlayers;
 
         bool matchInProcess = false;
@@ -44,6 +44,8 @@ namespace ClusterWaveServer.Network
         public void UpdateServer()
         {
             CheckMessage();
+            if (scene != null)
+                scene.Update();
         }
 
         void CheckMessage()
@@ -114,6 +116,7 @@ namespace ClusterWaveServer.Network
                                     players[id].DoneLoading();
                                     loadedPlayers++;
                                     Console.WriteLine("Player " + players[id].Name + " has finished loading");
+                                    if (connectedPlayers == loadedPlayers) startMatch();
                                 }
                                 #endregion
                                 break;
@@ -160,7 +163,7 @@ namespace ClusterWaveServer.Network
 
         void createPlayers()
         {
-            for (int id = 0; id <= maximumCapacity; id++)
+            for (int id = 0; id < maximumCapacity; id++)
             {
                 if (players[id] != null)
                 {
@@ -169,7 +172,9 @@ namespace ClusterWaveServer.Network
                     newPlayerMsg.Write(MsgIndex.subIndex.playerCreate);
                     newPlayerMsg.Write((byte)id);
                     //newPlayerMsg.Write()
-                    server.SendUnconnectedToSelf(newPlayerMsg);
+                    scene.OnPacket(newPlayerMsg);
+                    server.SendToAll(newPlayerMsg, NetDeliveryMethod.ReliableOrdered);
+
                 }
             }
         }
@@ -195,7 +200,7 @@ namespace ClusterWaveServer.Network
             string name = msg.ReadString();
             if (connectedPlayers <= maximumCapacity)
             {
-                for (int i = 0; i <= maximumCapacity; i++)
+                for (int i = 0; i < maximumCapacity; i++)
                 {
                     if (players[i] == null)
                     {

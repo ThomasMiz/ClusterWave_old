@@ -19,7 +19,7 @@ namespace ClusterWaveServer.Scenes
         }
 
         public abstract void Update();
-        public abstract void OnPacket(NetIncomingMessage msg);
+        public abstract void OnPacket(NetBuffer msg);
         public abstract void OnExit();
     }
 }

@@ -94,8 +94,8 @@ namespace ClusterWave.Scenes
             debug = new DebugViewXNA(scenario.PhysicsWorld);
             debug.LoadContent(GraphicsDevice, game.Content);
 
-            netPlayers = new NetPlayer[0];
-            localPlayer = new LocalPlayer(new Vector2(Game1.Random(scenario.Width), Game1.Random(scenario.Height)), this, null);
+            netPlayers = new NetPlayer[8];
+            //localPlayer = new LocalPlayer(new Vector2(Game1.Random(scenario.Width), Game1.Random(scenario.Height)), this, null);
 
             powerup = new Powerup(scenario.PowerupPos, scenario.PhysicsWorld);
 
@@ -136,14 +136,14 @@ namespace ClusterWave.Scenes
             bullets.UpdateBullets();
 
             for (int i = 0; i < netPlayers.Length; i++)
-                netPlayers[i].UpdatePrePhysics();
-            localPlayer.UpdatePrePhysics(mousePos);
+                if (netPlayers != null) netPlayers[i].UpdatePrePhysics();
+            if (localPlayer != null) localPlayer.UpdatePrePhysics(mousePos);
 
             scenario.PhysicsStep(Game1.DeltaTime);
 
             for (int i = 0; i < netPlayers.Length; i++)
-                netPlayers[i].UpdatePostPhysics();
-            localPlayer.UpdatePostPhysics();
+                if (netPlayers != null) netPlayers[i].UpdatePostPhysics();
+            if (localPlayer != null) localPlayer.UpdatePostPhysics();
 
             bg.Update();
 

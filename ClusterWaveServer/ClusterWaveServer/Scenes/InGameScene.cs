@@ -23,6 +23,7 @@ namespace ClusterWaveServer.Scenes
         {
             this.scenario = scenario;
             debugManager = new DebugRenderer.DebugManager(scenario).Start();
+            netPlayers = new NetPlayer[8];
         }
 
         public override void Update()
@@ -30,17 +31,16 @@ namespace ClusterWaveServer.Scenes
             scenario.PhysicsStep(Program.DeltaTime);
         }
 
-        public override void OnPacket(Lidgren.Network.NetIncomingMessage msg)
+        public override void OnPacket(Lidgren.Network.NetBuffer msg)
         {
             byte index = msg.ReadByte();
             switch (index)
             {
                 case MsgIndex.statusUpdate:
                     if (msg.ReadByte() == MsgIndex.subIndex.playerCreate)
-                    {
-                        Random r = new Random();
+                    {;
                         byte id = msg.ReadByte();
-                        netPlayers[id] = new NetPlayer(new Vector2(r.Next( 0 , (int)scenario.Width), r.Next(0 , (int)scenario.Height)), this, null);
+                        netPlayers[id] = new NetPlayer(scenario.PlayersPos[id], this, Program.server.players[id]);
                     }
                     break;
                 case MsgIndex.error:

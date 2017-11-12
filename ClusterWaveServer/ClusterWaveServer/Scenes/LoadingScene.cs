@@ -25,7 +25,7 @@ namespace ClusterWaveServer.Scenes
         }
 
 
-        public override void OnPacket(Lidgren.Network.NetIncomingMessage msg)
+        public override void OnPacket(Lidgren.Network.NetBuffer msg)
         {
 
         }
