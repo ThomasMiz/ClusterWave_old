@@ -116,7 +116,7 @@ namespace ClusterWaveServer.Network
                                     players[id].DoneLoading();
                                     loadedPlayers++;
                                     Console.WriteLine("Player " + players[id].Name + " has finished loading");
-                                    if (connectedPlayers == loadedPlayers) startMatch();
+                                    //if (connectedPlayers == loadedPlayers) startMatch();
                                 }
                                 #endregion
                                 break;
@@ -155,7 +155,7 @@ namespace ClusterWaveServer.Network
             this.scene = scene;
         }
 
-        void startMatch() 
+        public void startMatch() 
         {
             matchInProcess = true;
             createPlayers();
@@ -207,11 +207,17 @@ namespace ClusterWaveServer.Network
                         ConnectionToId.Add(msg.SenderConnection, i);
                         players[i] = new PlayerInfo(name, i);
                         Console.WriteLine("Player : " + name + " connected with ID : " + i);
-                        NetOutgoingMessage outMsg = server.CreateMessage();
-                        outMsg.Write(MsgIndex.assignId);
-                        outMsg.Write((byte)i);
-                        server.SendMessage(outMsg, msg.SenderConnection, NetDeliveryMethod.ReliableUnordered);
+                        NetOutgoingMessage idAssingMsg = server.CreateMessage();
+                        idAssingMsg.Write(MsgIndex.assignId);
+                        idAssingMsg.Write((byte)i);
+                        server.SendMessage(idAssingMsg, msg.SenderConnection, NetDeliveryMethod.ReliableUnordered);
                         connectedPlayers += 1;
+                        NetOutgoingMessage newPlayerMessage = server.CreateMessage();
+                        newPlayerMessage.Write(MsgIndex.disconnect);
+                        newPlayerMessage.Write(MsgIndex.subIndex.playerConnect);
+                        newPlayerMessage.Write((byte)i);
+                        newPlayerMessage.Write(name);
+                        server.SendToAll(newPlayerMessage, msg.SenderConnection, NetDeliveryMethod.ReliableOrdered,0);
                         break;
                     }
                 }

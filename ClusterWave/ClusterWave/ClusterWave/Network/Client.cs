@@ -14,7 +14,8 @@ namespace ClusterWave.Network
 
         NetPeerConfiguration config;
         NetClient client;
-        Player clientPlayer;
+        public Player clientPlayer;
+        public Player[] players;
         string name;
 
         public event OnPacketArrive OnPacket;
@@ -27,6 +28,8 @@ namespace ClusterWave.Network
             config = new NetPeerConfiguration("Cluster Wave");
             client = new NetClient(config);
             client.Start();
+
+            players = new Player[8];
         }
 
         void OnChatLineEntered(ref string line)
@@ -82,7 +85,19 @@ namespace ClusterWave.Network
                     else if (index == MsgIndex.assignId)
                     {
                         incomingMsg.ReadByte();
-                        clientPlayer = new Player(name, incomingMsg.ReadByte());
+                        int id = incomingMsg.ReadByte();
+                        players[id] = new Player(name,id);
+                        clientPlayer = players[id];
+                    }
+                    else if (index == MsgIndex.disconnect)
+                    {
+                        incomingMsg.ReadByte();
+                        if (incomingMsg.ReadByte() == MsgIndex.subIndex.playerConnect)
+                        {
+                            int id = incomingMsg.ReadByte();
+                            string name = incomingMsg.ReadString();
+                            players[id] = new Player(name,id);
+                        }
                     }
                     else if (OnPacket != null)
                         OnPacket(incomingMsg);
@@ -95,6 +110,7 @@ namespace ClusterWave.Network
                     {
                         //Console.WriteLine("Connected to Server at IP :" + incomingMsg.SenderConnection.RemoteEndPoint.Address);
                         sendInfo();
+                        chat.Add(String.Concat("&green;[Client] Connected to Server at IP :" + incomingMsg.SenderConnection.RemoteEndPoint.Address));
                     }
                     #endregion
                 }

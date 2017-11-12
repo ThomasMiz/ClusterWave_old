@@ -75,6 +75,8 @@ namespace ClusterWave.Scenes
             this.client = client;
             this.scenario = scenario;
 
+            client.OnPacket += OnPacket;
+
             bg = scenario.BackgroundObject;
             shields = new ShieldList();
             bullets = new BulletList();
@@ -136,13 +138,13 @@ namespace ClusterWave.Scenes
             bullets.UpdateBullets();
 
             for (int i = 0; i < netPlayers.Length; i++)
-                if (netPlayers != null) netPlayers[i].UpdatePrePhysics();
+                if (netPlayers[i] != null) netPlayers[i].UpdatePrePhysics();
             if (localPlayer != null) localPlayer.UpdatePrePhysics(mousePos);
 
             scenario.PhysicsStep(Game1.DeltaTime);
 
             for (int i = 0; i < netPlayers.Length; i++)
-                if (netPlayers != null) netPlayers[i].UpdatePostPhysics();
+                if (netPlayers[i] != null) netPlayers[i].UpdatePostPhysics();
             if (localPlayer != null) localPlayer.UpdatePostPhysics();
 
             bg.Update();
@@ -172,9 +174,9 @@ namespace ClusterWave.Scenes
             batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, PlayerDrawMatrix);
 
             bullets.DrawBullets(batch);
-            localPlayer.Draw(batch);
+            if (localPlayer != null) localPlayer.Draw(batch);
             for (int i = 0; i < netPlayers.Length; i++)
-                netPlayers[i].Draw(batch);
+                if (netPlayers[i] != null) netPlayers[i].Draw(batch);
 
             batch.End();
             #endregion
@@ -187,7 +189,7 @@ namespace ClusterWave.Scenes
             GraphicsDevice.BlendState = BlendState.Opaque;
             Viewport prevView = GraphicsDevice.Viewport;
             GraphicsDevice.Viewport = new Viewport(scenario.ScreenBounds);
-            bg.LightPosParameter.SetValue(localPlayer.Position);
+            if (localPlayer != null)bg.LightPosParameter.SetValue(localPlayer.Position);
             bg.RayTimeParameter.SetValue(Game1.Time);
 
             scenario.DrawLightWalls(GraphicsDevice);
@@ -276,7 +278,21 @@ namespace ClusterWave.Scenes
                     //CHAT
                     break;
                 case MsgIndex.statusUpdate:
-
+                    byte subIndex = msg.ReadByte();
+                    switch (subIndex)
+                    {
+                        case MsgIndex.subIndex.playerCreate:
+                            byte id = msg.ReadByte();
+                            if (id != client.clientPlayer.Id)
+                            {
+                                netPlayers[id] = new NetPlayer(scenario.PlayersPos[id], this, client.players[id]);
+                            }
+                            else
+                            {
+                                localPlayer = new LocalPlayer(scenario.PlayersPos[id], this, client.clientPlayer);
+                            }
+                            break;
+                    }
                     break;
                 case MsgIndex.disconnect:
 
