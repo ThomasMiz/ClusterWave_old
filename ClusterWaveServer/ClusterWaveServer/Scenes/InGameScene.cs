@@ -28,7 +28,11 @@ namespace ClusterWaveServer.Scenes
 
         public override void Update()
         {
+            for (int i = 0; i < 8; i++)
+                if (netPlayers[i] != null) netPlayers[i].UpdatePrePhysics();
             scenario.PhysicsStep(Program.DeltaTime);
+            for (int i = 0; i < 8; i++)
+                if (netPlayers[i] != null) netPlayers[i].UpdatePostPhysics();
         }
 
         public override void OnPacket(Lidgren.Network.NetBuffer msg)
@@ -38,7 +42,7 @@ namespace ClusterWaveServer.Scenes
             {
                 case MsgIndex.statusUpdate:
                     if (msg.ReadByte() == MsgIndex.subIndex.playerCreate)
-                    {;
+                    {
                         byte id = msg.ReadByte();
                         netPlayers[id] = new NetPlayer(scenario.PlayersPos[id], this, Program.server.players[id]);
                     }
@@ -50,7 +54,8 @@ namespace ClusterWaveServer.Scenes
 
                     break;
                 case MsgIndex.playerMove:
-                    
+                    movePlayer((NetIncomingMessage)msg);
+
                     break;
 
             }
@@ -61,9 +66,24 @@ namespace ClusterWaveServer.Scenes
             debugManager.Exit();
         }
 
-        void CreatePlayer(Vector2 pos,int id,PlayerInfo player)
+        void movePlayer(NetIncomingMessage msg)
         {
-            new NetPlayer(pos, this, player);
+            int id = Program.server.ConnectionToId[msg.SenderConnection];
+            switch (msg.ReadByte())
+            {
+                case MsgIndex.subIndex.up:
+                    netPlayers[id].MoveUp();
+                    break;
+                case MsgIndex.subIndex.down:
+                    netPlayers[id].MoveDown();
+                    break;
+                case MsgIndex.subIndex.left:
+                    netPlayers[id].MoveLeft();
+                    break;
+                case MsgIndex.subIndex.right:
+                    netPlayers[id].MoveRight();
+                    break;
+            }
         }
 
     }

@@ -14,10 +14,11 @@ namespace ClusterWave.Scenario
         {
 
         }
+        Vector2 spd = Vector2.Zero;
 
         public void UpdatePrePhysics(Vector2 mousePos)
         {
-            Vector2 spd = Vector2.Zero;
+            
             if (Game1.ks.IsKeyDown(Keys.A))
             {
                 spd.X = -Constants.PlayerMovementSpeed;
@@ -66,7 +67,7 @@ namespace ClusterWave.Scenario
 
         public void UpdatePostPhysics()
         {
-            
+            spd = Vector2.Zero;
         }
     }
 }

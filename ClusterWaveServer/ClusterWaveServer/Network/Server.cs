@@ -171,6 +171,8 @@ namespace ClusterWaveServer.Network
                     newPlayerMsg.Write(MsgIndex.statusUpdate);
                     newPlayerMsg.Write(MsgIndex.subIndex.playerCreate);
                     newPlayerMsg.Write((byte)id);
+                    newPlayerMsg.Write(((InGameScene)scene).Scenario.PlayersPos[id].X);
+                    newPlayerMsg.Write(((InGameScene)scene).Scenario.PlayersPos[id].Y);
                     //newPlayerMsg.Write()
                     scene.OnPacket(newPlayerMsg);
                     server.SendToAll(newPlayerMsg, NetDeliveryMethod.ReliableOrdered);
@@ -239,6 +241,42 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.chat);
             msg.Write(message);
             server.SendMessage(msg, to, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void MoveLeft(int id)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.left);
+            msg.Write((byte)id);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void MoveRight(int id)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.right);
+            msg.Write((byte)id);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void MoveUp(int id)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.up);
+            msg.Write((byte)id);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void MoveDown(int id)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.down);
+            msg.Write((byte)id);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
     }
 }

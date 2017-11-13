@@ -13,13 +13,40 @@ namespace ClusterWaveServer.Scenario
 
         }
 
+        Vector2 spd = Vector2.Zero;
+
         public void UpdatePrePhysics()
         {
-
+            body.LinearVelocity = spd;
         }
+
         public void UpdatePostPhysics()
         {
+            spd = Vector2.Zero;
+        }
 
+        public void MoveLeft()
+        {
+            spd.X -= Constants.PlayerMovementSpeed;
+            Program.server.MoveLeft(player.GetId());
+        }
+
+        public void MoveRight()
+        {
+            spd.X += Constants.PlayerMovementSpeed;
+            Program.server.MoveRight(player.GetId());
+        }
+
+        public void MoveUp()
+        {
+            spd.Y -= Constants.PlayerMovementSpeed;
+            Program.server.MoveUp(player.GetId());
+        }
+
+        public void MoveDown()
+        {
+            spd.Y += Constants.PlayerMovementSpeed;
+            Program.server.MoveDown(player.GetId());
         }
 
         public override void Damage(float amount)

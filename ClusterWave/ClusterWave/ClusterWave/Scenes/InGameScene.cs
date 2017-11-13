@@ -283,13 +283,15 @@ namespace ClusterWave.Scenes
                     {
                         case MsgIndex.subIndex.playerCreate:
                             byte id = msg.ReadByte();
+                            Vector2 pos = new Vector2(msg.ReadFloat(), msg.ReadFloat());
+                            client.chat.Add("Player connected with id " + id);
                             if (id != client.clientPlayer.Id)
                             {
-                                netPlayers[id] = new NetPlayer(scenario.PlayersPos[id], this, client.players[id]);
+                                netPlayers[id] = new NetPlayer(pos, this, client.players[id]);
                             }
                             else
                             {
-                                localPlayer = new LocalPlayer(scenario.PlayersPos[id], this, client.clientPlayer);
+                                localPlayer = new LocalPlayer(pos, this, client.clientPlayer);
                             }
                             break;
                     }
@@ -304,12 +306,34 @@ namespace ClusterWave.Scenes
 
                     break;
                 case MsgIndex.playerMove:
-
+                    byte dir = msg.ReadByte();
+                    byte playerToMove = msg.ReadByte();
+                    if (playerToMove != client.clientPlayer.Id) movePlayer(playerToMove, dir);
                     break;
                 case MsgIndex.scenarioRecieve:
 
                     break;
             }
         }
+
+        void movePlayer(byte id, byte dir)
+        {
+            switch (dir)
+            {
+                case MsgIndex.subIndex.up:
+                    netPlayers[id].MoveUp();
+                    break;
+                case MsgIndex.subIndex.down:
+                    netPlayers[id].MoveDown();
+                    break;
+                case MsgIndex.subIndex.left:
+                    netPlayers[id].MoveLeft();
+                    break;
+                case MsgIndex.subIndex.right:
+                    netPlayers[id].MoveRight();
+                    break;
+            }
+        }
+
     }
 }

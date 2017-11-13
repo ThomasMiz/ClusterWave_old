@@ -38,6 +38,11 @@ namespace ClusterWaveServer
             while (true)
             {
                 String cmd = Console.ReadLine();
+                if (cmd == "t")
+                {
+                    server.SetScenario("data.map");
+                    server.SendScenario();
+                }
                 if (cmd == "scenario")
                 {
                     string scenario = Console.ReadLine();
@@ -46,7 +51,7 @@ namespace ClusterWaveServer
                 }
                 if (cmd == "start") server.SendScenario();
 
-                if (cmd == "startM") server.startMatch();
+                if (cmd == "sm") server.startMatch();
                  //aca hay q poner para que pruebe hacer comandos (que llame una funcion que lo haga en otro lado?)
             }
         }

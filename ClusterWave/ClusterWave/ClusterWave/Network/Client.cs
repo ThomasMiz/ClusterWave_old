@@ -44,6 +44,9 @@ namespace ClusterWave.Network
                         if (thing.Length > 2)
                             connect(thing[1], thing[2]); //para "/connect <ip> <name>"
                         break;
+                    case "/local":
+                        connect("127.0.0.1", "debugTest");
+                        break;
                     default:
                         SendAsChat(line);
                         break;
