@@ -49,6 +49,11 @@ namespace ClusterWaveServer.Scenario
             Program.server.MoveDown(player.GetId());
         }
 
+        public void Rotate(float rot)
+        {
+            rotation = rot;
+        }
+
         public override void Damage(float amount)
         {
             health -= amount;

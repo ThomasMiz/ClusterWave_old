@@ -116,7 +116,7 @@ namespace ClusterWaveServer.Network
                                     players[id].DoneLoading();
                                     loadedPlayers++;
                                     Console.WriteLine("Player " + players[id].Name + " has finished loading");
-                                    //if (connectedPlayers == loadedPlayers) startMatch();
+                                    if (connectedPlayers == loadedPlayers) startMatch();
                                 }
                                 #endregion
                                 break;

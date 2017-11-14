@@ -150,31 +150,76 @@ namespace ClusterWave.Network
             client.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
-        public void MoveLeft() {
+        public void SendRotation(float rot)
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.rot);
+            msg.Write(rot);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void MoveLeft()
+        {
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.left);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void MoveRight() {
+        public void MoveRight()
+        {
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.right);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void MoveUp() {
+        public void MoveUp()
+        {
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.up);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void MoveDown() {
+        public void MoveDown()
+        {
             NetOutgoingMessage msg = client.CreateMessage();
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.down);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void ShootSmg()
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.smgShot);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void ShootShotgun()
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.shotyShot);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void ShootSniper()
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.sniperShot);
+            client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void Shield()
+        {
+            NetOutgoingMessage msg = client.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.shieldPlaced);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }
 

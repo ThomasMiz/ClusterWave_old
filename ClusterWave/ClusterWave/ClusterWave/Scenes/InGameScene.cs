@@ -132,7 +132,7 @@ namespace ClusterWave.Scenes
             }*/
             #endregion
 
-            if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f) * 0.5f, 1000));
+            //if (Game1.ms.LeftButton == ButtonState.Pressed) bullets.Add(new Bullet(0, scenario.PhysicsWorld, mousePos, Game1.Random(MathHelper.TwoPi), Game1.Random(15f, 20f) * 0.5f, 1000));
 
             powerup.Update();
             bullets.UpdateBullets();

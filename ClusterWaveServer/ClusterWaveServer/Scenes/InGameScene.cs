@@ -83,6 +83,9 @@ namespace ClusterWaveServer.Scenes
                 case MsgIndex.subIndex.right:
                     netPlayers[id].MoveRight();
                     break;
+                case MsgIndex.subIndex.rot:
+                    netPlayers[id].Rotate(msg.ReadFloat());
+                    break;
             }
         }
 
