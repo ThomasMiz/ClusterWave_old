@@ -46,7 +46,7 @@ namespace ClusterWave.Scenario
                 SetAnimationGunType(Constants.ShotgunId);
             }
             else if (Game1.ks.IsKeyDown(Keys.D2) && Game1.oldks.IsKeyUp(Keys.D2))
-            {}
+            {
                 SetAnimationGunType(Constants.SniperId);
             }
             else if (Game1.ks.IsKeyDown(Keys.D3) && Game1.oldks.IsKeyUp(Keys.D3))
@@ -61,7 +61,7 @@ namespace ClusterWave.Scenario
             if (Game1.ms.LeftButton == ButtonState.Pressed)
             {
                 StartShootingAnimation(Game1.Time);
-                scene.Client.Shoot();
+                scene.Client.ShootSmg();
             }
 
             body.LinearVelocity = spd;

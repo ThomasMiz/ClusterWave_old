@@ -278,5 +278,38 @@ namespace ClusterWaveServer.Network
             msg.Write((byte)id);
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
+
+        public void ShootSmg()
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.smgShot);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void ShootShotgun()
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.shotyShot);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void ShootSniper()
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.sniperShot);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void Shield()
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerAct);
+            msg.Write(MsgIndex.subIndex.shieldPlaced);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
     }
 }

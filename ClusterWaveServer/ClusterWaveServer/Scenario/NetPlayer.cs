@@ -49,6 +49,11 @@ namespace ClusterWaveServer.Scenario
             Program.server.MoveDown(player.GetId());
         }
 
+        public float GetRotation()
+        {
+            return rotation;
+        }
+
         public void Rotate(float rot)
         {
             rotation = rot;

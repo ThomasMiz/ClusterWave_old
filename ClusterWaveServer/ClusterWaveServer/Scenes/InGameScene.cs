@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using ClusterWaveServer.Scenario;
+using ClusterWaveServer.Scenario.Dynamic;
 using ClusterWaveServer.Network;
 using Lidgren.Network;
 
@@ -13,6 +14,8 @@ namespace ClusterWaveServer.Scenes
     class InGameScene : Scene
     {
         Scenario.Scenario scenario;
+
+        BulletList bullets;
 
         public Scenario.Scenario Scenario { get { return scenario; } }
         DebugRenderer.DebugManager debugManager;
@@ -24,6 +27,7 @@ namespace ClusterWaveServer.Scenes
             this.scenario = scenario;
             debugManager = new DebugRenderer.DebugManager(scenario).Start();
             netPlayers = new NetPlayer[8];
+            bullets = new BulletList();
         }
 
         public override void Update()
@@ -51,10 +55,10 @@ namespace ClusterWaveServer.Scenes
 
                     break;
                 case MsgIndex.playerAct:
-
+                    PlayerAct((NetIncomingMessage)msg);
                     break;
                 case MsgIndex.playerMove:
-                    movePlayer((NetIncomingMessage)msg);
+                    MovePlayer((NetIncomingMessage)msg);
 
                     break;
 
@@ -66,7 +70,28 @@ namespace ClusterWaveServer.Scenes
             debugManager.Exit();
         }
 
-        void movePlayer(NetIncomingMessage msg)
+        void PlayerAct(NetIncomingMessage msg)
+        {
+            int id = Program.server.ConnectionToId[msg.SenderConnection];
+            switch (msg.ReadByte())
+            {
+                case MsgIndex.subIndex.smgShot:
+                    Bullet tempBullet = Bullet.CreateMachinegun(1, scenario.PhysicsWorld, netPlayers[id].Position, netPlayers[id].GetRotation());
+                    bullets.Add(tempBullet);
+                    break;
+                case MsgIndex.subIndex.shotyShot:
+                    netPlayers[id].MoveDown();
+                    break;
+                case MsgIndex.subIndex.sniperShot:
+                    netPlayers[id].MoveLeft();
+                    break;
+                case MsgIndex.subIndex.shieldPlaced:
+                    netPlayers[id].MoveRight();
+                    break;
+            }
+        }
+
+        void MovePlayer(NetIncomingMessage msg)
         {
             int id = Program.server.ConnectionToId[msg.SenderConnection];
             switch (msg.ReadByte())
