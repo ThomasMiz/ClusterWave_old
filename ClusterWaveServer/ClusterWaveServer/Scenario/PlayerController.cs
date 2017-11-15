@@ -15,7 +15,7 @@ namespace ClusterWaveServer.Scenario
         protected Body body;
 
         /// <summary>
-        /// The rotation the player is facing. This value is used just for drawing
+        /// The rotation the player is facing.
         /// </summary>
         protected float rotation;
 
@@ -41,6 +41,8 @@ namespace ClusterWaveServer.Scenario
         /// Returns the position of this player's physics body
         /// </summary>
         public Vector2 Position { get { return body.Position; } }
+
+        public float Rotation { get { return rotation; } set { rotation = value; } }
 
         /// <summary>
         /// Creates a PlayerController, assigning it a given position, scene and it's assigned Player.

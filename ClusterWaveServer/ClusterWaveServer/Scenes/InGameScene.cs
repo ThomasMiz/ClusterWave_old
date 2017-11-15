@@ -76,7 +76,7 @@ namespace ClusterWaveServer.Scenes
             switch (msg.ReadByte())
             {
                 case MsgIndex.subIndex.smgShot:
-                    Bullet tempBullet = Bullet.CreateMachinegun(1, scenario.PhysicsWorld, netPlayers[id].Position, netPlayers[id].GetRotation());
+                    Bullet tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[id]);
                     bullets.Add(tempBullet);
                     break;
                 case MsgIndex.subIndex.shotyShot:
