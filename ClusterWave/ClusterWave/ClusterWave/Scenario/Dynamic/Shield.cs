@@ -98,7 +98,7 @@ namespace ClusterWave.Scenario.Dynamic
 
         public void Draw(GraphicsDevice device)
         {
-            if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
+            /*if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Left))
                 health -= 0.01f;
             if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Right))
                 health += 0.01f;
@@ -109,7 +109,7 @@ namespace ClusterWave.Scenario.Dynamic
                 if (Game1.oldks.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.B))
                     BreakAndDelete();
             }
-            else
+            else*/
             {
                 device.SetVertexBuffer(buffer);
                 shieldFx.Parameters["World"].SetValue(Matrix.CreateRotationZ(body.Rotation) * Matrix.CreateTranslation(body.Position.X, body.Position.Y, 0));
@@ -122,7 +122,7 @@ namespace ClusterWave.Scenario.Dynamic
             }
         }
 
-        private void BreakAndDelete()
+        public void BreakAndDelete()
         {
             Vector2[] vert = new Vector2[vertices.Length];
             for (int i = 0; i < vert.Length; i++)

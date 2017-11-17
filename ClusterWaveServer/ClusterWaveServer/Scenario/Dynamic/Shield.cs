@@ -25,7 +25,7 @@ namespace ClusterWaveServer.Scenario.Dynamic
         /// <param name="physicsWorld"></param>
         /// <param name="position"></param>
         /// <param name="rotation"></param>
-        public Shield(World physicsWorld, Vector2 position, float rotation)
+        private Shield(World physicsWorld, Vector2 position, float rotation)
         {
             this.id = idCounter++;
             rotation = 1;

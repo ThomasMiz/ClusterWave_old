@@ -81,7 +81,7 @@ namespace ClusterWave.Scenes
             shields = new ShieldList();
             bullets = new BulletList();
             particles = new ParticleList();
-            shields.Add(new Shield(0, scenario.PhysicsWorld, particles, new Vector2(2.1f, 0.8f), 0f));
+            //shields.Add(new Shield(0, scenario.PhysicsWorld, particles, new Vector2(2.1f, 0.8f), 0f));
 
             float hw = scenario.HalfWidth, hh = scenario.HalfHeight;
             Matrix view = Matrix.CreateLookAt(new Vector3(hw, hh, 2), new Vector3(hw, hh, 1), Vector3.Up);
