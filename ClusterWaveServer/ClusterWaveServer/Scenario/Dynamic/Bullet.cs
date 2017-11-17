@@ -64,8 +64,11 @@ namespace ClusterWaveServer.Scenario.Dynamic
             {
                 #region CheckForDamage
                 PlayerController player = userData as PlayerController;
-                if (player != null && player != ignore)
+                if (player != null)
                 {
+                    if (player == ignore)
+                        return false;
+
                     player.Damage(dmg * (bounceCount * 0.5f + 1));
 
                     GetRekkt();
