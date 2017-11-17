@@ -80,6 +80,24 @@ namespace ClusterWave.Network
                 {
                     #region Data
                     byte index = incomingMsg.PeekByte();
+                    switch (index)
+                    {
+                        case MsgIndex.chat:
+
+                            break;
+                        case MsgIndex.assignId:
+
+                            break;
+                        case MsgIndex.disconnect:
+                            incomingMsg.ReadByte();
+                            if (incomingMsg.ReadByte() == MsgIndex.subIndex.playerConnect)
+                            {
+                                int id = incomingMsg.ReadByte();
+                                string name = incomingMsg.ReadString();
+                                players[id] = new Player(name,id);
+                            }
+                            break;
+                    }
                     if (index == MsgIndex.chat)
                     {
                         incomingMsg.ReadByte();
@@ -94,13 +112,7 @@ namespace ClusterWave.Network
                     }
                     else if (index == MsgIndex.disconnect)
                     {
-                        incomingMsg.ReadByte();
-                        if (incomingMsg.ReadByte() == MsgIndex.subIndex.playerConnect)
-                        {
-                            int id = incomingMsg.ReadByte();
-                            string name = incomingMsg.ReadString();
-                            players[id] = new Player(name,id);
-                        }
+                        
                     }
                     else if (OnPacket != null)
                         OnPacket(incomingMsg);

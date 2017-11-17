@@ -209,22 +209,32 @@ namespace ClusterWaveServer.Network
                         ConnectionToId.Add(msg.SenderConnection, i);
                         players[i] = new PlayerInfo(name, i);
                         Console.WriteLine("Player : " + name + " connected with ID : " + i);
-                        NetOutgoingMessage idAssingMsg = server.CreateMessage();
-                        idAssingMsg.Write(MsgIndex.assignId);
-                        idAssingMsg.Write((byte)i);
-                        server.SendMessage(idAssingMsg, msg.SenderConnection, NetDeliveryMethod.ReliableUnordered);
+                        PlayerAssingIdMessage(i, msg.SenderConnection);
                         connectedPlayers += 1;
-                        NetOutgoingMessage newPlayerMessage = server.CreateMessage();
-                        newPlayerMessage.Write(MsgIndex.disconnect);
-                        newPlayerMessage.Write(MsgIndex.subIndex.playerConnect);
-                        newPlayerMessage.Write((byte)i);
-                        newPlayerMessage.Write(name);
-                        server.SendToAll(newPlayerMessage, msg.SenderConnection, NetDeliveryMethod.ReliableOrdered,0);
+                        PlayerConnectedMessage(i, name, msg.SenderConnection);
                         break;
                     }
                 }
             }
             Console.WriteLine("This brings the total connected player to : " + connectedPlayers + "/" + maximumCapacity);
+        }
+
+        void PlayerAssingIdMessage(int id, NetConnection connection)
+        {
+            NetOutgoingMessage idAssingMsg = server.CreateMessage();
+            idAssingMsg.Write(MsgIndex.assignId);
+            idAssingMsg.Write((byte)id);
+            server.SendMessage(idAssingMsg, connection, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        void PlayerConnectedMessage(int id, string name, NetConnection connection)
+        {
+            NetOutgoingMessage newPlayerMessage = server.CreateMessage();
+            newPlayerMessage.Write(MsgIndex.disconnect);
+            newPlayerMessage.Write(MsgIndex.subIndex.playerConnect);
+            newPlayerMessage.Write((byte)id);
+            newPlayerMessage.Write(name);
+            server.SendToAll(newPlayerMessage, connection, NetDeliveryMethod.ReliableOrdered,0);
         }
 
         void SendChatMessage(String message)

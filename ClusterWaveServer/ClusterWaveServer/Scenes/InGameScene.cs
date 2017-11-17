@@ -73,17 +73,20 @@ namespace ClusterWaveServer.Scenes
         void PlayerAct(NetIncomingMessage msg)
         {
             int id = Program.server.ConnectionToId[msg.SenderConnection];
+            Bullet tempBullet;
             switch (msg.ReadByte())
             {
                 case MsgIndex.subIndex.smgShot:
-                    Bullet tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[id]);
+                    tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[id]);
                     bullets.Add(tempBullet);
                     break;
                 case MsgIndex.subIndex.shotyShot:
-                    netPlayers[id].MoveDown();
+                    tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, netPlayers[id]);
+                    bullets.Add(tempBullet);
                     break;
                 case MsgIndex.subIndex.sniperShot:
-                    netPlayers[id].MoveLeft();
+                    tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, netPlayers[id]);
+                    bullets.Add(tempBullet);
                     break;
                 case MsgIndex.subIndex.shieldPlaced:
                     netPlayers[id].MoveRight();
