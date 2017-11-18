@@ -56,7 +56,7 @@ namespace ClusterWave.Scenario.Dynamic
             body.Restitution = Constants.BulletRestitution;
             body.AngularDamping = 0f;
             body.LinearDamping = 0f;
-            body.CollidesWith = Constants.BulletsCollideWith;
+            body.CollidesWith = Constants.WallsCategory | Constants.ShieldCategory;
             body.CollisionCategories = Constants.BulletsCategory;
             body.FixedRotation = true;
             body.OnCollision += body_OnCollision;
