@@ -328,7 +328,7 @@ namespace ClusterWave.UI
             exitBtn.Resize(-Pos + new Vector2(0, Size.Y + 10), new Vector2(90));
             bar.Resize(-Pos + new Vector2(0, Game1.ScreenHeight - 40), new Vector2(Game1.ScreenWidth, 40));
             destinationRectangle = new Rectangle(-(int)Pos.X, -(int)Pos.Y, Game1.ScreenWidth, Game1.ScreenHeight);
-            Game1.game.Window.Title = "" + size;
+            //Game1.game.Window.Title = "" + size;
             /*if (pl != null)
                 pl.Resize(Size);
             if(plIP != null)
