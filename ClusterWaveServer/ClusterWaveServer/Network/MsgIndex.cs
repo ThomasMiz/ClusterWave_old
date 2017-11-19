@@ -23,6 +23,7 @@ namespace ClusterWaveServer.Network
             public const byte playerUpdate = 21;
             public const byte BulletHit = 22;
             public const byte playerCreate = 23;
+            public const byte gameStarting = 24;
 
             public const byte playerExit = 31;
             public const byte connectionTimeout = 32;

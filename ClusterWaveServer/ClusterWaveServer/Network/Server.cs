@@ -183,10 +183,19 @@ namespace ClusterWaveServer.Network
 
         public void SendScenario()
         {
+            signalScenarioSend();
             Scenario.ScenarioLoader load = new Scenario.ScenarioLoader(scenario);
             load.OnCreationPacket += Program.server.sendByteArray;
             Program.server.SetScene(new InGameScene(load.CreateScenario()));
             load.OnCreationPacket -= Program.server.sendByteArray;
+        }
+
+        void signalScenarioSend()
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.statusUpdate);
+            msg.Write(MsgIndex.subIndex.gameStarting);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
         public void sendByteArray(byte[] byteArray)

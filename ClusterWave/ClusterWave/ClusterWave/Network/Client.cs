@@ -80,42 +80,34 @@ namespace ClusterWave.Network
                 {
                     #region Data
                     byte index = incomingMsg.PeekByte();
+                    int id;
                     switch (index)
                     {
                         case MsgIndex.chat:
-
+                            incomingMsg.ReadByte();
+                            chat.Add(incomingMsg.ReadString());
                             break;
                         case MsgIndex.assignId:
-
+                            incomingMsg.ReadByte();
+                            id = incomingMsg.ReadByte();
+                            players[id] = new Player(name,id);
+                            clientPlayer = players[id];
                             break;
                         case MsgIndex.disconnect:
                             incomingMsg.ReadByte();
                             if (incomingMsg.ReadByte() == MsgIndex.subIndex.playerConnect)
                             {
-                                int id = incomingMsg.ReadByte();
-                                string name = incomingMsg.ReadString();
+                                id = incomingMsg.ReadByte();
+                                string newPlayerName = incomingMsg.ReadString();
                                 players[id] = new Player(name,id);
                             }
                             break;
+                        default:
+                            if (OnPacket != null)
+                                OnPacket(incomingMsg);
+                            break;
                     }
-                    if (index == MsgIndex.chat)
-                    {
-                        incomingMsg.ReadByte();
-                        chat.Add(incomingMsg.ReadString());
-                    }
-                    else if (index == MsgIndex.assignId)
-                    {
-                        incomingMsg.ReadByte();
-                        int id = incomingMsg.ReadByte();
-                        players[id] = new Player(name,id);
-                        clientPlayer = players[id];
-                    }
-                    else if (index == MsgIndex.disconnect)
-                    {
-                        
-                    }
-                    else if (OnPacket != null)
-                        OnPacket(incomingMsg);
+                    
                     #endregion
                 }
                 else if (incomingMsg.MessageType == NetIncomingMessageType.StatusChanged)

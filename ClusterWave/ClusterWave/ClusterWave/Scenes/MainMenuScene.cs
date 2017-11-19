@@ -43,6 +43,11 @@ namespace ClusterWave.Scenes
 
         void OnPacket(NetIncomingMessage msg)
         {
+            byte index = msg.ReadByte();
+            if (index == MsgIndex.statusUpdate){
+                if(msg.ReadByte() == MsgIndex.subIndex.gameStarting)
+                    game.SetScene(new ScenarioLoadingScene(client));
+            }
             // sanda stuff here
         }
     }
