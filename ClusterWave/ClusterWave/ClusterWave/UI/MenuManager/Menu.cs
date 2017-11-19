@@ -33,7 +33,7 @@ namespace ClusterWave.UI
 
         public static void LoadContent(ContentManager content)
         {
-            playTex = content.Load<Texture2D>("UI_Content/icon_play");
+            playTex = content.Load<Texture2D>("UI_Content/icon_PC");
             optionsTex = content.Load<Texture2D>("UI_Content/icon_options");
             hostTex = content.Load<Texture2D>("UI_Content/icon_host");
             exitTex = content.Load<Texture2D>("UI_Content/icon_exit");

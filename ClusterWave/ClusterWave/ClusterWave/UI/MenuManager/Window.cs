@@ -23,6 +23,7 @@ namespace ClusterWave.UI.MenuManager
         public List<Tooltip> tooltips = new List<Tooltip>(10);
         public List<Text> texts = new List<Text>(10);
         public Vector2[,] buttonsResize = new Vector2[10, 10], textboxesResize = new Vector2[10, 10], slidersResize = new Vector2[10, 10], droplistsResize = new Vector2[10, 10], tooltipsResize = new Vector2[10, 10], textsResize = new Vector2[10, 10], dmResize = new Vector2[10, 10];
+        public Vector2[,] chatResize = new Vector2[2, 2];
         Menu menu;
         public ChatTextBox chat;
 
@@ -87,7 +88,11 @@ namespace ClusterWave.UI.MenuManager
                 dm[i].Resize(dmResize[i, 0] + pos + new Vector2(3, 27), size / dmResize[i, 1] - new Vector2(6, 30));
                 //dm[i].Resize(dmResize[i, 0] + pos + new Vector2(3, 27), size / dmResize[i, 1] - new Vector2(6, 30));//basta mizreaaaaasafuhasufahfafa
             if (chat != null)
-                chat.Resize(textboxesResize[0, 0] + pos + new Vector2(3, 27), size / textboxesResize[0, 1] - new Vector2(6, 30));
+            {
+                chat.Resize(pos, size);
+            }
+
+
             
         }
         public void Update(Vector2 mousePos)

@@ -11,7 +11,7 @@ namespace ClusterWave.UI
 {
     class MainMenu : Menu
     {
-        public static Vector2 Cancer;
+        public static Vector2 chatPos = new Vector2(400,240);
 
         Rectangle destinationRectangle;
         Button playBtn, optionsBtn, hostBtn, exitBtn, plJoin, plCreate, plGame, exYes, exNo, opButton, opNameGen, opFullScreen;
@@ -30,6 +30,7 @@ namespace ClusterWave.UI
 
         public MainMenu()
         {
+
             playBtn = new Button(new DrawIcon(playTex, Color.White), Color.LightBlue, Color.Blue, new Text(new DrawChainText(), "Play.exe", -1, -0.6f), new DrawIcon(playTex, Color.LightBlue), new DrawIcon(playTex, Color.Blue));
             optionsBtn = new Button(new DrawIcon(optionsTex, Color.White), Color.LightBlue, Color.Blue, new Text(new DrawChainText(), "Options", -1, -0.6f), new DrawIcon(optionsTex, Color.LightBlue), new DrawIcon(optionsTex, Color.Blue));
             hostBtn = new Button(new DrawIcon(hostTex, Color.White), Color.LightBlue, Color.Blue, new Text(new DrawChainText(), "Host", -1, -0.6f), new DrawIcon(optionsTex, Color.LightBlue), new DrawIcon(optionsTex, Color.Blue));
@@ -238,6 +239,11 @@ namespace ClusterWave.UI
 
             tConn = new Text(new DrawText(Color.White), "Connecting to " + txbPlIP.Text + "...\nRetrying...\nRetrying...\nError 404: Server is unreachable\n\nMaybe Fran has something to do with it... :)\n\nExecuting not_virus.exe from developer: softonic\n\nWINDOWS ERROR: j1i2r0rh2108h1208381u2801h82013\n\nDeleting system32", Vector2.Zero, -10);
             wConn.Add(tConn, new Vector2(1,1), new Vector2(2,2));
+
+            WindowRemove(wConn);
+            connecting = false;
+            //time = 0;
+            ConnectedWindow(); 
             connecting = true;
 
         }
@@ -246,13 +252,18 @@ namespace ClusterWave.UI
             wLobby = new Window("Lobby", this, new Vector2(-50,-100));
             wLobby.Resize(bounds * 1.5f);
             wLobby.Add(new DrawWin95TextBox(), new Vector2(5, wLobby.size.Y - (wLobby.size.Y / 1.2f) - (wLobby.size.Y - (wLobby.size.Y / 1.2f))/2), new Vector2(1.5f, 1.2f));
+
             wLobby.chat = new ChatTextBox(Game1.game.client.chat);
+            /*wLobby.chatResize[0, 0] = new Vector2(205,150);
+            wLobby.chatResize[0, 1] = new Vector2(100, 1);*/
             WindowForward(wLobby);
 
             for(int i = 1; i <= 9; i++){
                 wLobby.Add(new DrawWin95Press(), new Vector2(5 + wLobby.size.X / 1.5f, i * (wLobby.size.Y - (wLobby.size.Y / 1.2f) - (wLobby.size.Y - (wLobby.size.Y / 1.2f)) / 2)), new Vector2(4, 8/1.3f));
                 wLobby.Add(new Text(new DrawText(Color.Black), "", new Vector2(-1, 1), -5), new Vector2(5 + wLobby.size.X / 1.5f, i * (wLobby.size.Y - (wLobby.size.Y / 1.2f) - (wLobby.size.Y - (wLobby.size.Y / 1.2f)) / 2)), new Vector2(4, 8 / 1.3f));
             }
+
+
         }
         void FailedConnectWindow()
         {
@@ -274,21 +285,18 @@ namespace ClusterWave.UI
         {
             base.Update();
 
-            if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) && Game1.oldks.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if (Game1.ks.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.U) && Game1.oldks.IsKeyUp(Microsoft.Xna.Framework.Input.Keys.U))
                 OnConnectSuccessful();
 
             /*if(connecting)
             {
                 time += 1 * Game1.DeltaTime;
-            }
+            }*/
 
-            if(boolFunctionForDudeConnect()){
-                WindowRemove(wConn);
-                connecting = false;
-                time = 0;
-                ConnectedWindow(); 
-             }
-            if (time >= maxWaitTime)
+            //if(boolFunctionForDudeConnect()){
+               
+             //}
+           /* if (time >= maxWaitTime)
             {
                 //FailedConnectWindow();
                 WindowRemove(wConn);
@@ -306,20 +314,21 @@ namespace ClusterWave.UI
             batch.Draw(mainBG, destinationRectangle, Color.White);
             bar.Draw(batch, device);
             MenuDraw(batch, device, mousePos);
-
             batch.End();
         }
 
         public override void Resize(Vector2 pos, Vector2 size)
         {
             base.Resize(pos, size);
-            Cancer = Pos;
+            if (wLobby != null)
+                chatPos = size;
 
             playBtn.Resize(-Pos + new Vector2(0, 10), new Vector2(90, 90));
             optionsBtn.Resize(-Pos + new Vector2(0, 10 + Size.Y / 2), new Vector2(90, 90));
             exitBtn.Resize(-Pos + new Vector2(0, Size.Y + 10), new Vector2(90));
             bar.Resize(-Pos + new Vector2(0, Game1.ScreenHeight - 40), new Vector2(Game1.ScreenWidth, 40));
             destinationRectangle = new Rectangle(-(int)Pos.X, -(int)Pos.Y, Game1.ScreenWidth, Game1.ScreenHeight);
+            Game1.game.Window.Title = "" + size;
             /*if (pl != null)
                 pl.Resize(Size);
             if(plIP != null)
@@ -332,7 +341,7 @@ namespace ClusterWave.UI
 
         public void OnConnectSuccessful()
         {
-            WindowRemove(wConn);
+            //WindowRemove(wConn);
             ConnectedWindow();
         }
 

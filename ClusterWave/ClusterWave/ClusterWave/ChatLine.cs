@@ -386,7 +386,8 @@ namespace ClusterWave
         }
         ~SpecialChatLine()
         {
-            target.Dispose();
+            if(target != null)
+                target.Dispose();
         }
 
         public void Set(StringBuilder textLine)

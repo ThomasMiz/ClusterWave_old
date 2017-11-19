@@ -20,7 +20,7 @@ namespace ClusterWave.UI.Elements
         {
             batch.End();
             chat.Draw(batch);
-            batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.CreateTranslation(MainMenu.Cancer.X, MainMenu.Cancer.Y, 0));
+            batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.CreateTranslation(MainMenu.chatPos.X, MainMenu.chatPos.Y, 0));
             
         }
 
@@ -31,7 +31,11 @@ namespace ClusterWave.UI.Elements
 
         public override void Resize(Vector2 center, Vector2 size)
         {
-            chat.SetBounds(new Rectangle((int)center.X, (int)center.Y, (int)size.X, (int)size.Y));
+            Vector2 bounds = new Vector2(400, 240);
+
+            //chat.SetBounds(new Rectangle((int)center.X, (int)center.Y, (int)size.X, (int)size.Y));
+            bounds *= 1.5f;
+            chat.SetBounds(new Rectangle((int)center.X + (int)(MainMenu.chatPos.X/2) + 10, (int)center.Y + (int)(MainMenu.chatPos.Y/2) + (int)(size.Y - (size.Y / 1.2f) - (size.Y - (size.Y / 1.2f)) / 2) + 27, (int)(size.X / 1.5f) - 9, (int)(size.Y / 1.2f) - 40));
         }
     }
 }
