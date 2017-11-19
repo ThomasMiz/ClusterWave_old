@@ -21,7 +21,11 @@ namespace ClusterWave.UI.Elements
             batch.End();
             chat.Draw(batch);
             batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.CreateTranslation(MainMenu.chatPos.X, MainMenu.chatPos.Y, 0));
-            
+        }
+
+        public void PreDraw(SpriteBatch batch, GraphicsDevice dev)
+        {
+            chat.PreDraw(dev, batch);
         }
 
         public override void Draw(SpriteBatch batch, GraphicsDevice device, Vector2 mousePos)
