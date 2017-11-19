@@ -309,6 +309,11 @@ namespace ClusterWave.UI
 
         public void Draw(SpriteBatch batch, GraphicsDevice device)
         {
+            if (wLobby != null && wLobby.chat != null)
+            {
+                wLobby.chat.PreDraw(batch, device);
+                device.SetRenderTarget(null);
+            }
             mousePos = new Vector2(Game1.ms.X - Pos.X, Game1.ms.Y - Pos.Y);
 
             batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.CreateTranslation(Pos.X, Pos.Y,  0));
