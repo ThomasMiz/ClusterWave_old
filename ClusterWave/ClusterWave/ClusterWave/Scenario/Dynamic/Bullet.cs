@@ -30,12 +30,14 @@ namespace ClusterWave.Scenario.Dynamic
         private int bouncesLeft;
         bool check = false;
         float spd;
+        PlayerController ignore;
 
         /// <summary>
         /// Creates a Bullet. Do not use this constructor, use Bullet.Create variations instead
         /// </summary>
-        public Bullet(int id, World physicsWorld, Vector2 pos, float rot, float speed, int bounces)
+        public Bullet(int id, World physicsWorld, Vector2 pos, float rot, float speed, int bounces, PlayerController ignoreFirst)
         {
+            this.ignore = ignoreFirst;
             this.id = id;
             this.physicsWorld = physicsWorld;
             this.bouncesLeft = bounces;
@@ -49,7 +51,7 @@ namespace ClusterWave.Scenario.Dynamic
             body.BodyType = BodyType.Dynamic;
             body.IsBullet = true;
             body.LinearVelocity = movement;
-            Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity));
+            Fixture f = body.CreateFixture(new CircleShape(Constants.BulletRadius, Constants.BulletDensity), this);
             f.Friction = Constants.BulletFriction;
             f.Restitution = Constants.BulletRestitution;
             body.Friction = Constants.BulletFriction;
@@ -64,6 +66,11 @@ namespace ClusterWave.Scenario.Dynamic
 
         bool body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {
+            PlayerController tmp = (fixtureA.Body == body ? fixtureB : fixtureA).Body.UserData as PlayerController;
+            if(tmp == ignore)
+                return false;
+
+            ignore = null;
             if (--bouncesLeft == -1)
                 GetRekkt();
             contact.Restitution = 1;
@@ -109,22 +116,24 @@ namespace ClusterWave.Scenario.Dynamic
         }
 
         /// <summary>Creates a Bullet of the specified gun type with the corresponding id, physics world, position and rotation to go to</summary>
+        /// <param name="type">The type of bullet to create based on Constants.GunId</param>
         /// <param name="id">The Bullet's id</param>
         /// <param name="world">The physics world from the scenario</param>
         /// <param name="pos">The center position the bullet should be created at</param>
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
-        public static Bullet Create(int type, int id, World world, Vector2 pos, float rot)
+        /// <param name="ignore">The player that shoot it, to ignore it before it's first bounce</param>
+        public static Bullet Create(int type, int id, World world, Vector2 pos, float rot, PlayerController ignore)
         {
             switch(type)
             {
                 case Constants.ShotgunId:
-                    return CreateShotgun(id, world, pos, rot);
+                    return CreateShotgun(id, world, pos, rot, ignore);
 
                 case Constants.SniperId:
-                    return CreateSniper(id, world, pos, rot);
+                    return CreateSniper(id, world, pos, rot, ignore);
 
                 case Constants.MachinegunId:
-                    return CreateShotgun(id, world, pos, rot);
+                    return CreateShotgun(id, world, pos, rot, ignore);
 
                 default:
                     throw new SosUnPelotudoException();
@@ -136,9 +145,10 @@ namespace ClusterWave.Scenario.Dynamic
         /// <param name="world">The physics world from the scenario</param>
         /// <param name="pos">The center position the bullet should be created at</param>
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
-        public static Bullet CreateShotgun(int id, World world, Vector2 pos, float rot)
+        /// <param name="ignore">The player that shoot it, to ignore it before it's first bounce</param>
+        public static Bullet CreateShotgun(int id, World world, Vector2 pos, float rot, PlayerController ignore)
         {
-            return new Bullet(id, world, pos, rot, Constants.ShotgunBulletSpeed, Constants.MachinegunBulletBounceCount);
+            return new Bullet(id, world, pos, rot, Constants.ShotgunBulletSpeed, Constants.MachinegunBulletBounceCount, ignore);
         }
 
         /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
@@ -146,9 +156,10 @@ namespace ClusterWave.Scenario.Dynamic
         /// <param name="world">The physics world from the scenario</param>
         /// <param name="pos">The center position the bullet should be created at</param>
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
-        public static Bullet CreateSniper(int id, World world, Vector2 pos, float rot)
+        /// <param name="ignore">The player that shoot it, to ignore it before it's first bounce</param>
+        public static Bullet CreateSniper(int id, World world, Vector2 pos, float rot, PlayerController ignore)
         {
-            return new Bullet(id, world, pos, rot, Constants.SniperBulletSpeed, Constants.SniperBulletBounceCount);
+            return new Bullet(id, world, pos, rot, Constants.SniperBulletSpeed, Constants.SniperBulletBounceCount, ignore);
         }
 
         /// <summary>Creates a Shotgun bullet with the corresponding id, world, position and rotation to go to</summary>
@@ -156,9 +167,10 @@ namespace ClusterWave.Scenario.Dynamic
         /// <param name="world">The physics world from the scenario</param>
         /// <param name="pos">The center position the bullet should be created at</param>
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
-        public static Bullet CreateMachinegun(int id, World world, Vector2 pos, float rot)
+        /// <param name="ignore">The player that shoot it, to ignore it before it's first bounce</param>
+        public static Bullet CreateMachinegun(int id, World world, Vector2 pos, float rot, PlayerController ignore)
         {
-            return new Bullet(id, world, pos, rot, Constants.MachinegunBulletSpeed, Constants.MachinegunBulletBounceCount); 
+            return new Bullet(id, world, pos, rot, Constants.MachinegunBulletSpeed, Constants.MachinegunBulletBounceCount, ignore); 
         }
     }
 }

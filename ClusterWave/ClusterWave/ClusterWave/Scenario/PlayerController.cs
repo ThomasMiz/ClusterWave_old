@@ -60,7 +60,7 @@ namespace ClusterWave.Scenario
             this.scene = scene;
             rotation = 0;
             this.player = player;
-            body = new Body(scene.Scenario.PhysicsWorld, position, 0f, null);
+            body = new Body(scene.Scenario.PhysicsWorld, position, 0f, this);
             body.CreateFixture(new FarseerPhysics.Collision.Shapes.CircleShape(Constants.PlayerColliderSize, Constants.PlayerDensity), this);
             body.BodyType = BodyType.Dynamic;
             body.FixedRotation = true;
