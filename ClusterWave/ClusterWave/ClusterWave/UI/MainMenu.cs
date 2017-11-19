@@ -239,6 +239,7 @@ namespace ClusterWave.UI
 
             tConn = new Text(new DrawText(Color.White), "Connecting to " + txbPlIP.Text + "...\nRetrying...\nRetrying...\nError 404: Server is unreachable\n\nMaybe Fran has something to do with it... :)\n\nExecuting not_virus.exe from developer: softonic\n\nWINDOWS ERROR: j1i2r0rh2108h1208381u2801h82013\n\nDeleting system32", Vector2.Zero, -10);
             wConn.Add(tConn, new Vector2(1,1), new Vector2(2,2));
+            Game1.game.client.connect(txbPlIP.Text, txbOp.Text);
 
             WindowRemove(wConn);
             connecting = false;
