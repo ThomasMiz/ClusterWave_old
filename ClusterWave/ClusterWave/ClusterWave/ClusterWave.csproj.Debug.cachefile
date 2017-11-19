@@ -32,4 +32,16 @@ Content\Player\machinegun.xnb
 Content\Player\shotgun.xnb
 Content\Player\sniper.xnb
 Content\Player\walk1.xnb
+Content\UI_Content\Barrier.xnb
+Content\UI_Content\Dash.xnb
+Content\UI_Content\HealthSquare.xnb
+Content\UI_Content\IconPC.xnb
+Content\UI_Content\icon_exit.xnb
+Content\UI_Content\icon_host.xnb
+Content\UI_Content\icon_options.xnb
+Content\UI_Content\icon_PC.xnb
+Content\UI_Content\icon_play.xnb
+Content\UI_Content\pixelPlayIcon.xnb
+Content\UI_Content\UI_Background.xnb
+Content\UI_Content\Weapon0.xnb
 data.map

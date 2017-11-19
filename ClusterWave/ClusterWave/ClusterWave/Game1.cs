@@ -69,7 +69,7 @@ namespace ClusterWave
             whiteSquare = new Texture2D(GraphicsDevice, 1, 1);
             whiteSquare.SetData(new Color[] { Color.White });
 
-            Scenes.Windows95.Load(Content);
+            UI.Menu.LoadContent(Content);
             Scenes.InGameScene.Load(Content);
 
             Scenario.Dynamic.Bullet.Load(Content);
@@ -81,7 +81,7 @@ namespace ClusterWave
             if (client == null)
                 client = new Client();
             if (scene == null)
-                scene = new Scenes.ScenarioLoadingScene(client);
+                scene = new Scenes.MainMenuScene(client);
                 //scene = new Scenes.InGameScene(client);
 
             Window_ClientSizeChanged(null, null);
@@ -131,9 +131,12 @@ namespace ClusterWave
                 ScreenHeight = Math.Max(Window.ClientBounds.Height, 1);
                 ScreenWidthXtra = ScreenWidth + 250;
                 ScreenHeightXtra = ScreenHeight + 250;
-                
-                int chatHeight = Math.Min(ScreenHeight * 3 / 4, 900);
-                client.chat.SetBounds(new Rectangle(10, ScreenHeight - chatHeight - 20, Math.Min(800, ScreenWidth), chatHeight));
+
+                if (!(scene is Scenes.MainMenuScene))
+                {
+                    int chatHeight = Math.Min(ScreenHeight * 3 / 4, 900);
+                    client.chat.SetBounds(new Rectangle(10, ScreenHeight - chatHeight - 20, Math.Min(800, ScreenWidth), chatHeight));
+                }
 
                 if (ScreenWidth == 0) ScreenWidth = 1;
                 else if (ScreenWidth > 2048) ScreenWidth = 2048;
@@ -155,7 +158,10 @@ namespace ClusterWave
         {
             scene.OnExit();
             scene = s;
+            int chatHeight = Math.Min(ScreenHeight * 3 / 4, 900);
+            client.chat.SetBounds(new Rectangle(10, ScreenHeight - chatHeight - 20, Math.Min(800, ScreenWidth), chatHeight));
             s.OnResize();
+
         }
     }
 }

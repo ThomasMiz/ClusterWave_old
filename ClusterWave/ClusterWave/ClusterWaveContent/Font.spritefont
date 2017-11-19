@@ -11,13 +11,13 @@ with.
     <!--
     Modify this string to change the font that will be imported.
     -->
-    <FontName>Consolas</FontName>
+    <FontName>Microsoft Sans Serif</FontName>
 
     <!--
     Size is a float value, measured in points. Modify this value to change
     the size of the font.
     -->
-    <Size>96</Size>
+    <Size>10</Size>
 
     <!--
     Spacing is a float value, measured in pixels. Modify this value to change
@@ -54,6 +54,11 @@ with.
       <CharacterRegion>
         <Start>&#32;</Start>
         <End>&#255;</End>
+      </CharacterRegion>
+
+      <CharacterRegion>
+        <Start>│</Start>
+        <End>▾</End>
       </CharacterRegion>
     </CharacterRegions>
   </Asset>

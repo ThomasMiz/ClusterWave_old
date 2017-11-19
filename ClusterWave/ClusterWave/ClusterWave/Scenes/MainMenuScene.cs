@@ -1,24 +1,23 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Input;
 using ClusterWave.UI;
+using Lidgren.Network;
+using ClusterWave.Network;
 
 namespace ClusterWave.Scenes
 {
-    class Windows95 : Scene
+    class MainMenuScene : Scene
     {
-        public static void Load(ContentManager Content)
+        Client client;
+        MainMenu m;
+
+        public MainMenuScene(Client client)
         {
+            m = new MainMenu();
 
-        }
-
-        TestMenu m;
-
-        public Windows95()
-        {
-            m = new TestMenu();
+            this.client = client;
+            client.OnPacket += OnPacket;
         }
 
         public override void Update()
@@ -39,7 +38,12 @@ namespace ClusterWave.Scenes
 
         public override void OnExit()
         {
-            
+            client.OnPacket -= OnPacket;
+        }
+
+        void OnPacket(NetIncomingMessage msg)
+        {
+            // sanda stuff here
         }
     }
 }

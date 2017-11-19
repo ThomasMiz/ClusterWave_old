@@ -123,16 +123,40 @@
     <Compile Include="Scenario\Scenario.cs" />
     <Compile Include="Scenario\Shape.cs" />
     <Compile Include="Scenes\InGameScene.cs" />
+    <Compile Include="Scenes\MainMenuScene.cs" />
     <Compile Include="Scenes\ScenarioLoadingScene.cs" />
     <Compile Include="Scenes\Scene.cs" />
-    <Compile Include="Scenes\Windows95.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Stuff.cs" />
-    <Compile Include="UI\Button.cs" />
+    <Compile Include="UI\Drawables\DrawChainText.cs" />
     <Compile Include="UI\Drawables\DrawMethod.cs" />
     <Compile Include="UI\Drawables\DrawSingleColor.cs" />
-    <Compile Include="UI\Menu.cs" />
+    <Compile Include="UI\Drawables\DrawText.cs" />
+    <Compile Include="UI\Drawables\DrawTextMethod.cs" />
+    <Compile Include="UI\Elements\Button.cs" />
+    <Compile Include="UI\Elements\ChatTextBox.cs" />
+    <Compile Include="UI\Elements\DropDownList.cs" />
+    <Compile Include="UI\Elements\Element.cs" />
+    <Compile Include="UI\Elements\Slider.cs" />
+    <Compile Include="UI\Elements\Text.cs" />
+    <Compile Include="UI\Elements\TextBox.cs" />
+    <Compile Include="UI\Elements\Tooltip.cs" />
+    <Compile Include="UI\GameMenu.cs" />
+    <Compile Include="UI\InGame\ability.cs" />
+    <Compile Include="UI\InGame\healthBar.cs" />
+    <Compile Include="UI\InGame\weaponDisplay.cs" />
+    <Compile Include="UI\MainMenu.cs" />
+    <Compile Include="UI\MenuManager\Menu.cs" />
+    <Compile Include="UI\MenuManager\Window.cs" />
+    <Compile Include="UI\MenuManager\WindowManager.cs" />
     <Compile Include="UI\TestMenu.cs" />
+    <Compile Include="UI\Windows95_UI\Draw95Window.cs" />
+    <Compile Include="UI\Windows95_UI\DrawIcon.cs" />
+    <Compile Include="UI\Windows95_UI\DrawWin95.cs" />
+    <Compile Include="UI\Windows95_UI\DrawWin95Over.cs" />
+    <Compile Include="UI\Windows95_UI\DrawWin95Press.cs" />
+    <Compile Include="UI\Windows95_UI\Win95TextBox.cs" />
+    <Compile Include="UI\Windows95_UI\WindowDrawMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -168,9 +192,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windo95\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="data.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

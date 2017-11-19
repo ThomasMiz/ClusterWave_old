@@ -33,6 +33,8 @@ namespace ClusterWave
         /// <summary>Whether an enter key event will make the chat open and start typing</summary>
         public bool AllowOpen = true;
 
+        public bool AllowWrite = true;
+
         Matrix transform;
         int linesToShow;
         bool isOpen = false;
@@ -245,12 +247,13 @@ namespace ClusterWave
             if (!isOpen)
             {
                 isOpen = true;
+                AllowWrite = true;
             }
         }
 
         void OnCharEnter(object sender, CharacterEventArgs e)
         {
-            if (isOpen)
+            if (isOpen && AllowWrite)
             {
                 lastCharTime = Game1.Time;
                 char c = e.Character;
