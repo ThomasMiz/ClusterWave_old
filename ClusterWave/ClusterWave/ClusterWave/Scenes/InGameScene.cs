@@ -271,6 +271,7 @@ namespace ClusterWave.Scenes
         void OnPacket(NetIncomingMessage msg)
         {
             byte index = msg.ReadByte();
+            byte id;
             switch (index)
             {
                 case MsgIndex.chat:
@@ -282,7 +283,7 @@ namespace ClusterWave.Scenes
                     switch (subIndex)
                     {
                         case MsgIndex.subIndex.playerCreate:
-                            byte id = msg.ReadByte();
+                            id = msg.ReadByte();
                             Vector2 pos = new Vector2(msg.ReadFloat(), msg.ReadFloat());
                             client.chat.Add("Player connected with id " + id);
                             if (id != client.clientPlayer.Id)
@@ -303,15 +304,47 @@ namespace ClusterWave.Scenes
 
                     break;
                 case MsgIndex.playerAct:
-
+                    byte action = msg.ReadByte();
+                    id = msg.ReadByte();
+                    byte bulletId = msg.ReadByte();
+                    playerActed(id, bulletId , action);
                     break;
                 case MsgIndex.playerMove:
                     byte dir = msg.ReadByte();
-                    byte playerToMove = msg.ReadByte();
-                    if (playerToMove != client.clientPlayer.Id) movePlayer(playerToMove, dir);
+                    id = msg.ReadByte();
+                    if (id != client.clientPlayer.Id) movePlayer(id, dir);
                     break;
                 case MsgIndex.scenarioRecieve:
 
+                    break;
+                case MsgIndex.playerRot:
+                    id = msg.ReadByte();
+                    float rot = msg.ReadByte();
+                    if (id != client.clientPlayer.Id) rotatePlayer(id, rot);
+                    break;
+            }
+        }
+
+        void rotatePlayer(int id, float rot)
+        {
+            netPlayers[id].Rotation = rot;
+        }
+
+        void playerActed(int id, int bulletId, byte action)
+        {
+            switch (action)
+            {
+                case MsgIndex.subIndex.smgShot:
+                    SmgShot(id, bulletId);
+                    break;
+                case MsgIndex.subIndex.sniperShot:
+                    SmgShot(id, bulletId);
+                    break;
+                case MsgIndex.subIndex.shotyShot:
+                    SmgShot(id, bulletId);
+                    break;
+                case MsgIndex.subIndex.shieldPlaced:
+                    SmgShot(id, bulletId);
                     break;
             }
         }
@@ -335,5 +368,51 @@ namespace ClusterWave.Scenes
             }
         }
 
+        void ShotgunShot(int playerId, int bulletId)
+        {
+            Bullet tempBullet;
+            if (playerId != client.clientPlayer.Id)
+            {
+                tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, netPlayers[playerId], bulletId);
+            }
+            else
+            {
+                tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, localPlayer, bulletId);
+            }
+            bullets.Add(tempBullet);
+        }
+
+        void SmgShot(int playerId, int bulletId)
+        {
+            Bullet tempBullet;
+            if (playerId != client.clientPlayer.Id)
+            {
+                tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[playerId], bulletId);
+            }
+            else
+            {
+                tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, localPlayer, bulletId);
+            }
+            bullets.Add(tempBullet);
+        }
+
+        void SniperShot(int playerId, int bulletId)
+        {
+            Bullet tempBullet;
+            if (playerId != client.clientPlayer.Id)
+            {
+                tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, netPlayers[playerId], bulletId);
+            }
+            else
+            {
+                tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, localPlayer, bulletId);
+            }
+            bullets.Add(tempBullet);
+        }
+
+        void ShieldPlaced()
+        {
+
+        }
     }
 }

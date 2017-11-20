@@ -298,35 +298,53 @@ namespace ClusterWaveServer.Network
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void ShootSmg()
+        public void Rotate(int id, float rotation)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.playerMove);
+            msg.Write(MsgIndex.subIndex.rot);
+            msg.Write((byte)id);
+            msg.Write((byte)rotation);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void ShootSmg(int id, int bulletId)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.smgShot);
+            msg.Write((byte)id);
+            msg.Write((byte)bulletId);
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void ShootShotgun()
+        public void ShootShotgun(int id, int bulletId)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.shotyShot);
+            msg.Write((byte)id);
+            msg.Write((byte)bulletId);
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void ShootSniper()
+        public void ShootSniper(int id, int bulletId)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.sniperShot);
+            msg.Write((byte)id);
+            msg.Write((byte)bulletId);
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
 
-        public void Shield()
+        public void Shield(int id, int bulletId)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.shieldPlaced);
+            msg.Write((byte)id);
+            msg.Write((byte)bulletId);
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
         }
 

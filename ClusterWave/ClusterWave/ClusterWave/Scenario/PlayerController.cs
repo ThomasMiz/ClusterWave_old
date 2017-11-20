@@ -49,6 +49,8 @@ namespace ClusterWave.Scenario
         /// </summary>
         public Vector2 Position { get { return body.Position; } }
 
+        public float Rotation { get { return rotation; } set { rotation = value; } }
+
         /// <summary>
         /// Creates a PlayerController, assigning it a given position, scene and it's assigned Player.
         /// </summary>

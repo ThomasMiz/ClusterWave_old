@@ -172,5 +172,39 @@ namespace ClusterWave.Scenario.Dynamic
         {
             return new Bullet(id, world, pos, rot, Constants.MachinegunBulletSpeed, Constants.MachinegunBulletBounceCount, ignore); 
         }
+
+        /// <summary>Creates a Shotgun bullet with the specified physics world and player that shoot it</summary>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="player">The PlayerController that fired the bullet, for calculating bullet position offset</param>
+        public static Bullet CreateShotgun(World world, PlayerController player,int id)
+        {
+            Vector2 rot = new Vector2(0.18f, -0.28f);
+            rot.RotateVector(player.Rotation);
+            return CreateShotgun(id, world, player.Position + rot, player.Rotation, player);
+        }
+
+        /// <summary>Creates a Shotgun bullet with the specified physics world and player that shoot it</summary>
+        /// <param name="id">The Bullet's id</param>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="pos">The center position the bullet should be created at</param>
+        /// <param name="rot">The rotation the bullet should be facing and going to</param>
+        public static Bullet CreateSniper(World world, PlayerController player, int id)
+        {
+            Vector2 rot = new Vector2(0.18f, -0.28f);
+            rot.RotateVector(player.Rotation);
+            return CreateSniper(id, world, player.Position + rot, player.Rotation, player);
+        }
+
+        /// <summary>Creates a Shotgun bullet with the specified physics world and player that shoot it</summary>
+        /// <param name="id">The Bullet's id</param>
+        /// <param name="world">The physics world from the scenario</param>
+        /// <param name="pos">The center position the bullet should be created at</param>
+        /// <param name="rot">The rotation the bullet should be facing and going to</param>
+        public static Bullet CreateMachinegun(World world, PlayerController player, int id)
+        {
+            Vector2 rot = new Vector2(0.18f, -0.28f);
+            rot.RotateVector(player.Rotation);
+            return CreateMachinegun(id, world, player.Position + rot, player.Rotation, player);
+        }
     }
 }

@@ -79,14 +79,17 @@ namespace ClusterWaveServer.Scenes
                 case MsgIndex.subIndex.smgShot:
                     tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[id]);
                     bullets.Add(tempBullet);
+                    Program.server.ShootSmg(id, tempBullet.id);
                     break;
                 case MsgIndex.subIndex.shotyShot:
                     tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, netPlayers[id]);
                     bullets.Add(tempBullet);
+                    Program.server.ShootShotgun(id, tempBullet.id);
                     break;
                 case MsgIndex.subIndex.sniperShot:
                     tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, netPlayers[id]);
                     bullets.Add(tempBullet);
+                    Program.server.ShootSniper(id, tempBullet.id);
                     break;
                 case MsgIndex.subIndex.shieldPlaced:
                     netPlayers[id].MoveRight();
