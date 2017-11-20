@@ -157,8 +157,7 @@ namespace ClusterWave.Network
         public void SendRotation(float rot)
         {
             NetOutgoingMessage msg = client.CreateMessage();
-            msg.Write(MsgIndex.playerMove);
-            msg.Write(MsgIndex.subIndex.rot);
+            msg.Write(MsgIndex.playerRot);
             msg.Write(rot);
             client.SendMessage(msg, NetDeliveryMethod.ReliableUnordered);
         }

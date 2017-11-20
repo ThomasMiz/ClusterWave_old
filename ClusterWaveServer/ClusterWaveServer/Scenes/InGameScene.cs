@@ -22,6 +22,8 @@ namespace ClusterWaveServer.Scenes
 
         NetPlayer[] netPlayers;
 
+        float timeSinceLastUpdate;
+
         public InGameScene(Scenario.Scenario scenario) : base()
         {
             this.scenario = scenario;
@@ -37,6 +39,10 @@ namespace ClusterWaveServer.Scenes
             scenario.PhysicsStep(Program.DeltaTime);
             for (int i = 0; i < 8; i++)
                 if (netPlayers[i] != null) netPlayers[i].UpdatePostPhysics();
+
+            if (timeSinceLastUpdate > 1) UpdatePositions();
+
+            timeSinceLastUpdate += Program.DeltaTime;
         }
 
         public override void OnPacket(Lidgren.Network.NetBuffer msg)
@@ -61,6 +67,9 @@ namespace ClusterWaveServer.Scenes
                     MovePlayer((NetIncomingMessage)msg);
 
                     break;
+                case MsgIndex.playerRot:
+                    PlayerRotate((NetIncomingMessage)msg);
+                    break;
 
             }
         }
@@ -68,6 +77,13 @@ namespace ClusterWaveServer.Scenes
         public override void OnExit()
         {
             debugManager.Exit();
+        }
+
+        void UpdatePositions()
+        {
+            Console.WriteLine("BEEP BEEP UPDATING SHEEP");
+            Program.server.UpdatePositions(netPlayers);
+            timeSinceLastUpdate = 0;
         }
 
         void PlayerAct(NetIncomingMessage msg)
@@ -116,8 +132,17 @@ namespace ClusterWaveServer.Scenes
                     break;
                 case MsgIndex.subIndex.rot:
                     netPlayers[id].Rotate(msg.ReadFloat());
+                    Program.server.Rotate(id, msg.ReadFloat());
                     break;
             }
+        }
+
+        void PlayerRotate(NetIncomingMessage msg)
+        {
+            int id = Program.server.ConnectionToId[msg.SenderConnection];
+            float rot = msg.ReadFloat();
+            netPlayers[id].Rotate(rot);
+            Program.server.Rotate(id, rot);
         }
 
     }

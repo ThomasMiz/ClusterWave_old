@@ -279,23 +279,7 @@ namespace ClusterWave.Scenes
                     //CHAT
                     break;
                 case MsgIndex.statusUpdate:
-                    byte subIndex = msg.ReadByte();
-                    switch (subIndex)
-                    {
-                        case MsgIndex.subIndex.playerCreate:
-                            id = msg.ReadByte();
-                            Vector2 pos = new Vector2(msg.ReadFloat(), msg.ReadFloat());
-                            client.chat.Add("Player connected with id " + id);
-                            if (id != client.clientPlayer.Id)
-                            {
-                                netPlayers[id] = new NetPlayer(pos, this, client.players[id]);
-                            }
-                            else
-                            {
-                                localPlayer = new LocalPlayer(pos, this, client.clientPlayer);
-                            }
-                            break;
-                    }
+                    StatusUpdate(msg);
                     break;
                 case MsgIndex.disconnect:
 
@@ -413,6 +397,49 @@ namespace ClusterWave.Scenes
         void ShieldPlaced()
         {
 
+        }
+
+        void StatusUpdate(NetIncomingMessage msg)
+        {
+            int id;
+            Vector2 pos;
+            byte subIndex = msg.ReadByte();
+            switch (subIndex)
+            {
+                case MsgIndex.subIndex.worldUpdate:
+                    int quantity = msg.ReadByte();
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        id = msg.ReadByte();
+                        pos = new Vector2 (msg.ReadFloat(),msg.ReadFloat());
+                        if (id != client.clientPlayer.Id)
+                        {
+                            netPlayers[id].UpdatePos(pos);
+                            netPlayers[id].Rotation = msg.ReadFloat();
+                        }
+                        else
+                        {
+                            localPlayer.UpdatePos(pos);
+                            localPlayer.Rotation = msg.ReadFloat();
+                        }
+                    }
+                    break;
+                case MsgIndex.subIndex.playerCreate:
+                    id = msg.ReadByte();
+                    pos = new Vector2(msg.ReadFloat(), msg.ReadFloat());
+                    client.chat.Add("Player connected with id " + id);
+
+                    if (id != client.clientPlayer.Id)
+                    {
+                        netPlayers[id] = new NetPlayer(pos, this, client.players[id]);
+                    }
+                    else
+                    {
+                        localPlayer = new LocalPlayer(pos, this, client.clientPlayer);
+                    }
+                    break;
+                
+            }
         }
     }
 }

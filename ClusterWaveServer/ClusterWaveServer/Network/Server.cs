@@ -246,6 +246,25 @@ namespace ClusterWaveServer.Network
             server.SendToAll(newPlayerMessage, connection, NetDeliveryMethod.ReliableOrdered,0);
         }
 
+        public void UpdatePositions(Scenario.NetPlayer[] players)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.statusUpdate);
+            msg.Write(MsgIndex.subIndex.worldUpdate);
+            msg.Write((byte)connectedPlayers);
+            for (int i = 0; i < 8; i++)
+            {
+                if (players[i] != null)
+                {
+                    msg.Write((byte)players[i].Player.GetId());
+                    msg.Write(players[i].Position.X);
+                    msg.Write(players[i].Position.Y);
+                    msg.Write(players[i].Rotation);
+                }
+            }
+            server.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         void SendChatMessage(String message)
         {
             NetOutgoingMessage msg = server.CreateMessage();
@@ -268,7 +287,7 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.left);
             msg.Write((byte)id);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void MoveRight(int id)
@@ -277,7 +296,7 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.right);
             msg.Write((byte)id);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void MoveUp(int id)
@@ -286,7 +305,7 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.up);
             msg.Write((byte)id);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void MoveDown(int id)
@@ -295,17 +314,16 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.playerMove);
             msg.Write(MsgIndex.subIndex.down);
             msg.Write((byte)id);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void Rotate(int id, float rotation)
         {
             NetOutgoingMessage msg = server.CreateMessage();
-            msg.Write(MsgIndex.playerMove);
-            msg.Write(MsgIndex.subIndex.rot);
+            msg.Write(MsgIndex.playerRot);
             msg.Write((byte)id);
             msg.Write((byte)rotation);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void ShootSmg(int id, int bulletId)
@@ -315,7 +333,7 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.subIndex.smgShot);
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void ShootShotgun(int id, int bulletId)
@@ -325,7 +343,7 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.subIndex.shotyShot);
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void ShootSniper(int id, int bulletId)
@@ -335,7 +353,7 @@ namespace ClusterWaveServer.Network
             msg.Write(MsgIndex.subIndex.sniperShot);
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
-            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
         public void Shield(int id, int bulletId)

@@ -70,5 +70,10 @@ namespace ClusterWaveServer.Scenario
         /// </summary>
         /// <param name="amount">The amount of damage the bullet inflicts</param>
         public abstract void Damage(float amount);
+
+        public void UpdatePos(Vector2 pos)
+        {
+            body.Position = pos;
+        }
     }
 }

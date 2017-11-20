@@ -131,5 +131,10 @@ namespace ClusterWave.Scenario
         {
 
         }
+
+        public void UpdatePos(Vector2 pos)
+        {
+            body.Position = pos;
+        }
     }
 }

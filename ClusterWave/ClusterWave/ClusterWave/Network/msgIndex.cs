@@ -37,7 +37,6 @@ namespace ClusterWave.Network
             public const byte right = 42;
             public const byte up = 43;
             public const byte down = 44;
-            public const byte rot = 45;
 
             public const byte smgShot = 51;
             public const byte shotyShot = 52;
