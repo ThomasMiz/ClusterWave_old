@@ -250,6 +250,7 @@ namespace ClusterWave.UI
         }
         void ConnectedWindow()
         {
+            chatPos = Size;
             wLobby = new Window("Lobby", this, new Vector2(-50,-100));
             wLobby.Resize(bounds * 1.5f);
             wLobby.Add(new DrawWin95TextBox(), new Vector2(5, wLobby.size.Y - (wLobby.size.Y / 1.2f) - (wLobby.size.Y - (wLobby.size.Y / 1.2f))/2), new Vector2(1.5f, 1.2f));
