@@ -112,7 +112,7 @@ namespace ClusterWaveServer.DebugRenderer
         public void RenderDebug()
         {
             //foreach (Body b in world.BodyList)
-            for (int xdddd = 0; xdddd < world.BodyList.Count; xdddd++ )
+            for (int xdddd = 0; xdddd < world.BodyList.Count; xdddd++)
             {
                 Body b = world.BodyList[xdddd];
                 Transform transform;
@@ -124,58 +124,59 @@ namespace ClusterWaveServer.DebugRenderer
                 //Matrix4 mat = Matrix4.CreateRotationZ(b.Rotation) * Matrix4.CreateTranslation(b.Position.X, b.Position.Y, 0);
 
                 //foreach (Fixture f in b.FixtureList)
-                for (int nose = 0; nose < b.FixtureList.Count; nose++ )
-                {
-                    Fixture f = b.FixtureList[nose];
-                    Vertices v;
-                    switch (f.Shape.ShapeType)
+                if (b != null && b.FixtureList != null)
+                    for (int nose = 0; nose < b.FixtureList.Count; nose++)
                     {
-                        case ShapeType.Polygon:
-                            #region DrawPolygon
-                            PolygonShape poly = (PolygonShape)f.Shape;
-                            v = poly.Vertices;
-                            VertexColor[] arr = new VertexColor[v.Count];
-                            for (int i = 0; i < arr.Length; i++)
-                            {
-                                Microsoft.Xna.Framework.Vector2 eso = v[i];
-                                arr[i] = new VertexColor(new Vector3(MathUtils.Mul(ref transform, ref eso).ToTK()), light);
-                            }
-                            batch.AddTriangleFan(arr);
-                            for (int i = 0; i < arr.Length; i++)
-                                arr[i].Color.A = col.A;
-                            batch.AddLineStrip(arr);
-                            batch.AddLine(arr[arr.Length - 1], arr[0]);
+                        Fixture f = b.FixtureList[nose];
+                        Vertices v;
+                        switch (f.Shape.ShapeType)
+                        {
+                            case ShapeType.Polygon:
+                                #region DrawPolygon
+                                PolygonShape poly = (PolygonShape)f.Shape;
+                                v = poly.Vertices;
+                                VertexColor[] arr = new VertexColor[v.Count];
+                                for (int i = 0; i < arr.Length; i++)
+                                {
+                                    Microsoft.Xna.Framework.Vector2 eso = v[i];
+                                    arr[i] = new VertexColor(new Vector3(MathUtils.Mul(ref transform, ref eso).ToTK()), light);
+                                }
+                                batch.AddTriangleFan(arr);
+                                for (int i = 0; i < arr.Length; i++)
+                                    arr[i].Color.A = col.A;
+                                batch.AddLineStrip(arr);
+                                batch.AddLine(arr[arr.Length - 1], arr[0]);
 
-                            #endregion
-                            break;
-                        case ShapeType.Edge:
-                            #region DrawEdge
-                            EdgeShape edge = (EdgeShape)f.Shape;
-                            batch.AddLine(new VertexColor(new Vector3(edge.Vertex1.ToTK(), 0), col), new VertexColor(new Vector3(edge.Vertex2.ToTK(), 0), col));
-                            #endregion
-                            break;
-                        case ShapeType.Chain:
-                            #region DrawChain
-                            ChainShape chain = (ChainShape)f.Shape;
-                            v = chain.Vertices;
-                            VertexColor last = new VertexColor(new Vector3(v[0].ToTK(), 0), col);
-                            for (int i = 1; i < v.Count; i++)
-                            {
-                                VertexColor c = new VertexColor(new Vector3(v[i].ToTK(), 0), col);
-                                batch.AddLine(last, c);
-                                last = c;
-                            }
-                            #endregion
-                            break;
-                        case ShapeType.Circle:
-                            #region DrawCircle
-                            CircleShape circ = (CircleShape)f.Shape;
-                            DrawSolidCircle(b.Position.ToTK(), circ.Radius, light);
-                            DrawHollowCircle(b.Position.ToTK(), circ.Radius, col);
-                            #endregion
-                            break;
+                                #endregion
+                                break;
+                            case ShapeType.Edge:
+                                #region DrawEdge
+                                EdgeShape edge = (EdgeShape)f.Shape;
+                                batch.AddLine(new VertexColor(new Vector3(edge.Vertex1.ToTK(), 0), col), new VertexColor(new Vector3(edge.Vertex2.ToTK(), 0), col));
+                                #endregion
+                                break;
+                            case ShapeType.Chain:
+                                #region DrawChain
+                                ChainShape chain = (ChainShape)f.Shape;
+                                v = chain.Vertices;
+                                VertexColor last = new VertexColor(new Vector3(v[0].ToTK(), 0), col);
+                                for (int i = 1; i < v.Count; i++)
+                                {
+                                    VertexColor c = new VertexColor(new Vector3(v[i].ToTK(), 0), col);
+                                    batch.AddLine(last, c);
+                                    last = c;
+                                }
+                                #endregion
+                                break;
+                            case ShapeType.Circle:
+                                #region DrawCircle
+                                CircleShape circ = (CircleShape)f.Shape;
+                                DrawSolidCircle(b.Position.ToTK(), circ.Radius, light);
+                                DrawHollowCircle(b.Position.ToTK(), circ.Radius, col);
+                                #endregion
+                                break;
+                        }
                     }
-                }
             }
 
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
