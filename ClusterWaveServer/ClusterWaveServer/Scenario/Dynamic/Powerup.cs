@@ -34,23 +34,24 @@ namespace ClusterWaveServer.Scenario.Dynamic
         bool body_OnCollision(Fixture fixtureA, Fixture fixtureB, FarseerPhysics.Dynamics.Contacts.Contact contact)
         {
             PlayerController player = (fixtureA.Body == body ? fixtureB : fixtureA).UserData as PlayerController;
+
             if (player == null)
                 return false;
 
             if (OnPickedUp != null)
                 OnPickedUp(player);
-            body.Enabled = false;
+
             return false;
-        }
-
-        public void Update()
-        {
-
         }
 
         public void SetActive()
         {
             body.Enabled = true;
+        }
+
+        public void SetInactive()
+        {
+            body.Enabled = false;
         }
 
         public event OnPowerupPickedUp OnPickedUp;
