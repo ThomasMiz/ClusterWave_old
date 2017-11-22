@@ -127,7 +127,7 @@ namespace ClusterWave.UI
         }
         void settingsClick(Button sender)
         {
-            AudioHandler.ChangeVolume((int)musicOp.value);
+            AudioHandler.ChangeVolume(musicOp.value);
             //game1.SoundVolume(sound.OpValue);
             //thisPlayer.name = txbOp.txt;
             //game1.resolution = ddlOp.selectedValue;

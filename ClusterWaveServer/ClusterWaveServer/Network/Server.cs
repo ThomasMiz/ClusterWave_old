@@ -325,37 +325,40 @@ namespace ClusterWaveServer.Network
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerRot);
             msg.Write((byte)id);
-            msg.Write((byte)rotation);
+            msg.Write(rotation);
             server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
-        public void ShootSmg(int id, int bulletId)
+        public void ShootSmg(int id, int bulletId, float rot)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.smgShot);
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
+            msg.Write(rot);
             server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
-        public void ShootShotgun(int id, int bulletId)
+        public void ShootShotgun(int id, int bulletId, float rot)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.shotyShot);
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
+            msg.Write(rot);
             server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 
-        public void ShootSniper(int id, int bulletId)
+        public void ShootSniper(int id, int bulletId, float rot)
         {
             NetOutgoingMessage msg = server.CreateMessage();
             msg.Write(MsgIndex.playerAct);
             msg.Write(MsgIndex.subIndex.sniperShot);
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
+            msg.Write(rot);
             server.SendToAll(msg, NetDeliveryMethod.Unreliable);
         }
 

@@ -74,6 +74,7 @@ namespace ClusterWave.Scenes
         /// <param name="scenario">The Scenario object for the game round.</param>
         public InGameScene(Client client, Scenario.Scenario scenario)
         {
+            AudioHandler.ChangeVolume(10);
             this.client = client;
             this.scenario = scenario;
 
@@ -293,7 +294,8 @@ namespace ClusterWave.Scenes
                     byte action = msg.ReadByte();
                     id = msg.ReadByte();
                     byte bulletId = msg.ReadByte();
-                    playerActed(id, bulletId , action);
+                    float rotation = msg.ReadFloat();
+                    playerActed(id, bulletId , action, rotation);
                     break;
                 case MsgIndex.playerMove:
                     byte dir = msg.ReadByte();
@@ -305,7 +307,7 @@ namespace ClusterWave.Scenes
                     break;
                 case MsgIndex.playerRot:
                     id = msg.ReadByte();
-                    float rot = msg.ReadByte();
+                    float rot = msg.ReadFloat();
                     if (id != client.clientPlayer.Id) rotatePlayer(id, rot);
                     break;
             }
@@ -316,21 +318,21 @@ namespace ClusterWave.Scenes
             netPlayers[id].Rotation = rot;
         }
 
-        void playerActed(int id, int bulletId, byte action)
+        void playerActed(int id, int bulletId, byte action, float dir)
         {
             switch (action)
             {
                 case MsgIndex.subIndex.smgShot:
-                    SmgShot(id, bulletId);
+                    SmgShot(id, bulletId, dir);
                     break;
                 case MsgIndex.subIndex.sniperShot:
-                    SmgShot(id, bulletId);
+                    SmgShot(id, bulletId, dir);
                     break;
                 case MsgIndex.subIndex.shotyShot:
-                    SmgShot(id, bulletId);
+                    SmgShot(id, bulletId, dir);
                     break;
                 case MsgIndex.subIndex.shieldPlaced:
-                    SmgShot(id, bulletId);
+                    SmgShot(id, bulletId, dir);
                     break;
             }
         }
@@ -354,44 +356,44 @@ namespace ClusterWave.Scenes
             }
         }
 
-        void ShotgunShot(int playerId, int bulletId)
+        void ShotgunShot(int playerId, int bulletId, float dir)
         {
             Bullet tempBullet;
             if (playerId != client.clientPlayer.Id)
             {
-                tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, netPlayers[playerId], bulletId);
+                tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, netPlayers[playerId], dir, bulletId);
             }
             else
             {
-                tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, localPlayer, bulletId);
+                tempBullet = Bullet.CreateShotgun(scenario.PhysicsWorld, localPlayer, dir, bulletId);
             }
             bullets.Add(tempBullet);
         }
 
-        void SmgShot(int playerId, int bulletId)
+        void SmgShot(int playerId, int bulletId, float dir)
         {
             Bullet tempBullet;
             if (playerId != client.clientPlayer.Id)
             {
-                tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[playerId], bulletId);
+                tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, netPlayers[playerId], dir, bulletId);
             }
             else
             {
-                tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, localPlayer, bulletId);
+                tempBullet = Bullet.CreateMachinegun(scenario.PhysicsWorld, localPlayer, dir, bulletId);
             }
             bullets.Add(tempBullet);
         }
 
-        void SniperShot(int playerId, int bulletId)
+        void SniperShot(int playerId, int bulletId, float dir)
         {
             Bullet tempBullet;
             if (playerId != client.clientPlayer.Id)
             {
-                tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, netPlayers[playerId], bulletId);
+                tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, netPlayers[playerId], dir, bulletId);
             }
             else
             {
-                tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, localPlayer, bulletId);
+                tempBullet = Bullet.CreateSniper(scenario.PhysicsWorld, localPlayer, dir, bulletId);
             }
             bullets.Add(tempBullet);
         }
