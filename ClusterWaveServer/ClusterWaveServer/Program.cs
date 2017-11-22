@@ -43,6 +43,11 @@ namespace ClusterWaveServer
                     server.SetScenario("data.map");
                     server.SendScenario();
                 }
+                if (cmd == "res")
+                {
+                    server.SetScenario("data.map");
+                    server.SendScenario();
+                }
                 if (cmd == "scenario")
                 {
                     string scenario = Console.ReadLine();

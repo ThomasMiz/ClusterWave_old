@@ -388,7 +388,7 @@ namespace ClusterWaveServer.Network
             }
         }
 
-        void RestartMatch()
+        public void RestartMatch()
         {
             SetScenario("data.map");
             SendScenario();

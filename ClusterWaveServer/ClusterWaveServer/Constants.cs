@@ -65,11 +65,11 @@ namespace ClusterWaveServer
         /// <summary>The damage machinegun bullets inflict</summary>
         public const float MachinegunBulletDamage = 5f;
         /// <summary>The speed Shotgun bullets should have</summary>
-        public const float ShotgunBulletSpeed = 10f;
+        public const float ShotgunBulletSpeed = 2.5f;
         /// <summary>The Speed Sniper bullets should have</summary>
-        public const float SniperBulletSpeed = 25f;
+        public const float SniperBulletSpeed = 10f;
         /// <summary>The Speed Machinegun bullets should have</summary>
-        public const float MachinegunBulletSpeed = 10f;
+        public const float MachinegunBulletSpeed = 5f;
         /// <summary>The maximum/starting amount of shotgun bullets a player can have</summary>
         public const int ShotgunMaxBullets = 8;
         /// <summary>The maximum/starting amount of sniper bullets a player can have</summary>

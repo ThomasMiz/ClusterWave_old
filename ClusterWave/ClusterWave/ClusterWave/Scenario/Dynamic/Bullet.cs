@@ -178,7 +178,8 @@ namespace ClusterWave.Scenario.Dynamic
         /// <param name="player">The PlayerController that fired the bullet, for calculating bullet position offset</param>
         public static Bullet CreateShotgun(World world, PlayerController player,int id)
         {
-            Vector2 rot = new Vector2(0.18f, -0.28f);
+            //Vector2 rot = new Vector2(0.18f, -0.28f);
+            Vector2 rot = new Vector2(0, 0);
             rot.RotateVector(player.Rotation);
             return CreateShotgun(id, world, player.Position + rot, player.Rotation, player);
         }
@@ -190,7 +191,8 @@ namespace ClusterWave.Scenario.Dynamic
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
         public static Bullet CreateSniper(World world, PlayerController player, int id)
         {
-            Vector2 rot = new Vector2(0.18f, -0.28f);
+            //Vector2 rot = new Vector2(0.18f, -0.28f);
+            Vector2 rot = new Vector2(0, 0);
             rot.RotateVector(player.Rotation);
             return CreateSniper(id, world, player.Position + rot, player.Rotation, player);
         }
@@ -202,7 +204,8 @@ namespace ClusterWave.Scenario.Dynamic
         /// <param name="rot">The rotation the bullet should be facing and going to</param>
         public static Bullet CreateMachinegun(World world, PlayerController player, int id)
         {
-            Vector2 rot = new Vector2(0.18f, -0.28f);
+            //Vector2 rot = new Vector2(0.18f, -0.28f);
+            Vector2 rot = new Vector2(0, 0);
             rot.RotateVector(player.Rotation);
             return CreateMachinegun(id, world, player.Position + rot, player.Rotation, player);
         }
