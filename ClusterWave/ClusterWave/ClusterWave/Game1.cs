@@ -39,8 +39,6 @@ namespace ClusterWave
         Scenes.Scene scene;
         public Client client;
 
-        AudioHandler audio;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this) { SynchronizeWithVerticalRetrace = true };
@@ -80,8 +78,7 @@ namespace ClusterWave
             Scenario.PlayerController.Load(Content);
             Scenario.Dynamic.Powerup.Load(Content);
 
-            audio = new AudioHandler();
-            audio.LoadContent(Content);
+            AudioHandler.LoadContent(Content);
 
             if (client == null)
                 client = new Client();
@@ -91,7 +88,7 @@ namespace ClusterWave
 
             Window_ClientSizeChanged(null, null);
 
-            audio.StartMusic();
+            AudioHandler.StartMusic();
         }
 
         protected override void UnloadContent()

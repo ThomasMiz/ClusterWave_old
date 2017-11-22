@@ -22,8 +22,10 @@ namespace ClusterWaveServer.Network
         int connectedPlayers;
         int maximumCapacity = 8;
         int loadedPlayers;
+        int deadPlayers;
 
         bool matchInProcess = false;
+        bool mustCreatePlayers = false;
 
         public Dictionary<NetConnection, int> ConnectionToId;
         //26200 = Port
@@ -44,7 +46,7 @@ namespace ClusterWaveServer.Network
         public void UpdateServer()
         {
             CheckMessage();
-            if (scene != null)
+            if (scene != null && matchInProcess == true)
                 scene.Update();
         }
 
@@ -121,6 +123,7 @@ namespace ClusterWaveServer.Network
                                 #endregion
                                 break;
                             default:
+                                if (matchInProcess == true)
                                 scene.OnPacket(incomingMsg);
                                 break;
                         }
@@ -364,6 +367,34 @@ namespace ClusterWaveServer.Network
             msg.Write((byte)id);
             msg.Write((byte)bulletId);
             server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+        }
+
+        public void TellPlayerHeIsDead(int id)
+        {
+            NetOutgoingMessage msg = server.CreateMessage();
+            msg.Write(MsgIndex.statusUpdate);
+            msg.Write(MsgIndex.subIndex.playerExit);
+            msg.Write((byte)id);
+            server.SendToAll(msg, NetDeliveryMethod.ReliableUnordered);
+            deadPlayers++;
+            CheckForDead();
+        }
+
+        void CheckForDead()
+        {
+            if (deadPlayers == connectedPlayers - 1 && connectedPlayers > 1)
+            {
+                RestartMatch();
+            }
+        }
+
+        void RestartMatch()
+        {
+            SetScenario("data.map");
+            SendScenario();
+            matchInProcess = false;
+            loadedPlayers = 0;
+            deadPlayers = 0;
         }
 
     }

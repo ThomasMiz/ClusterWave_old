@@ -64,6 +64,9 @@ namespace ClusterWaveServer.Scenario
             health -= amount;
             if (health <= 0)
             {
+                Program.server.TellPlayerHeIsDead(player.GetId());
+                dead = true;
+                body.Enabled = false;
                 // implement: lack of existence.
             }
         }

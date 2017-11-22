@@ -44,6 +44,8 @@ namespace ClusterWaveServer.Scenario
 
         public float Rotation { get { return rotation; } set { rotation = value; } }
 
+        public bool dead = false;
+
         /// <summary>
         /// Creates a PlayerController, assigning it a given position, scene and it's assigned Player.
         /// </summary>

@@ -90,6 +90,7 @@ namespace ClusterWaveServer.Scenes
         {
             int id = Program.server.ConnectionToId[msg.SenderConnection];
             Bullet tempBullet;
+            if (netPlayers[id].dead == false)
             switch (msg.ReadByte())
             {
                 case MsgIndex.subIndex.smgShot:

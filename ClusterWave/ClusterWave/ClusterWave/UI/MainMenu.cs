@@ -74,7 +74,7 @@ namespace ClusterWave.UI
             #endregion
             #region optionWindow
             musicOp = new Slider(0, 100);
-            musicOp.value = 100;
+            musicOp.value = 0;
             soundOp = new Slider(0, 100);
             soundOp.value = 100;
             txbOp = new TextBox(15, new DrawWin95TextBox(), new DrawWin95TextBox(), Game1.font);
@@ -127,7 +127,7 @@ namespace ClusterWave.UI
         }
         void settingsClick(Button sender)
         {
-            //game1.MusicVolume(music.OpValue);
+            AudioHandler.ChangeVolume((int)musicOp.value);
             //game1.SoundVolume(sound.OpValue);
             //thisPlayer.name = txbOp.txt;
             //game1.resolution = ddlOp.selectedValue;

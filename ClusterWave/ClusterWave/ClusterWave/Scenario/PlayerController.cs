@@ -51,6 +51,8 @@ namespace ClusterWave.Scenario
 
         public float Rotation { get { return rotation; } set { rotation = value; } }
 
+        bool dead;
+
         /// <summary>
         /// Creates a PlayerController, assigning it a given position, scene and it's assigned Player.
         /// </summary>
@@ -70,12 +72,14 @@ namespace ClusterWave.Scenario
             body.Restitution = Constants.PlayerRestitution;
             body.CollidesWith = Constants.PlayersCollideWith;
             body.CollisionCategories = Constants.PlayerCategory;
+            dead = false;
 
             animator = new PlayerAnimator(this);
         }
 
         public void Draw(SpriteBatch batch)
         {
+            if (!dead)
             animator.Draw(batch, body.Position, rotation);
         }
 
@@ -135,6 +139,12 @@ namespace ClusterWave.Scenario
         public void UpdatePos(Vector2 pos)
         {
             body.Position = pos;
+        }
+
+        public void SetAsDead()
+        {
+            body.Enabled = false;
+            dead = true;
         }
     }
 }

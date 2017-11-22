@@ -440,6 +440,20 @@ namespace ClusterWave.Scenes
                         localPlayer = new LocalPlayer(pos, this, client.clientPlayer);
                     }
                     break;
+                case MsgIndex.subIndex.playerExit:
+                    id = msg.ReadByte();
+                    if (id != client.clientPlayer.Id)
+                    {
+                        netPlayers[id].SetAsDead();
+                    }
+                    else
+                    {
+                        localPlayer.SetAsDead();
+                    }
+                    break;
+                case MsgIndex.subIndex.gameStarting:
+                        game.SetScene(new ScenarioLoadingScene(client));
+                    break;
                 
             }
         }
