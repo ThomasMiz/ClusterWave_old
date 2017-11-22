@@ -81,6 +81,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioHandler.cs" />
     <Compile Include="ByteStream.cs" />
     <Compile Include="Chat.cs" />
     <Compile Include="ChatLine.cs" />

@@ -10,12 +10,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using System;
 
 namespace ClusterWave.Scenes
 {
     class InGameScene : Scene
     {
+        
         /// <summary>ColorFX is the shader responsible for the physics particle's color rendering and anything that renders alike</summary>
         public static Effect colorFx;
         /// <summary>Just a couple of colors in a 1D texture</summary>
