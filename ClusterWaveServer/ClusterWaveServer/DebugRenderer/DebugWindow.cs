@@ -111,7 +111,7 @@ namespace ClusterWaveServer.DebugRenderer
             debug.Projection = CreateProjectionMatrix();
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        /*protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             if (e.Button == MouseButton.Left)
             {
@@ -139,7 +139,7 @@ namespace ClusterWaveServer.DebugRenderer
                 b.AngularDamping = 0.2f;
                 b.LinearVelocity = new Microsoft.Xna.Framework.Vector2(rand(-5, 5), rand(-5, 5));
             }
-        }
+        }*/
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
